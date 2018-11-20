@@ -10,5 +10,13 @@
 		<managed-bean-class>com.ruralhousejsf.model.login.LoginBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<navigation-rule>
+		<display-name>Login</display-name>
+		<from-view-id>/views/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>ok</from-outcome>
+			<to-view-id>/views/client_panel.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>

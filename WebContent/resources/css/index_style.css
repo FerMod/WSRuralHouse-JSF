@@ -1,5 +1,5 @@
 body {
-	background: url("../images/photo_bg.jpg") no-repeat center center fixed;
+	background: url("./images/photo_bg.jpg") no-repeat center center fixed;
 	background-size: cover;
 	font-size: 16px;
 	font-family: 'Lato', sans-serif;
@@ -15,6 +15,8 @@ h1 {
 	font-size: 3.2em;
 	color: white;
 	text-align: center;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; /* Black border to make more readable*/
+	background: rgba(0,0,0,0.5);
 }
 
 h2 {
