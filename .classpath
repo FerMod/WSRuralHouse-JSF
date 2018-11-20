@@ -30,5 +30,10 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/WSRuralHouse-JSF/lib/WSRuralHouse.jar!/doc"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/omnifaces-1.14.1.jar" sourcepath="lib/omnifaces-1.14.1-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/WSRuralHouse-JSF/lib/omnifaces-1.14.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
