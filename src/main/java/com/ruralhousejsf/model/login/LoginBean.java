@@ -17,7 +17,10 @@ public class LoginBean {
 	
 	private String user;
 	private String pass;
+	
+	/*
 	private AbstractUser client;
+	
 	private Config cf;
 	private ApplicationFacadeInterface aplicationFacade;
 	
@@ -25,7 +28,11 @@ public class LoginBean {
 		cf = ConfigXML.getInstance();
 		aplicationFacade = ApplicationFacadeFactory.createApplicationFacade(cf);
 	}
-
+	*/
+	
+	public LoginBean(){
+	}
+	
 	public String getUser() {
 		return user;
 	}
@@ -41,7 +48,7 @@ public class LoginBean {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
-	
+	/*
 	public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
 		if (aplicationFacade.getTypeOfUser(user) != UserType.CLIENT) {
 			return aplicationFacade.login(getUser(), getPass());
@@ -49,9 +56,10 @@ public class LoginBean {
 			throw new UserRoleException();
 		}
 	}
-	
+	*/
 	public String comprobar() throws UserRoleException {
 		//https://www.mkyong.com/jsf2/custom-validator-in-jsf-2-0/
+		/*
 		try {
 			client = login(getUser(), getPass());
 		} catch (AccountNotFoundException e) {
@@ -61,7 +69,7 @@ public class LoginBean {
 		} catch (UserRoleException e) {
 			
 		}
-		
+		*/
 		return "ok";
 	}
 	
