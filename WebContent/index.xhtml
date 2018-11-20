@@ -15,35 +15,37 @@
 			href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900'
 			rel='stylesheet' type='text/css' />
 		<h:outputStylesheet target="head" library="css" name="index_style.css" />
-		<h:outputStylesheet target="head" library="css" name="index_animate.css" />
+		<h:outputStylesheet target="head" library="css"
+			name="index_animate.css" />
 
-		<!-- <script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script> -->
-		<h:outputScript target="head" library="js" name="jquery-3.3.1.js"></h:outputScript>
-		<h:outputScript target="head">
-		
-			function isEmpty(element) {
-				return !$.trim(element.html());
-			}
-
-			function placeholder(element, text) {
-				if (isEmpty($(this))) {
-					$(this).attr('placeholder', text);
-				} else {
-					$(this).removeAttr('placeholder');
-				}
-			}
-
-			$(function() {
+<!-- 		<h:outputScript target="head" library="js" name="jquery-3.3.1.js"></h:outputScript> -->
+		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
+		<script type="text/javascript" src="resources/js/docReady.js"></script>
+		<script type="text/javascript">
+			
+			docReady(function() {
 				
-				$('#logo').addClass('animated fadeInDown');
-				$("input\\:text\\:visible\\:first").focus();
+				function isEmpty($element) {
+					return !$.trim($element.html());
+				}
 
-				$('#username').change(function() {
-					placeholder('placeholder', 'username');
+				function placeholder($element, text) {
+					if (isEmpty($element)) {
+						$element.attr('placeholder', text);
+					} else {
+						$element.removeAttr('placeholder');
+					}
+				}
+
+				$('#logo').addClass('animated fadeInDown');
+				$("input:text:visible:first").focus();
+
+				$('#login\\:username').change(function() {
+					placeholder($(this), 'username');
 				});
 
-				$('#password').change(function() {
-					placeholder('placeholder', 'password');
+				$('#login\\:password').change(function() {
+					placeholder($(this), 'password');
 				});
 				
 				$('#login\\:username').focus(function() {
@@ -58,14 +60,12 @@
 				$('#login\\:password').blur(function() {
 					$('label[for="password"]').removeClass('selected');
 				});
-				
 
-				placeholder($('#username'), 'username');
-				placeholder($('#password'), 'password');
+				placeholder($('#login\\:username'), 'username');
+				placeholder($('#login\\:password'), 'password');
 
 			});
-			
-		</h:outputScript>
+		</script>
 
 	</h:head>
 
