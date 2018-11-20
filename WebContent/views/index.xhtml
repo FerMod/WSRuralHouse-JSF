@@ -23,13 +23,14 @@
 			</div>
 			<label for="username">Usuario</label>
 			<br/>
-			<input type="text" id="username" placeholder="usuario">
+			<h:inputText id="username" value="#{login.user}" placeholder="usuario"></h:inputText>
 			<br/>
 			<label for="password">Contraseña</label>
 			<br/>
-			<input type="password" id="password" placeholder="password">
+			<h:inputSecret type="password" id="password" value="#{login.pass}" placeholder="password"></h:inputSecret>
 			<br/>
 			<button type="submit">Iniciar sesión</button>
+			<h:commandButton value="Iniciar sesión" action="#{login.comprobar}" />
 			<br/>
 		</div>
 	</div>
