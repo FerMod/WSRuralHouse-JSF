@@ -1,5 +1,12 @@
 package com.ruralhousejsf.model.login;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.security.auth.login.AccountNotFoundException;
 
 import com.ruralhousejsf.exceptions.UserRoleException;
@@ -12,27 +19,23 @@ import domain.AbstractUser;
 import domain.UserType;
 import exceptions.AuthException;
 
-
+@ManagedBean(name = "login")
+@SessionScoped
 public class LoginBean {
-	
+
 	private String user;
 	private String pass;
-	
-	/*
-	private AbstractUser client;
-	
+
+	/*private AbstractUser client;
+
 	private Config cf;
-	private ApplicationFacadeInterface aplicationFacade;
-	
+	private ApplicationFacadeInterface aplicationFacade;*/
+
 	public LoginBean(){
-		cf = ConfigXML.getInstance();
-		aplicationFacade = ApplicationFacadeFactory.createApplicationFacade(cf);
+		/*cf = ConfigXML.getInstance();
+		aplicationFacade = ApplicationFacadeFactory.createApplicationFacade(cf);*/
 	}
-	*/
-	
-	public LoginBean(){
-	}
-	
+
 	public String getUser() {
 		return user;
 	}
@@ -48,29 +51,55 @@ public class LoginBean {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
-	/*
-	public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
+
+	/*public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
 		if (aplicationFacade.getTypeOfUser(user) != UserType.CLIENT) {
 			return aplicationFacade.login(getUser(), getPass());
 		} else {
 			throw new UserRoleException();
 		}
-	}
-	*/
-	public String comprobar() throws UserRoleException {
-		//https://www.mkyong.com/jsf2/custom-validator-in-jsf-2-0/
-		/*
-		try {
-			client = login(getUser(), getPass());
-		} catch (AccountNotFoundException e) {
-			e.printStackTrace();
-		} catch (AuthException e) {
-			e.printStackTrace();
-		} catch (UserRoleException e) {
-			
-		}
-		*/
+	}*/
+
+	public String entrar() {
 		return "ok";
 	}
-	
+
+	public void validateLogin(ComponentSystemEvent event) {
+
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		UIComponent components = event.getComponent();
+
+		UIInput uiInputUser = (UIInput) components.findComponent("login:username");
+		UIInput uiInputPass = (UIInput) components.findComponent("login:password");
+		String password = uiInputPass.getLocalValue() == null ? "" : uiInputPass.getLocalValue().toString();
+		String user = uiInputUser.getLocalValue() == null ? "" : uiInputUser.getLocalValue().toString();
+
+		/*
+		try {
+			client = login(user, password);
+		} catch(UserRoleException e) {
+			FacesMessage msg = new FacesMessage("El rol de usuario no es adecuado.");
+			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fc.addMessage(uiInputUser.getClientId()+uiInputPass.getClientId(), msg);
+			fc.validationFailed();
+			fc.renderResponse();
+		} catch(AccountNotFoundException e) {
+			FacesMessage msg = new FacesMessage("Cuenta no encontrada.");
+			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fc.addMessage(uiInputUser.getClientId()+uiInputPass.getClientId(), msg);
+			fc.validationFailed();
+			fc.renderResponse();
+		} catch(AuthException e) {
+			FacesMessage msg = new FacesMessage("La contraseña o el usuario indicado es incorrecto.");
+			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fc.addMessage(uiInputUser.getClientId()+uiInputPass.getClientId(), msg);
+			fc.validationFailed();
+			fc.renderResponse();
+		}
+		 */
+
+	}
+
+
 }
