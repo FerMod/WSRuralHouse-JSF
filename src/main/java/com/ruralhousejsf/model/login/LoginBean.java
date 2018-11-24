@@ -21,7 +21,7 @@ public class LoginBean {
 	private String user;
 	private String pass;
 
-	private AbstractUser client;
+	private AbstractUser logedinUser;
 
 	private Config config;
 	private ApplicationFacadeInterface aplicationFacade;
@@ -62,7 +62,7 @@ public class LoginBean {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
-			client = login(user, pass);
+			logedinUser = login(user, pass);
 			login = true;
 		} catch(UserRoleException e) {
 			failedValidationMsg("El rol de usuario no es adecuado.", fc, fc.getCurrentPhaseId().toString());
@@ -71,7 +71,7 @@ public class LoginBean {
 		} catch(AuthException e) {
 			failedValidationMsg("La contraseña o el usuario indicado es incorrecto.", fc, fc.getCurrentPhaseId().toString());
 		}
-
+		System.out.println(login ? "ok" : "error");
 		return login ? "ok" : "error";
 	}
 
