@@ -3,10 +3,7 @@ package com.ruralhousejsf.model.login;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ComponentSystemEvent;
 import javax.security.auth.login.AccountNotFoundException;
 
 import com.ruralhousejsf.exceptions.UserRoleException;
@@ -26,14 +23,15 @@ public class LoginBean {
 	private String user;
 	private String pass;
 
-	/*private AbstractUser client;
+	private AbstractUser client;
 
-	private Config cf;
-	private ApplicationFacadeInterface aplicationFacade;*/
+	private Config config;
+	private ApplicationFacadeInterface aplicationFacade;
 
 	public LoginBean(){
-		/*cf = ConfigXML.getInstance();
-		aplicationFacade = ApplicationFacadeFactory.createApplicationFacade(cf);*/
+		System.out.println(getClass().getResource("/db/config.xml").getFile());
+		config = ConfigXML.loadConfig(getClass().getResource("/db/config.xml").getFile());
+		aplicationFacade = ApplicationFacadeFactory.createApplicationFacade(config);
 	}
 
 	public String getUser() {
@@ -52,18 +50,34 @@ public class LoginBean {
 		this.pass = pass;
 	}
 
-	/*public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
-		if (aplicationFacade.getTypeOfUser(user) != UserType.CLIENT) {
+	public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
+		if (aplicationFacade.getTypeOfUser(user) != UserType.CLIENT || aplicationFacade.getTypeOfUser(user) != UserType.OWNER) {
 			return aplicationFacade.login(getUser(), getPass());
 		} else {
 			throw new UserRoleException();
 		}
-	}*/
-
-	public String entrar() {
-		return "ok";
 	}
 
+	public String validate() {
+
+		boolean login = false;
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try {
+			client = login(user, pass);
+			login = true;
+		} catch(UserRoleException e) {
+			failedValidationMsg("El rol de usuario no es adecuado.", fc, fc.getCurrentPhaseId().toString());
+		} catch(AccountNotFoundException e) {
+			failedValidationMsg("Cuenta no encontrada.", fc, fc.getCurrentPhaseId().toString());
+		} catch(AuthException e) {
+			failedValidationMsg("La contraseña o el usuario indicado es incorrecto.", fc, fc.getCurrentPhaseId().toString());
+		}
+
+		return login ? "ok" : "error";
+	}
+
+	/*
 	public void validateLogin(ComponentSystemEvent event) {
 
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -72,33 +86,29 @@ public class LoginBean {
 
 		UIInput uiInputUser = (UIInput) components.findComponent("login:username");
 		UIInput uiInputPass = (UIInput) components.findComponent("login:password");
+
 		String password = uiInputPass.getLocalValue() == null ? "" : uiInputPass.getLocalValue().toString();
 		String user = uiInputUser.getLocalValue() == null ? "" : uiInputUser.getLocalValue().toString();
 
-		/*
 		try {
 			client = login(user, password);
 		} catch(UserRoleException e) {
-			FacesMessage msg = new FacesMessage("El rol de usuario no es adecuado.");
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage(uiInputUser.getClientId()+uiInputPass.getClientId(), msg);
-			fc.validationFailed();
-			fc.renderResponse();
+			failedValidationMsg("El rol de usuario no es adecuado.", fc, uiInputUser.getClientId() + uiInputPass.getClientId());
 		} catch(AccountNotFoundException e) {
-			FacesMessage msg = new FacesMessage("Cuenta no encontrada.");
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage(uiInputUser.getClientId()+uiInputPass.getClientId(), msg);
-			fc.validationFailed();
-			fc.renderResponse();
+			failedValidationMsg("Cuenta no encontrada.", fc, uiInputUser.getClientId() + uiInputPass.getClientId());
 		} catch(AuthException e) {
-			FacesMessage msg = new FacesMessage("La contraseña o el usuario indicado es incorrecto.");
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage(uiInputUser.getClientId()+uiInputPass.getClientId(), msg);
-			fc.validationFailed();
-			fc.renderResponse();
+			failedValidationMsg("La contraseña o el usuario indicado es incorrecto.", fc, uiInputUser.getClientId() + uiInputPass.getClientId());
 		}
-		 */
 
+	}
+	 */
+
+	private void failedValidationMsg(String message, FacesContext fc, String clientId) {
+		FacesMessage msg = new FacesMessage(message);
+		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+		fc.addMessage(clientId, msg);
+		fc.validationFailed();
+		fc.renderResponse();
 	}
 
 

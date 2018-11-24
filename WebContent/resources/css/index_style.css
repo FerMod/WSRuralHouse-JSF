@@ -141,3 +141,7 @@ p.small {
   -webkit-animation-duration: 1s;
   -webkit-animation-delay: 1s;
 }
+
+#login\:msgList {
+	text-align: left;
+}

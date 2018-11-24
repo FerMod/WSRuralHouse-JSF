@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15427101875640" configfile="/WSRuralHouse-JSF/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="Login" x="192" y="168" id="pf15427312543220" outlinks="pf15427312543231" path="/views/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="Client" x="444" y="168" id="pf15427312543232" inlinks="pf15427312543231" path="/views/client_panel.xhtml"/>
-  <links id="pf15427312543231" target="pf15427312543232" source="pf15427312543220" outcome="ok"/>
+  <nodes xsi:type="pageflow:PFPage" name="Login" x="192" y="168" id="pf15427312543220" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15430672406340" path="/views/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Client" x="444" y="168" id="pf15427312543232" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15430672406340" path="/views/client_panel.xhtml"/>
+  <links id="pf15430672406340" target="pf15427312543232" source="pf15427312543220" outcome="ok"/>
 </pageflow:Pageflow>

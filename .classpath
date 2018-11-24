@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" output="build/classes" path="src/main/java"/>
-	<classpathentry kind="src" output="build/testclasses" path="src/test/java">
+	<classpathentry excluding="**" kind="src" output="build/test-classes" path="src/test/resources">
+		<attributes>
+			<attribute name="test" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="build/classes" path="src/main/resources"/>
+	<classpathentry kind="src" output="build/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="test" value="true"/>
 		</attributes>
