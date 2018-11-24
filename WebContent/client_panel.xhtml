@@ -68,7 +68,29 @@
 
 			<div id="Setav" class="tabcontent">
 				<h3>Establecer disponibilidad</h3>
-				<p>Esta página sirve para establecer la disponibilidad.</p>
+				<p>Cree una oferta para una de las casas rurales.</p>
+				<h:form>
+					<div style="padding-bottom:10px">
+						<p>Inserte fecha inicial</p>
+						<h:inputText id="startDate" value="#{ava.startDate}"
+							required="true"
+							requiredMessage="Inserte la fecha inicial de la oferta.">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:inputText>
+					</div>
+					<div style="padding-bottom:10px">
+						<p>Inserte fecha final</p>
+						<h:inputText id="endDate" value="#{ava.endDate}" required="true"
+							requiredMessage="Inserte la fecha final de la oferta.">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:inputText>
+					</div>
+					<h:commandButton value="Establecer disponibilidad"
+						action="#{ava.establecer}" />
+				</h:form>
+				<div style="padding:10px">
+					<h:messages style="color:red"></h:messages>
+				</div>
 			</div>
 		</div>
 	</h:body>

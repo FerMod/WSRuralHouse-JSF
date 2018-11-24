@@ -10,6 +10,11 @@
 		<managed-bean-class>com.ruralhousejsf.model.login.LoginBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ava</managed-bean-name>
+		<managed-bean-class>com.ruralhousejsf.model.login.AvailabityBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	<navigation-rule>
 		<display-name>Login</display-name>
 		<from-view-id>/views/index.xhtml</from-view-id>
