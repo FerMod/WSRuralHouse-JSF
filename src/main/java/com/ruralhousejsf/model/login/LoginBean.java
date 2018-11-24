@@ -47,6 +47,10 @@ public class LoginBean {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
+	
+	public AbstractUser getLoggedUser() {
+		return logedinUser;
+	}
 
 	public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
 		if (aplicationFacade.getTypeOfUser(user) != UserType.CLIENT || aplicationFacade.getTypeOfUser(user) != UserType.OWNER) {

@@ -30,7 +30,7 @@
 				class="glyphicon glyphicon-log-out"></span> Log out
 			</a>
 		</div>
-		<h2>¡Bienvenido [usuario]!</h2>
+		<h2>¡Bienvenido <h:outputText value="&#160;#{login.loggedUser.username}" />!</h2>
 		<div class="panel">
 			<div class="tab">
 				<button class="tablinks" onclick="clickTab(event, 'Info')"
