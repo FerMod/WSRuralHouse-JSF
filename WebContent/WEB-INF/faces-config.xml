@@ -18,5 +18,9 @@
 			<to-view-id>/views/client_panel.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-
+    <validator>
+    	<display-name>loginVal</display-name>
+    	<validator-id>loginValidator</validator-id>
+        <validator-class>com.ruralhousejsf.validator.LoginValidator</validator-class>
+    </validator>
 </faces-config>

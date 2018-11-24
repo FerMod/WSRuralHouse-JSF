@@ -19,8 +19,6 @@ import domain.AbstractUser;
 import domain.UserType;
 import exceptions.AuthException;
 
-@ManagedBean(name = "login")
-@SessionScoped
 public class LoginBean {
 
 	private String user;
@@ -63,7 +61,7 @@ public class LoginBean {
 	public String entrar() {
 		return "ok";
 	}
-
+/*
 	public void validateLogin(ComponentSystemEvent event) {
 
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -75,7 +73,7 @@ public class LoginBean {
 		String password = uiInputPass.getLocalValue() == null ? "" : uiInputPass.getLocalValue().toString();
 		String user = uiInputUser.getLocalValue() == null ? "" : uiInputUser.getLocalValue().toString();
 
-		/*
+
 		try {
 			client = login(user, password);
 		} catch(UserRoleException e) {
@@ -97,9 +95,9 @@ public class LoginBean {
 			fc.validationFailed();
 			fc.renderResponse();
 		}
-		 */
+		 
 
 	}
-
+*/
 
 }

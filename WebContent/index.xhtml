@@ -76,7 +76,6 @@
 			</div>
 			<h:form id="login">
 				<div class="login-box animated fadeInUp">
-					<f:event listener="#{login.validateLogin}" type="postValidate" />
 					<div class="box-header">
 						<h2>Inicia sesión</h2>
 					</div>
@@ -84,6 +83,7 @@
 					<h:inputText id="username" value="#{login.user}"
 						placeholder="usuario" required="true"
 						requiredMessage="Inserte su nombre de usuario">
+						<f:validator validatorId="loginValidator" />
 					</h:inputText>
 					<h:message id="usrmsg" style="color:red"/>
 					<br /> <label for="password">Contraseña</label> <br />
