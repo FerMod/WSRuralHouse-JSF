@@ -16,8 +16,6 @@ import domain.AbstractUser;
 import domain.UserType;
 import exceptions.AuthException;
 
-@ManagedBean(name = "login")
-@SessionScoped
 public class LoginBean {
 
 	private String user;
@@ -90,18 +88,8 @@ public class LoginBean {
 		String password = uiInputPass.getLocalValue() == null ? "" : uiInputPass.getLocalValue().toString();
 		String user = uiInputUser.getLocalValue() == null ? "" : uiInputUser.getLocalValue().toString();
 
-		try {
-			client = login(user, password);
-		} catch(UserRoleException e) {
-			failedValidationMsg("El rol de usuario no es adecuado.", fc, uiInputUser.getClientId() + uiInputPass.getClientId());
-		} catch(AccountNotFoundException e) {
-			failedValidationMsg("Cuenta no encontrada.", fc, uiInputUser.getClientId() + uiInputPass.getClientId());
-		} catch(AuthException e) {
-			failedValidationMsg("La contraseña o el usuario indicado es incorrecto.", fc, uiInputUser.getClientId() + uiInputPass.getClientId());
-		}
-
 	}
-	 */
+	*/
 
 	private void failedValidationMsg(String message, FacesContext fc, String clientId) {
 		FacesMessage msg = new FacesMessage(message);
@@ -110,6 +98,5 @@ public class LoginBean {
 		fc.validationFailed();
 		fc.renderResponse();
 	}
-
 
 }
