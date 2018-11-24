@@ -2,11 +2,12 @@ package com.ruralhousejsf.model.login;
 
 import java.util.Date;
 
-public class AvailabityBean {
+public class AvailabilityBean {
+	
 	public Date startDate;
 	public Date endDate;
 	
-	public AvailabityBean() {
+	public AvailabilityBean() {
 	}
 	
 	public Date getStartDate() {
