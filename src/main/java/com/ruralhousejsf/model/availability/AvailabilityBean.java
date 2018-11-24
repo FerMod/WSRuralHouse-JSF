@@ -1,7 +1,12 @@
-package com.ruralhousejsf.model.login;
+package com.ruralhousejsf.model.availability;
 
 import java.util.Date;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+@ManagedBean(name="setAvailability")
+@SessionScoped
 public class AvailabilityBean {
 	
 	public Date startDate;

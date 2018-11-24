@@ -1,17 +1,13 @@
 package com.ruralhousejsf.model.login;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.security.auth.login.AccountNotFoundException;
 
+import com.ruralhousejsf.AppFacade;
 import com.ruralhousejsf.exceptions.UserRoleException;
 
-import businessLogic.ApplicationFacadeFactory;
 import businessLogic.ApplicationFacadeInterface;
-import configuration.Config;
-import configuration.ConfigXML;
 import domain.AbstractUser;
 import domain.UserType;
 import exceptions.AuthException;
@@ -22,14 +18,10 @@ public class LoginBean {
 	private String pass;
 
 	private AbstractUser logedinUser;
-
-	private Config config;
-	private ApplicationFacadeInterface aplicationFacade;
-
+	private AppFacade applicationFacade;
+	
 	public LoginBean(){
-		System.out.println(getClass().getResource("/db/config.xml").getFile());
-		config = ConfigXML.loadConfig(getClass().getResource("/db/config.xml").getFile());
-		aplicationFacade = ApplicationFacadeFactory.createApplicationFacade(config);
+		applicationFacade = AppFacade.getInstance();
 	}
 
 	public String getUser() {
@@ -53,8 +45,8 @@ public class LoginBean {
 	}
 
 	public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
-		if (aplicationFacade.getTypeOfUser(user) != UserType.CLIENT || aplicationFacade.getTypeOfUser(user) != UserType.OWNER) {
-			return aplicationFacade.login(getUser(), getPass());
+		if (applicationFacade.getImpl().getTypeOfUser(user) != UserType.CLIENT || applicationFacade.getImpl().getTypeOfUser(user) != UserType.OWNER) {
+			return applicationFacade.getImpl().login(getUser(), getPass());
 		} else {
 			throw new UserRoleException();
 		}

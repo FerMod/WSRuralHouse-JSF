@@ -31,7 +31,7 @@
 	</h:head>
 	<h:body>
 		<div class="logbot">
-			<a href="#" class="btn btn-info btn-lg">
+			<a href="login.xhtml?faces-redirect=true" class="btn btn-info btn-lg">
 				<span class="glyphicon glyphicon-log-out"></span>
 				Log out
 			</a>
@@ -73,6 +73,12 @@
 			<div id="queryav" class="tabcontent">
 				<h3>Consultar disponibilidad</h3>
 				<p>Esta página sirve para consultar la disponibilidad.</p>
+				<h:form>
+					<h:selectOneMenu value="#{queryAvailability.ruralHouseHashMap}">
+			 			<f:selectItems value="#{queryAvailability.ruralHouseHashMap}" />
+			 		</h:selectOneMenu>
+					<h:inputText value="#{queryAvailabilityBean.date}" styleClass="form-control datepicker" />
+				</h:form>
 			</div>
 
 			<div id="setav" class="tabcontent">
@@ -81,7 +87,7 @@
 				<h:form>
 					<div style="padding-bottom: 10px">
 						<p>Inserte fecha inicial</p>
-						<h:inputText id="startDate" value="#{ava.startDate}"
+						<h:inputText id="startDate" value="#{setAvailability.startDate}"
 							required="true"
 							requiredMessage="Inserte la fecha inicial de la oferta.">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -89,13 +95,13 @@
 					</div>
 					<div style="padding-bottom: 10px">
 						<p>Inserte fecha final</p>
-						<h:inputText id="endDate" value="#{ava.endDate}" required="true"
+						<h:inputText id="endDate" value="#{setAvailability.endDate}" required="true"
 							requiredMessage="Inserte la fecha final de la oferta.">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:inputText>
 					</div>
 					<h:commandButton value="Establecer disponibilidad"
-						action="#{ava.establecer}" />
+						action="#{setAvailability.establecer}" />
 				</h:form>
 				<div style="padding: 10px">
 					<h:messages style="color:red"></h:messages>
