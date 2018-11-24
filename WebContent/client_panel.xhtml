@@ -10,67 +10,76 @@
 <f:view>
 	<h:head>
 		<title>Casas rurales | Panel cliente</title>
-		<h:outputStylesheet target="head" library="css"
-			name="client_style.css" />
-		<link rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+		<h:outputStylesheet target="head" library="css"	name="client_style.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="resources/js/docReady.js"></script>
-		<script type="text/javascript" src="resources/js/cp_utilities.js"></script>
-		<script type="text/javascript">
-			function clickTab(evt, tabName) {
-				openTab(evt, tabName);
-			}
+		<script type="text/javascript">		
+			docReady(function() {
+				
+				$(".tablinks").click(function() {
+					$(".tabcontent").css('display', 'none');
+					$(".tablinks").removeClass('active');
+					$("#" + $(this).data('tab')).css('display', 'block');
+					$(this).addClass('active');
+				});
 
-			document.getElementById("defaultOpen").click();
-		</script>
+				$("#defaultOpen").click();
+				
+			});
+		</script>		
 	</h:head>
 	<h:body>
 		<div class="logbot">
-			<a href="#" class="btn btn-info btn-lg"> <span
-				class="glyphicon glyphicon-log-out"></span> Log out
+			<a href="#" class="btn btn-info btn-lg">
+				<span class="glyphicon glyphicon-log-out"></span>
+				Log out
 			</a>
 		</div>
-		<h2>¡Bienvenido <h:outputText value="&#160;#{login.loggedUser.username}" />!</h2>
+		<h2>
+			¡Bienvenido <h:outputText value="&#160;#{login.loggedUser.username}" />!
+		</h2>
 		<div class="panel">
 			<div class="tab">
-				<button class="tablinks" onclick="clickTab(event, 'Info')"
-					id="defaultOpen">
-					<i class="glyphicon glyphicon-info-sign"></i> Información
+				<button class="tablinks" data-tab="info" id="defaultOpen">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					Información
 				</button>
-				<button class="tablinks" onclick="clickTab(event, 'Profile')"
-					id="defaultOpen">
-					<i class="glyphicon glyphicon-user"></i> Perfil
+				<button class="tablinks" data-tab="profile">
+					<i class="glyphicon glyphicon-user"></i>
+					Perfil
 				</button>
-				<button class="tablinks" onclick="clickTab(event, 'Queryav')">
-					<i class="glyphicon glyphicon-calendar"></i> Consultar
-					disponibilidad
+				<button class="tablinks" data-tab="queryav">
+					<i class="glyphicon glyphicon-calendar"></i>
+					Consultar disponibilidad
 				</button>
-				<button class="tablinks" onclick="clickTab(event, 'Setav')">
-					<i class="glyphicon glyphicon-home"></i> Establecer disponibilidad
+				<button class="tablinks" data-tab="setav">
+					<i class="glyphicon glyphicon-home"></i>
+					Establecer disponibilidad
 				</button>
 			</div>
 
-			<div id="Info" class="tabcontent">
+			<div id="info" class="tabcontent">
 				<h3>Información</h3>
 				<p>Esta página completa permite al cliente buscar y comprobar la
 					disponibilidad de las casas rurales.</p>
 			</div>
 
-			<div id="Profile" class="tabcontent">
+			<div id="profile" class="tabcontent">
 				<h3>Perfil</h3>
 				<p>Esta página muestra el perfil.</p>
 			</div>
 
-			<div id="Queryav" class="tabcontent">
+			<div id="queryav" class="tabcontent">
 				<h3>Consultar disponibilidad</h3>
 				<p>Esta página sirve para consultar la disponibilidad.</p>
 			</div>
 
-			<div id="Setav" class="tabcontent">
+			<div id="setav" class="tabcontent">
 				<h3>Establecer disponibilidad</h3>
 				<p>Cree una oferta para una de las casas rurales.</p>
 				<h:form>
-					<div style="padding-bottom:10px">
+					<div style="padding-bottom: 10px">
 						<p>Inserte fecha inicial</p>
 						<h:inputText id="startDate" value="#{ava.startDate}"
 							required="true"
@@ -78,7 +87,7 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:inputText>
 					</div>
-					<div style="padding-bottom:10px">
+					<div style="padding-bottom: 10px">
 						<p>Inserte fecha final</p>
 						<h:inputText id="endDate" value="#{ava.endDate}" required="true"
 							requiredMessage="Inserte la fecha final de la oferta.">
@@ -88,7 +97,7 @@
 					<h:commandButton value="Establecer disponibilidad"
 						action="#{ava.establecer}" />
 				</h:form>
-				<div style="padding:10px">
+				<div style="padding: 10px">
 					<h:messages style="color:red"></h:messages>
 				</div>
 			</div>

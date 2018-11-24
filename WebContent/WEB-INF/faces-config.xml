@@ -21,6 +21,7 @@
 		<navigation-case>
 			<from-outcome>ok</from-outcome>
 			<to-view-id>/client_panel.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
     <validator>
