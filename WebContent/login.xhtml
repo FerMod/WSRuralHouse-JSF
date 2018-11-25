@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:o="http://omnifaces.org/ui"
-	xmlns:of="http://omnifaces.org/functions">
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui">
 <f:view>
 	<h:head>
 
@@ -90,10 +91,11 @@
 						requiredMessage="Inserte su contraseña">
 					</h:inputSecret>
 					<br />
-					<h:commandButton value="Iniciar sesión" action="#{login.validate}" />
+					<h:commandButton value="Iniciar sesión" action="#{login.validate}">
+						<f:ajax execute="@form" render="msgList" />
+					</h:commandButton>					
 					<br />
-					<h:messages id="msgList" style="color:red">
-					</h:messages>
+					<h:messages id="msgList" style="color:red" />
 				</div>
 			</h:form>
 		</div>

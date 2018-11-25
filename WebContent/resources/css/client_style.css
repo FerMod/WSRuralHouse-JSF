@@ -71,3 +71,11 @@ body {
     height: 400px;
     background-color: #FFF;
 }
+
+.ui-grid td {
+    white-space: nowrap;
+}
+
+#queryAvailability\:messages {
+	text-align: left;
+}

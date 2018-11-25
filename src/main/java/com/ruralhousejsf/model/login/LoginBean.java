@@ -45,7 +45,17 @@ public class LoginBean {
 	}
 
 	public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
-		if (applicationFacade.getImpl().getTypeOfUser(user) != UserType.CLIENT || applicationFacade.getImpl().getTypeOfUser(user) != UserType.OWNER) {
+		
+		////// [TODO]: Control exception in WSRuralHouse-2017
+		UserType userType = null;
+		try {
+			userType = applicationFacade.getImpl().getTypeOfUser(user);
+		} catch (Exception e) {
+			throw new UserRoleException();
+		}
+		//////
+		
+		if (userType != UserType.CLIENT || userType != UserType.OWNER) {
 			return applicationFacade.getImpl().login(getUser(), getPass());
 		} else {
 			throw new UserRoleException();

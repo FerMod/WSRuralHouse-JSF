@@ -29,12 +29,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/WSRuralHouse.jar" sourcepath="lib/WSRuralHouse.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/WSRuralHouse-JSF/lib/WSRuralHouse.jar!/doc"/>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/omnifaces-1.14.1.jar" sourcepath="lib/omnifaces-1.14.1-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/WSRuralHouse-JSF/lib/omnifaces-1.14.1-javadoc.jar!/"/>
@@ -45,6 +39,16 @@
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 			<attribute name="owner.project.facets" value="jst.jsf"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/primefaces-6.2.jar" sourcepath="lib/primefaces-6.2-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/WSRuralHouse.jar" sourcepath="lib/WSRuralHouse.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/WSRuralHouse-JSF/lib/WSRuralHouse.jar!/doc"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="WebContent"/>
