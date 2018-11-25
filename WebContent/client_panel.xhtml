@@ -40,8 +40,7 @@
 	<h:body>
 		<div class="logbot">
 			<a href="login.xhtml?faces-redirect=true" class="btn btn-info btn-lg">
-				<span class="glyphicon glyphicon-log-out"></span>
-				Log out
+				<span class="glyphicon glyphicon-log-out"></span> Log out
 			</a>
 		</div>
 		<h2>
@@ -52,20 +51,17 @@
 		<div class="panel">
 			<div class="tab">
 				<button class="tablinks" data-tab="info" id="defaultOpen">
-					<i class="glyphicon glyphicon-info-sign"></i>
-					Información
+					<i class="glyphicon glyphicon-info-sign"></i> Información
 				</button>
 				<button class="tablinks" data-tab="profile">
-					<i class="glyphicon glyphicon-user"></i>
-					Perfil
+					<i class="glyphicon glyphicon-user"></i> Perfil
 				</button>
 				<button class="tablinks" data-tab="queryav">
-					<i class="glyphicon glyphicon-calendar"></i>
-					Consultar disponibilidad
+					<i class="glyphicon glyphicon-calendar"></i> Consultar
+					disponibilidad
 				</button>
 				<button class="tablinks" data-tab="setav">
-					<i class="glyphicon glyphicon-home"></i>
-					Establecer disponibilidad
+					<i class="glyphicon glyphicon-home"></i> Establecer disponibilidad
 				</button>
 			</div>
 
@@ -78,6 +74,7 @@
 			<div id="profile" class="tabcontent">
 				<h3>Perfil</h3>
 				<p>Esta página muestra el perfil.</p>
+				<div>Usuario: #{login.loggedUser.username}</div>
 			</div>
 
 			<div id="queryav" class="tabcontent">
@@ -150,6 +147,13 @@
 				<h3>Establecer disponibilidad</h3>
 				<p>Cree una oferta para una de las casas rurales.</p>
 				<h:form>
+					<div style="padding-bottom: 10px">
+						<p>Seleccione una casa rural</p>
+						<h:selectOneMenu value="#{setAvailability.ruralHouse}">
+							<f:selectItems value="#{setAvailability.ruralHouses}" />
+							<f:validator validatorId="setAvailabilityValidator" />
+						</h:selectOneMenu>
+					</div>
 					<div style="padding-bottom: 10px">
 						<p>Inserte fecha inicial (DD/MM/YYYY)</p>
 						<h:inputText value="#{setAvailability.startDate}" required="true"

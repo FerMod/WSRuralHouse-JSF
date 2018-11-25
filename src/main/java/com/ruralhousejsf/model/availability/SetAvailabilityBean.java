@@ -22,11 +22,11 @@ import domain.Review.ReviewState;
 public class SetAvailabilityBean {
 	
 	private Date startDate;
-	private String ruralHouses;
+	private String ruralHouse;
 	private Date endDate;
 	private double priceOffer;
 
-	private LinkedHashMap<String, Object> ruralHouseHashMap;
+	private LinkedHashMap<String, Object> ruralHouses;
 	private ApplicationFacadeInterface applicationFacade;
 
 	public SetAvailabilityBean() {
@@ -34,9 +34,9 @@ public class SetAvailabilityBean {
 		applicationFacade = AppFacade.getInstance().getImpl();
 		List<RuralHouse> ruralHouseList = applicationFacade.getRuralHouses(ReviewState.APPROVED);
 
-		ruralHouseHashMap = new LinkedHashMap<String, Object>();
+		ruralHouses = new LinkedHashMap<String, Object>();
 		for (RuralHouse ruralHouse : ruralHouseList) {
-			ruralHouseHashMap.put(ruralHouse.getName(), ruralHouse);
+			ruralHouses.put(ruralHouse.getName(), ruralHouse);
 		}
 		
 	}
@@ -65,12 +65,12 @@ public class SetAvailabilityBean {
 		this.priceOffer = priceOffer;
 	}
 
-	public LinkedHashMap<String, Object> getRuralHouseHashMap() {
-		return ruralHouseHashMap;
+	public LinkedHashMap<String, Object> getRuralHouses() {
+		return ruralHouses;
 	}
 	
-	public String[] getRuralHouseHashMapValues() {
-		return (String[]) ruralHouseHashMap.keySet().toArray();
+	public String[] getRuralHousesValues() {
+		return (String[]) ruralHouses.keySet().toArray();
 	}
 	
 	public ApplicationFacadeInterface getApplicationFacade() {
@@ -83,6 +83,14 @@ public class SetAvailabilityBean {
 	
 	public String establecer() {
 		return "setok";
+	}
+
+	public String getRuralHouse() {
+		return ruralHouse;
+	}
+
+	public void setRuralHouse(String ruralHouse) {
+		this.ruralHouse = ruralHouse;
 	}
 	
 }
