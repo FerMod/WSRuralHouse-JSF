@@ -25,8 +25,10 @@
 		<script type="text/javascript">			
 			docReady(function() {
 				
+				var jq = jQuery.noConflict();
+				
 				function isEmpty($element) {
-					return !$.trim($element.html());
+					return !jq.trim($element.html());
 				}
 
 				function placeholder($element, text) {
@@ -37,32 +39,32 @@
 					}
 				}
 
-				$('#logo').addClass('animated fadeInDown');
-				$("input:text:visible:first").focus();
+				jq('#logo').addClass('animated fadeInDown');
+				jq("input:text:visible:first").focus();
 
-				$('#login\\:username').change(function() {
+				jq('#login\\:username').change(function() {
 					placeholder($(this), 'username');
 				});
 
-				$('#login\\:password').change(function() {
+				jq('#login\\:password').change(function() {
 					placeholder($(this), 'password');
 				});
 				
-				$('#login\\:username').focus(function() {
-					$('label[for="username"]').addClass('selected');
+				jq('#login\\:username').focus(function() {
+					jq('label[for="username"]').addClass('selected');
 				});
-				$('#login\\:username').blur(function() {
-					$('label[for="username"]').removeClass('selected');
+				jq('#login\\:username').blur(function() {
+					jq('label[for="username"]').removeClass('selected');
 				});
-				$('#login\\:password').focus(function() {
-					$('label[for="password"]').addClass('selected');
+				jq('#login\\:password').focus(function() {
+					jq('label[for="password"]').addClass('selected');
 				});
-				$('#login\\:password').blur(function() {
-					$('label[for="password"]').removeClass('selected');
+				jq('#login\\:password').blur(function() {
+					jq('label[for="password"]').removeClass('selected');
 				});
 
-				placeholder($('#login\\:username'), 'username');
-				placeholder($('#login\\:password'), 'password');
+				placeholder(jq('#login\\:username'), 'username');
+				placeholder(jq('#login\\:password'), 'password');
 
 			});
 		</script>

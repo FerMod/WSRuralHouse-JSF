@@ -22,15 +22,17 @@
 		<script type="text/javascript" src="resources/js/docReady.js"></script>
 		<script type="text/javascript">
 			docReady(function() {
-
-				$(".tablinks").click(function() {
-					$(".tabcontent").css('display', 'none');
-					$(".tablinks").removeClass('active');
-					$("#" + $(this).data('tab')).css('display', 'block');
-					$(this).addClass('active');
+				
+				var jq = jQuery.noConflict();
+				
+				jq(".tablinks").click(function() {
+					jq(".tabcontent").css('display', 'none');
+					jq(".tablinks").removeClass('active');
+					jq("#" + $(this).data('tab')).css('display', 'block');
+					jq(this).addClass('active');
 				});
 
-				$("#defaultOpen").click();
+				jq("#defaultOpen").click();
 
 			});
 		</script>
@@ -81,25 +83,17 @@
 				<h:form id="queryAvailability">
 					<h:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
 						<h:outputLabel for="ruralHouse" value="Casa rural: " />
-						<h:selectOneMenu id="ruralHouse"
-							value="#{queryAvailability.ruralHouseLabel}" style="width:125px">
+						<p:selectOneMenu id="ruralHouse"
+							value="#{queryAvailability.ruralHouseLabel}" styleclass="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-disabled" editable="false">
 							<f:selectItems value="#{queryAvailability.ruralHousesValues}" />
-						</h:selectOneMenu>
-						<!-- 						22/01/2017 -->
+						</p:selectOneMenu>
 						<h:outputLabel for="startDate" value="Fecha inicial: " />
-						<h:inputText id="startDate" value="#{queryAvailability.startDate}"
-							required="true"
-							requiredMessage="Inserte la fecha inicial de la oferta."
-							converterMessage="El valor introducido para la fecha inicial no cumple el patrón.">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:inputText>
-						<!--
 						<p:calendar id="startDate" value="#{queryAvailability.startDate}"
 							showOn="button" pattern="dd/MM/yyyy" mask="true" required="true"
 							requiredMessage="Inserte la fecha inicial de la oferta."
 							converterMessage="El valor introducido para la fecha inicial no cumple el patrón.">
 						</p:calendar>
-						-->
+						
 						<h:outputLabel for="nights" value="Número de noches: " />
 						<p:spinner id="nights" value="#{queryAvailability.nights}" min="1" />
 
