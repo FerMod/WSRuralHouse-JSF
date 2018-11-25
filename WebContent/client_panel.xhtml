@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+	<h:head>
+		<title>Casas rurales | Panel cliente</title>
+		<h:outputStylesheet target="head" library="css"
+			name="client_style.css" />
+		<!-- 		<h:outputStylesheet target="head" library="css" name="components.css" /> -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous" />
+		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
+		<script type="text/javascript" src="resources/js/docReady.js"></script>
+		<script type="text/javascript">
+			docReady(function() {
+				
+				var jq = jQuery.noConflict();
+				
+				jq(".tablinks").click(function() {
+					jq(".tabcontent").css('display', 'none');
+					jq(".tablinks").removeClass('active');
+					jq("#" + $(this).data('tab')).css('display', 'block');
+					jq(this).addClass('active');
+				});
+
+				jq("#defaultOpen").click();
+
+			});
+		</script>
+	</h:head>
+	<h:body>
+		<div class="logbot">
+			<a href="login.xhtml?faces-redirect=true" class="btn btn-info btn-lg">
+				<span class="glyphicon glyphicon-log-out"></span> Log out
+			</a>
+		</div>
+		<h2>
+			¡Bienvenido
+			<h:outputText value="&#160;#{login.loggedUser.username}" />
+			!
+		</h2>
+		<div class="panel">
+			<div class="tab">
+				<button class="tablinks" data-tab="info" id="defaultOpen">
+					<i class="glyphicon glyphicon-info-sign"></i> Información
+				</button>
+				<button class="tablinks" data-tab="profile">
+					<i class="glyphicon glyphicon-user"></i> Perfil
+				</button>
+				<button class="tablinks" data-tab="queryav">
+					<i class="glyphicon glyphicon-calendar"></i> Consultar
+					disponibilidad
+				</button>
+				<button class="tablinks" data-tab="setav">
+					<i class="glyphicon glyphicon-home"></i> Establecer disponibilidad
+				</button>
+			</div>
+
+			<div id="info" class="tabcontent">
+				<h3>Información</h3>
+				<p>Esta página completa permite al cliente buscar y comprobar la
+					disponibilidad de las casas rurales.</p>
+			</div>
+
+			<div id="profile" class="tabcontent">
+				<h3>Perfil</h3>
+				<p>Esta página muestra el perfil.</p>
+				<div>Usuario: #{login.loggedUser.username}</div>
+			</div>
+
+			<div id="queryav" class="tabcontent">
+				<h3>Consultar disponibilidad</h3>
+				<p>Esta página sirve para consultar la disponibilidad.</p>
+				<h:form id="queryAvailability">
+					<h:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
+						<h:outputLabel for="ruralHouse" value="Casa rural: " />
+						<p:selectOneMenu id="ruralHouse"
+							value="#{queryAvailability.ruralHouseLabel}" styleclass="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-disabled" editable="false">
+							<f:selectItems value="#{queryAvailability.ruralHousesValues}" />
+						</p:selectOneMenu>
+						<h:outputLabel for="startDate" value="Fecha inicial: " />
+						<p:calendar id="startDate" value="#{queryAvailability.startDate}"
+							showOn="button" pattern="dd/MM/yyyy" mask="true" required="true"
+							requiredMessage="Inserte la fecha inicial de la oferta."
+							converterMessage="El valor introducido para la fecha inicial no cumple el patrón.">
+						</p:calendar>
+						
+						<h:outputLabel for="nights" value="Número de noches: " />
+						<p:spinner id="nights" value="#{queryAvailability.nights}" min="1" />
+
+					</h:panelGrid>
+
+					<h:dataTable id="queryTable" value="#{queryAvailability.offerList}"
+						var="offer" styleClass="offer-table"
+						headerClass="offer-table-header"
+						rowClasses="offer-table-odd-row,offer-table-even-row">
+						<h:column>
+							<!-- column header -->
+							<f:facet name="header">Offer Id</f:facet>
+							<!-- row record -->
+							#{offer.id}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Start Date</f:facet>
+							#{offer.startDate}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">End Date</f:facet>
+							#{offer.endDate}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Rural House</f:facet>
+							#{offer.ruralHouse}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Price</f:facet>
+							#{offer.price}
+						</h:column>
+					</h:dataTable>
+
+					<h:commandButton value="Buscar">
+						<f:ajax execute="@form"
+							listener="#{queryAvailability.dynamicRender}" />
+					</h:commandButton>
+					<br />
+					<p:messages id="messages" showIcon="true" showSummary="false"
+						showDetail="true" closable="true" style="margin:8px;">
+						<p:autoUpdate />
+					</p:messages>
+				</h:form>
+			</div>
+
+			<div id="setav" class="tabcontent">
+				<h3>Establecer disponibilidad</h3>
+				<p>Cree una oferta para una de las casas rurales.</p>
+				<h:form>
+					<div style="padding-bottom: 10px">
+						<p>Seleccione una casa rural</p>
+						<h:selectOneMenu value="#{setAvailability.ruralHouse}">
+							<f:selectItems value="#{setAvailability.ruralHouses}" />
+							<f:validator validatorId="setAvailabilityValidator" />
+						</h:selectOneMenu>
+					</div>
+					<div style="padding-bottom: 10px">
+						<p>Inserte fecha inicial (DD/MM/YYYY)</p>
+						<h:inputText value="#{setAvailability.startDate}" required="true"
+							requiredMessage="Inserte la fecha inicial de la oferta."
+							converterMessage="El valor introducido para la fecha inicial no cumple el patrón.">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:inputText>
+					</div>
+					<div style="padding-bottom: 10px">
+						<p>Inserte fecha final (DD/MM/YYYY)</p>
+						<h:inputText value="#{setAvailability.endDate}" required="true"
+							requiredMessage="Inserte la fecha final de la oferta."
+							converterMessage="El valor introducido para la fecha final no cumple el patrón.">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:inputText>
+					</div>
+					<div style="padding-bottom: 10px">
+						<p>Inserte precio</p>
+						<h:inputText value="#{setAvailability.priceOffer}" id="priceOffer"
+							required="true" requiredMessage="Inserte el precio de la oferta."
+							converterMessage="El valor introducido para el precio no es válido.">
+							<f:converter converterId="javax.faces.Double" />
+						</h:inputText>
+					</div>
+					<h:commandButton value="Establecer disponibilidad"
+						action="#{setAvailability.establecer}" />
+				</h:form>
+				<div style="padding: 10px">
+					<h:messages style="color:red"></h:messages>
+				</div>
+			</div>
+		</div>
+	</h:body>
+</f:view>
+</html>

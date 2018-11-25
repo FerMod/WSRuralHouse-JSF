@@ -1,0 +1,81 @@
+* {box-sizing: border-box}
+
+/* Style for the body of client panel */
+body {
+    font-family: "Lato", sans-serif;
+}
+
+
+/* Style for the welcome h2 */
+h2 {
+    text-align: center;
+}
+
+/* Style for the div that contains the panel */
+.panel{
+    padding: 70px;
+    background-color: inherit;
+}
+
+/* Style the logout button */
+.logbot {
+    text-align: right;
+    padding: 22px 16px;
+}
+
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #267928;
+    width: 30%;
+    height: 400px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #38c33c;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #38a33a;
+}
+
+body {
+	background-color: #ddd;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #aaa;
+    width: 70%;
+    border-left: none;
+    height: 400px;
+    background-color: #FFF;
+}
+
+.ui-grid td {
+    white-space: nowrap;
+}
+
+#queryAvailability\:messages {
+	text-align: left;
+}
