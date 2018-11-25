@@ -22,10 +22,10 @@ import domain.Review.ReviewState;
 public class SetAvailabilityBean {
 	
 	private Date startDate;
-	private String ruralHouse;
+	private String ruralHouses;
 	private Date endDate;
 	private double priceOffer;
-	
+
 	private LinkedHashMap<String, Object> ruralHouseHashMap;
 	private ApplicationFacadeInterface applicationFacade;
 
@@ -72,14 +72,6 @@ public class SetAvailabilityBean {
 	public String[] getRuralHouseHashMapValues() {
 		return (String[]) ruralHouseHashMap.keySet().toArray();
 	}
-
-	public String getRuralHouse() {
-		return ruralHouse;
-	}
-
-	public void setRuralHouse(String ruralHouse) {
-		this.ruralHouse = ruralHouse;
-	}
 	
 	public ApplicationFacadeInterface getApplicationFacade() {
 		return applicationFacade;
@@ -90,17 +82,7 @@ public class SetAvailabilityBean {
 	}
 	
 	public String establecer() {
-		RuralHouse rh = (RuralHouse) getRuralHouseHashMap().get(ruralHouse);
-		try {
-			getApplicationFacade().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
-		} catch (OverlappingOfferException e) {
-			throw new ValidatorException(new FacesMessage(
-					"La oferta no debe tener fechas solapadas con otra oferta."));
-		} catch (BadDatesException e) {
-			throw new ValidatorException(new FacesMessage(
-					"La oferta no debe tener fechas que no cumplan su rango correctamente."));
-		}
-		return "Oferta creada";
+		return "setok";
 	}
 	
 }
