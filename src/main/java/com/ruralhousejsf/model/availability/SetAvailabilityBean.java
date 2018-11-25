@@ -7,12 +7,12 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name="setAvailability")
 @SessionScoped
-public class AvailabilityBean {
+public class SetAvailabilityBean {
 	
 	public Date startDate;
 	public Date endDate;
 	
-	public AvailabilityBean() {
+	public SetAvailabilityBean() {
 	}
 	
 	public Date getStartDate() {
