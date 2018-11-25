@@ -11,6 +11,7 @@ public class SetAvailabilityBean {
 	
 	public Date startDate;
 	public Date endDate;
+	public int priceOffer;
 	
 	public SetAvailabilityBean() {
 	}
@@ -31,6 +32,14 @@ public class SetAvailabilityBean {
 		this.endDate = endDate;
 	}
 	
+	public int getPriceOffer() {
+		return priceOffer;
+	}
+
+	public void setPriceOffer(int priceOffer) {
+		this.priceOffer = priceOffer;
+	}
+
 	public String establecer() {
 		return "lulz";
 	}
