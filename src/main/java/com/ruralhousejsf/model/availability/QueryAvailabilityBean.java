@@ -130,18 +130,10 @@ public class QueryAvailabilityBean {
 			sb.append("Offers: " + offers + System.lineSeparator());
 			System.out.println(sb.toString());
 
-			// Show messages
+			// TODO: Show offers
 
 		}
 
-	}
-
-	public String renderTarget() {
-		return "queryMsg";
-	}
-
-	public String query() {
-		return "";
 	}
 
 	private FacesMessage createMessage(FacesMessage.Severity severity, String summary, String content) {
