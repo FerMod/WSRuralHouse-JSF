@@ -84,12 +84,13 @@
 				<h:form id="queryAvailability">
 					<h:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
 						<h:outputLabel for="ruralHouse" value="Casa rural: " />
-						<h:selectOneMenu id="ruralHouse" value="#{queryAvailability.ruralHouseLabel}" style="width:125px">
-							<f:selectItems value="#{queryAvailability.ruralHousesValues}"/>
+						<h:selectOneMenu id="ruralHouse"
+							value="#{queryAvailability.ruralHouseLabel}" style="width:125px">
+							<f:selectItems value="#{queryAvailability.ruralHousesValues}" />
 						</h:selectOneMenu>
-<!-- 						22/01/2017 -->
+						<!-- 						22/01/2017 -->
 						<h:outputLabel for="startDate" value="Fecha inicial: " />
-						<h:inputText id="startDate" value="#{queryAvailability.startDate}" 
+						<h:inputText id="startDate" value="#{queryAvailability.startDate}"
 							required="true"
 							requiredMessage="Inserte la fecha inicial de la oferta."
 							converterMessage="El valor introducido para la fecha inicial no cumple el patrón.">
@@ -106,10 +107,10 @@
 						<p:spinner id="nights" value="#{queryAvailability.nights}" min="1" />
 
 					</h:panelGrid>
-					
-					<h:dataTable id="queryTable"
-						value="#{queryAvailability.offerList}" var="offer"
-						styleClass="offer-table" headerClass="offer-table-header"
+
+					<h:dataTable id="queryTable" value="#{queryAvailability.offerList}"
+						var="offer" styleClass="offer-table"
+						headerClass="offer-table-header"
 						rowClasses="offer-table-odd-row,offer-table-even-row">
 						<h:column>
 							<!-- column header -->
@@ -117,22 +118,22 @@
 							<!-- row record -->
 							#{offer.id}
 						</h:column>
-	
+
 						<h:column>
 							<f:facet name="header">Start Date</f:facet>
 							#{offer.startDate}
 						</h:column>
-	
+
 						<h:column>
 							<f:facet name="header">End Date</f:facet>
 							#{offer.endDate}
 						</h:column>
-	
+
 						<h:column>
 							<f:facet name="header">Rural House</f:facet>
 							#{offer.ruralHouse}
 						</h:column>
-	
+
 						<h:column>
 							<f:facet name="header">Price</f:facet>
 							#{offer.price}
@@ -140,11 +141,13 @@
 					</h:dataTable>
 
 					<h:commandButton value="Buscar">
-						<f:ajax execute="@form" listener="#{queryAvailability.dynamicRender}" />
+						<f:ajax execute="@form"
+							listener="#{queryAvailability.dynamicRender}" />
 					</h:commandButton>
 					<br />
-					<p:messages id="messages" showIcon="true" showSummary="false" showDetail="true" closable="true" style="margin:8px;">
-					    <p:autoUpdate />
+					<p:messages id="messages" showIcon="true" showSummary="false"
+						showDetail="true" closable="true" style="margin:8px;">
+						<p:autoUpdate />
 					</p:messages>
 				</h:form>
 			</div>
@@ -171,8 +174,8 @@
 					</div>
 					<div style="padding-bottom: 10px">
 						<p>Inserte precio</p>
-						<h:inputText value="#{setAvailability.priceOffer}" required="true"
-							requiredMessage="Inserte el precio de la oferta."
+						<h:inputText value="#{setAvailability.priceOffer}" id="priceOffer"
+							required="true" requiredMessage="Inserte el precio de la oferta."
 							converterMessage="El valor introducido para el precio no es válido.">
 							<f:converter converterId="javax.faces.Double" />
 						</h:inputText>
