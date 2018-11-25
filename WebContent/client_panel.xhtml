@@ -89,6 +89,12 @@
 				<p>Cree una oferta para una de las casas rurales.</p>
 				<h:form>
 					<div style="padding-bottom: 10px">
+						<p>Seleccione una casa rural</p>
+						<h:selectOneMenu value="#{setAvailability.ruralHouse}">
+							<f:selectItems value="#{setAvailability.ruralHouseHashMap}" />
+						</h:selectOneMenu>
+					</div>
+					<div style="padding-bottom: 10px">
 						<p>Inserte fecha inicial (DD/MM/YYYY)</p>
 						<h:inputText value="#{setAvailability.startDate}" required="true"
 							requiredMessage="Inserte la fecha inicial de la oferta."
@@ -106,8 +112,8 @@
 					</div>
 					<div style="padding-bottom: 10px">
 						<p>Inserte precio</p>
-						<h:inputText value="#{setAvailability.priceOffer}"
-							required="true" requiredMessage="Inserte el precio de la oferta."
+						<h:inputText value="#{setAvailability.priceOffer}" required="true"
+							requiredMessage="Inserte el precio de la oferta."
 							converterMessage="El valor introducido para el precio no es válido.">
 							<f:converter converterId="javax.faces.Double" />
 						</h:inputText>
