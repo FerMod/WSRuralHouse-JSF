@@ -7,6 +7,9 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 
 import com.ruralhousejsf.AppFacade;
@@ -20,7 +23,7 @@ import domain.Review.ReviewState;
 @ManagedBean(name="setAvailability")
 @SessionScoped
 public class SetAvailabilityBean {
-	
+
 	private Date startDate;
 	private String ruralHouse;
 	private Date endDate;
@@ -30,7 +33,7 @@ public class SetAvailabilityBean {
 	private ApplicationFacadeInterface applicationFacade;
 
 	public SetAvailabilityBean() {
-		
+
 		applicationFacade = AppFacade.getInstance().getImpl();
 		List<RuralHouse> ruralHouseList = applicationFacade.getRuralHouses(ReviewState.APPROVED);
 
@@ -38,25 +41,25 @@ public class SetAvailabilityBean {
 		for (RuralHouse ruralHouse : ruralHouseList) {
 			ruralHouses.put(ruralHouse.getName(), ruralHouse);
 		}
-		
+
 	}
-	
+
 	public Date getStartDate() {
 		return startDate;
 	}
-	
+
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
+
 	public Date getEndDate() {
 		return endDate;
 	}
-	
+
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
+
 	public double getPriceOffer() {
 		return priceOffer;
 	}
@@ -68,21 +71,17 @@ public class SetAvailabilityBean {
 	public LinkedHashMap<String, Object> getRuralHouses() {
 		return ruralHouses;
 	}
-	
+
 	public String[] getRuralHousesValues() {
 		return (String[]) ruralHouses.keySet().toArray();
 	}
-	
+
 	public ApplicationFacadeInterface getApplicationFacade() {
 		return applicationFacade;
 	}
 
 	public void setApplicationFacade(ApplicationFacadeInterface applicationFacade) {
 		this.applicationFacade = applicationFacade;
-	}
-	
-	public String establecer() {
-		return "setok";
 	}
 
 	public String getRuralHouse() {
@@ -92,5 +91,28 @@ public class SetAvailabilityBean {
 	public void setRuralHouse(String ruralHouse) {
 		this.ruralHouse = ruralHouse;
 	}
+
+	public void dynamicRender(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		if(!context.isValidationFailed()) {
+			RuralHouse rh = (RuralHouse) getRuralHouses().get(ruralHouse);
+			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
+			try {
+				getApplicationFacade().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", ""));
+			} catch (OverlappingOfferException e) {
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas coincidentes a otra oferta.", e.getMessage()));
+				context.validationFailed();
+			} catch (BadDatesException e) {
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas incompatibles.", e.getMessage()));
+				context.validationFailed();
+			}
+		}
+	}
 	
+	private FacesMessage createMessage(FacesMessage.Severity severity, String summary, String content) {
+		return new FacesMessage(severity, summary, content);
+	}
+
 }
