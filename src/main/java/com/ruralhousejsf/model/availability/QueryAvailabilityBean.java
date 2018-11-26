@@ -28,8 +28,8 @@ public class QueryAvailabilityBean {
 	private Date startDate;
 	private Date endDate;
 
-	private String ruralHouseLabel;
-	private LinkedHashMap<String, RuralHouse> ruralHouses;
+	private RuralHouse ruralHouse;
+	private List<RuralHouse> ruralHouseList;
 
 	private List<Offer> offers;
 
@@ -38,34 +38,29 @@ public class QueryAvailabilityBean {
 	public QueryAvailabilityBean() {
 
 		applicationFacade = AppFacade.getInstance();
-		List<RuralHouse> ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
+		ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
 
-		ruralHouses = new LinkedHashMap<String, RuralHouse>();
-		for (RuralHouse ruralHouse : ruralHouseList) {
-			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getName(), ruralHouse);
-		}
+//		ruralHouses = new LinkedHashMap<String, RuralHouse>();
+//		for (RuralHouse ruralHouse : ruralHouseList) {
+//			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getName(), ruralHouse);
+//		}
 
 	}
 
-	public LinkedHashMap<String, RuralHouse> getRuralHouses() {
-		return ruralHouses;
+	public List<RuralHouse> getRuralHouseList() {
+		return ruralHouseList;
 	}
 
-	public String[] getRuralHousesValues() {
-		Set<String> values = ruralHouses.keySet();
-		return values.toArray(new String[values.size()]);
+	public void setRuralHouses(List<RuralHouse> ruralHouseList) {
+		this.ruralHouseList = ruralHouseList;
 	}
 
-	public void setRuralHouses(LinkedHashMap<String, RuralHouse> ruralHouses) {
-		this.ruralHouses = ruralHouses;
+	public RuralHouse getRuralHouse() {
+		return ruralHouse;
 	}
 
-	public String getRuralHouseLabel() {
-		return ruralHouseLabel;
-	}
-
-	public void setRuralHouseLabel(String ruralHouseLabel) {
-		this.ruralHouseLabel = ruralHouseLabel;
+	public void setRuralHouse(RuralHouse ruralHouse) {
+		this.ruralHouse = ruralHouse;
 	}
 
 	public int getNights() {
@@ -99,6 +94,13 @@ public class QueryAvailabilityBean {
 	public void setOfferList(List<Offer> offerList) {
 		this.offers = offerList;
 	}
+	
+	private Date addDays(Date date, int days) {
+		Calendar calendar = Calendar.getInstance(); 
+		calendar.setTime(date); 
+		calendar.add(Calendar.DATE, days);
+		return calendar.getTime();
+	}
 
 	public void dynamicRender(AjaxBehaviorEvent event) {
 
@@ -106,17 +108,13 @@ public class QueryAvailabilityBean {
 
 		if(!context.isValidationFailed()) {
 			
-			Calendar calendar = Calendar.getInstance(); 
-			calendar.setTime(startDate); 
-			calendar.add(Calendar.DATE, nights);
-			endDate = calendar.getTime();
+			endDate = addDays(startDate, nights);
 			
-			RuralHouse ruralHouse = ruralHouses.get(ruralHouseLabel);
 			try {
 				offers =  applicationFacade.getImpl().getOffers(ruralHouse, getStartDate(), getEndDate());
 			} catch (BadDatesException e) {
 				e.printStackTrace();
-				UIComponent target = event.getComponent().findComponent("messages");
+				UIComponent target = event.getComponent().findComponent("queryAvailability:msg");
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "Bad Dates Exception", e.getMessage()));
 				context.validationFailed();
 			}
@@ -125,8 +123,8 @@ public class QueryAvailabilityBean {
 			sb.append("Nights: " + nights + System.lineSeparator());
 			sb.append("StartDate: " + startDate + System.lineSeparator());
 			sb.append("EndDate: " + endDate + System.lineSeparator());
-			sb.append("RuralHouseLabel: " + ruralHouseLabel + System.lineSeparator());
-			sb.append("RuralHouses: " + ruralHouses + System.lineSeparator());
+			sb.append("RuralHouseLabel: " + ruralHouse + System.lineSeparator());
+			sb.append("RuralHouses: " + ruralHouseList + System.lineSeparator());
 			sb.append("Offers: " + offers + System.lineSeparator());
 			System.out.println(sb.toString());
 
