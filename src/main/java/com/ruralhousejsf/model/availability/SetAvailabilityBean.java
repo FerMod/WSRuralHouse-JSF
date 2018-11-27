@@ -26,21 +26,21 @@ import domain.Review.ReviewState;
 public class SetAvailabilityBean {
 
 	private Date startDate;
-	private String ruralHouse;
+	private String ruralHouseLabel;
 	private Date endDate;
 	private double priceOffer;
 
-	private LinkedHashMap<String, Object> ruralHouses;
-	private ApplicationFacadeInterface applicationFacade;
+	private LinkedHashMap<String, RuralHouse> ruralHouses;
+	private AppFacade applicationFacade;
 
 	public SetAvailabilityBean() {
 
-		applicationFacade = AppFacade.getInstance().getImpl();
-		List<RuralHouse> ruralHouseList = applicationFacade.getRuralHouses(ReviewState.APPROVED);
+		applicationFacade = AppFacade.getInstance();
+		List<RuralHouse> ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
 
-		ruralHouses = new LinkedHashMap<String, Object>();
+		ruralHouses = new LinkedHashMap<String, RuralHouse>();
 		for (RuralHouse ruralHouse : ruralHouseList) {
-			ruralHouses.put(ruralHouse.getName(), ruralHouse);
+			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getName(), ruralHouse);
 		}
 
 	}
@@ -69,7 +69,7 @@ public class SetAvailabilityBean {
 		this.priceOffer = priceOffer;
 	}
 
-	public LinkedHashMap<String, Object> getRuralHouses() {
+	public LinkedHashMap<String, RuralHouse> getRuralHouses() {
 		return ruralHouses;
 	}
 
@@ -78,30 +78,30 @@ public class SetAvailabilityBean {
 		return values.toArray(new String[values.size()]);
 	}
 
-	public ApplicationFacadeInterface getApplicationFacade() {
+	public AppFacade getApplicationFacade() {
 		return applicationFacade;
 	}
 
-	public void setApplicationFacade(ApplicationFacadeInterface applicationFacade) {
+	public void setApplicationFacade(AppFacade applicationFacade) {
 		this.applicationFacade = applicationFacade;
 	}
 
-	public String getRuralHouse() {
-		return ruralHouse;
+	public String getRuralHouseLabel() {
+		return ruralHouseLabel;
 	}
 
-	public void setRuralHouse(String ruralHouse) {
-		this.ruralHouse = ruralHouse;
+	public void setRuralHouse(String ruralHouseLabel) {
+		this.ruralHouseLabel = ruralHouseLabel;
 	}
 
 	public void dynamicRender(AjaxBehaviorEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if(!context.isValidationFailed()) {
-			RuralHouse rh = (RuralHouse) getRuralHouses().get(ruralHouse);
-			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
+			RuralHouse rh = (RuralHouse) getRuralHouses().get(getRuralHouseLabel());
+			UIComponent target = event.getComponent().findComponent("msg");
 			try {
-				getApplicationFacade().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
+				getApplicationFacade().getImpl().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", ""));
 			} catch (OverlappingOfferException e) {
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas coincidentes a otra oferta.", e.getMessage()));
