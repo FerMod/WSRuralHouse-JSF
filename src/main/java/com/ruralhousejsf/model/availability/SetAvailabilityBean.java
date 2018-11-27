@@ -3,6 +3,7 @@ package com.ruralhousejsf.model.availability;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -73,7 +74,8 @@ public class SetAvailabilityBean {
 	}
 
 	public String[] getRuralHousesValues() {
-		return (String[]) ruralHouses.keySet().toArray();
+		Set<String> values = ruralHouses.keySet();
+		return values.toArray(new String[values.size()]);
 	}
 
 	public ApplicationFacadeInterface getApplicationFacade() {

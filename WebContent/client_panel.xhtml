@@ -17,7 +17,7 @@
 		<link rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-			crossorigin="anonymous" />
+			crossorigin="anonymous" />"WebContent/login.xhtml"
 		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="resources/js/docReady.js"></script>
 		<script type="text/javascript">
@@ -151,10 +151,12 @@
 				<h:form id="setAvailability">
 					<div style="padding-bottom: 10px">
 						<p>Seleccione una casa rural</p>
-						<h:selectOneMenu id="setRuralHouse"
-							value="#{setAvailability.ruralHouse}">
-							<f:selectItems value="#{setAvailability.ruralHouses}" />
-						</h:selectOneMenu>
+						<p:selectOneMenu id="setRuralHouse"
+							value="#{setAvailability.ruralHouse}"
+							styleclass="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-disabled"
+							editable="false">
+							<f:selectItems value="#{setAvailability.ruralHousesValues}" />
+						</p:selectOneMenu>
 					</div>
 					<div style="padding-bottom: 10px">
 						<p>Inserte fecha inicial (DD/MM/YYYY)</p>
@@ -190,8 +192,8 @@
 						<p:autoUpdate />
 					</p:messages>
 				</h:form>
-				<p:messages showIcon="true" showSummary="false"
-					showDetail="true" closable="true" redisplay="false" style="margin:8px;">
+				<p:messages showIcon="true" showSummary="false" showDetail="true"
+					closable="true" redisplay="false" style="margin:8px;">
 					<p:autoUpdate />
 				</p:messages>
 			</div>
