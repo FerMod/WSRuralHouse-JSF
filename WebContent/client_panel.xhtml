@@ -84,10 +84,11 @@
 					<h:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
 						<h:outputLabel for="ruralHouse" value="Casa rural: " />
 						<p:selectOneMenu id="ruralHouse"
-							value="#{queryAvailability.ruralHouseLabel}"
+							value="#{queryAvailability.ruralHouse}"
 							styleclass="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-disabled"
-							editable="false">
-							<f:selectItems value="#{queryAvailability.ruralHousesValues}" />
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{queryAvailability.ruralHouseList}"
+								var="rh" itemLabel="#{rh.name}" itemValue="#{rh}" />
 						</p:selectOneMenu>
 						<h:outputLabel for="startDate" value="Fecha inicial: " />
 						<p:calendar id="startDate" value="#{queryAvailability.startDate}"
@@ -138,7 +139,7 @@
 							listener="#{queryAvailability.dynamicRender}" />
 					</h:commandButton>
 					<br />
-					<p:messages id="messages" showIcon="true" showSummary="false"
+					<p:messages id="queryAvailability:msg" showIcon="true" showSummary="false"
 						showDetail="true" closable="true" style="margin:8px;">
 						<p:autoUpdate />
 					</p:messages>
@@ -187,7 +188,7 @@
 							listener="#{setAvailability.dynamicRender}" />
 					</h:commandButton>
 					<br></br>
-					<p:messages id="msg" showIcon="true" showSummary="false"
+					<p:messages id="setAvailability:msg" showIcon="true" showSummary="false"
 						showDetail="true" closable="true" style="margin:8px;">
 						<p:autoUpdate />
 					</p:messages>
