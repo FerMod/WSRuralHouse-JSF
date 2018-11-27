@@ -98,8 +98,8 @@ public class SetAvailabilityBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if(!context.isValidationFailed()) {
-			RuralHouse rh = (RuralHouse) getRuralHouses().get(getRuralHouseLabel());
-			UIComponent target = event.getComponent().findComponent("msg");
+			RuralHouse rh = getRuralHouses().get(getRuralHouseLabel());
+			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
 			try {
 				getApplicationFacade().getImpl().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", ""));
