@@ -13,8 +13,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import com.ruralhousejsf.AppFacade;
-
+import businessLogic.AppFacade;
+import businessLogic.ApplicationFacadeInterface;
+import configuration.Config;
+import configuration.ConfigXML;
 import domain.Offer;
 import domain.Review.ReviewState;
 import domain.RuralHouse;
@@ -33,12 +35,13 @@ public class QueryAvailabilityBean {
 
 	private List<Offer> offers;
 
-	private AppFacade applicationFacade;
+	private ApplicationFacadeInterface applicationFacade;
 
 	public QueryAvailabilityBean() {
 
-		applicationFacade = AppFacade.getInstance();
-		ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
+		Config config = ConfigXML.loadConfig(AppFacade.class.getResource("db/config.xml").getFile());
+		applicationFacade = AppFacade.loadConfig(config);
+		ruralHouseList = applicationFacade.getRuralHouses(ReviewState.APPROVED);
 
 //		ruralHouses = new LinkedHashMap<String, RuralHouse>();
 //		for (RuralHouse ruralHouse : ruralHouseList) {
@@ -111,7 +114,7 @@ public class QueryAvailabilityBean {
 			endDate = addDays(startDate, nights);
 			
 			try {
-				offers =  applicationFacade.getImpl().getOffers(ruralHouse, getStartDate(), getEndDate());
+				offers =  applicationFacade.getOffers(ruralHouse, getStartDate(), getEndDate());
 			} catch (BadDatesException e) {
 				e.printStackTrace();
 				UIComponent target = event.getComponent().findComponent("queryAvailability:msg");

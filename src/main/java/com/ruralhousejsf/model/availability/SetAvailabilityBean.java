@@ -9,9 +9,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.validator.ValidatorException;
 
-import com.ruralhousejsf.AppFacade;
-
+import businessLogic.AppFacade;
 import businessLogic.ApplicationFacadeInterface;
+import configuration.Config;
+import configuration.ConfigXML;
 import domain.RuralHouse;
 import exceptions.BadDatesException;
 import exceptions.OverlappingOfferException;
@@ -31,7 +32,8 @@ public class SetAvailabilityBean {
 
 	public SetAvailabilityBean() {
 		
-		applicationFacade = AppFacade.getInstance().getImpl();
+		Config config = ConfigXML.loadConfig(AppFacade.class.getResource("db/config.xml").getFile());
+		applicationFacade = AppFacade.loadConfig(config);
 		List<RuralHouse> ruralHouseList = applicationFacade.getRuralHouses(ReviewState.APPROVED);
 
 		ruralHouses = new LinkedHashMap<String, Object>();

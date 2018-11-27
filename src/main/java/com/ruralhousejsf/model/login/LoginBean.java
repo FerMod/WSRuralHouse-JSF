@@ -4,9 +4,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.security.auth.login.AccountNotFoundException;
 
-import com.ruralhousejsf.AppFacade;
 import com.ruralhousejsf.exceptions.UserRoleException;
 
+import businessLogic.AppFacade;
 import businessLogic.ApplicationFacadeInterface;
 import domain.AbstractUser;
 import domain.UserType;
@@ -18,7 +18,7 @@ public class LoginBean {
 	private String pass;
 
 	private AbstractUser logedinUser;
-	private AppFacade applicationFacade;
+	private ApplicationFacadeInterface applicationFacade;
 	
 	public LoginBean(){
 		applicationFacade = AppFacade.getInstance();
@@ -46,20 +46,20 @@ public class LoginBean {
 
 	public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
 		
-		////// [TODO]: Control exception in WSRuralHouse-2017
-		UserType userType = null;
 		try {
-			userType = applicationFacade.getImpl().getTypeOfUser(user);
-		} catch (Exception e) {
-			throw new UserRoleException();
+			
+			UserType userType = applicationFacade.getTypeOfUser(user);
+			
+			if (userType != UserType.CLIENT || userType != UserType.OWNER) {
+				return applicationFacade.login(getUser(), getPass());
+			} else {
+				throw new UserRoleException();
+			}
+			
+		} catch (AccountNotFoundException e) {
+			throw e;
 		}
-		//////
 		
-		if (userType != UserType.CLIENT || userType != UserType.OWNER) {
-			return applicationFacade.getImpl().login(getUser(), getPass());
-		} else {
-			throw new UserRoleException();
-		}
 	}
 
 	public String validate() {

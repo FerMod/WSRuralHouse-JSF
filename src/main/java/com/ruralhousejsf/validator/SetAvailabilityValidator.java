@@ -10,15 +10,14 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-import com.ruralhousejsf.AppFacade;
-
+import businessLogic.AppFacade;
 import businessLogic.ApplicationFacadeInterface;
+import configuration.Config;
+import configuration.ConfigXML;
 import domain.RuralHouse;
 import exceptions.BadDatesException;
 import exceptions.OverlappingOfferException;
@@ -31,7 +30,8 @@ public class SetAvailabilityValidator implements Validator {
 	private ApplicationFacadeInterface applicationFacade;
 
 	public SetAvailabilityValidator() {
-		applicationFacade = AppFacade.getInstance().getImpl();
+		Config config = ConfigXML.loadConfig(AppFacade.class.getResource("db/config.xml").getFile());
+		applicationFacade = AppFacade.loadConfig(config);
 		List<RuralHouse> ruralHouseList = applicationFacade.getRuralHouses(ReviewState.APPROVED);
 
 		ruralHouseHashMap = new LinkedHashMap<String, Object>();
