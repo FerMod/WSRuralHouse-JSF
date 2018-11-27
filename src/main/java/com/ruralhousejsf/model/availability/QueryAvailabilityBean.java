@@ -2,10 +2,7 @@ package com.ruralhousejsf.model.availability;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -39,11 +36,6 @@ public class QueryAvailabilityBean {
 
 		applicationFacade = AppFacade.getInstance();
 		ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
-
-//		ruralHouses = new LinkedHashMap<String, RuralHouse>();
-//		for (RuralHouse ruralHouse : ruralHouseList) {
-//			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getName(), ruralHouse);
-//		}
 
 	}
 
