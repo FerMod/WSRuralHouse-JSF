@@ -3,10 +3,14 @@ package com.ruralhousejsf.model.availability;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 
 import com.ruralhousejsf.AppFacade;
@@ -20,43 +24,43 @@ import domain.Review.ReviewState;
 @ManagedBean(name="setAvailability")
 @SessionScoped
 public class SetAvailabilityBean {
-	
+
 	private Date startDate;
-	private String ruralHouse;
+	private String ruralHouseLabel;
 	private Date endDate;
 	private double priceOffer;
 
-	private LinkedHashMap<String, Object> ruralHouses;
-	private ApplicationFacadeInterface applicationFacade;
+	private LinkedHashMap<String, RuralHouse> ruralHouses;
+	private AppFacade applicationFacade;
 
 	public SetAvailabilityBean() {
-		
-		applicationFacade = AppFacade.getInstance().getImpl();
-		List<RuralHouse> ruralHouseList = applicationFacade.getRuralHouses(ReviewState.APPROVED);
 
-		ruralHouses = new LinkedHashMap<String, Object>();
+		applicationFacade = AppFacade.getInstance();
+		List<RuralHouse> ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
+
+		ruralHouses = new LinkedHashMap<String, RuralHouse>();
 		for (RuralHouse ruralHouse : ruralHouseList) {
-			ruralHouses.put(ruralHouse.getName(), ruralHouse);
+			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getName(), ruralHouse);
 		}
-		
+
 	}
-	
+
 	public Date getStartDate() {
 		return startDate;
 	}
-	
+
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
+
 	public Date getEndDate() {
 		return endDate;
 	}
-	
+
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
+
 	public double getPriceOffer() {
 		return priceOffer;
 	}
@@ -65,32 +69,52 @@ public class SetAvailabilityBean {
 		this.priceOffer = priceOffer;
 	}
 
-	public LinkedHashMap<String, Object> getRuralHouses() {
+	public LinkedHashMap<String, RuralHouse> getRuralHouses() {
 		return ruralHouses;
 	}
-	
+
 	public String[] getRuralHousesValues() {
-		return (String[]) ruralHouses.keySet().toArray();
+		Set<String> values = ruralHouses.keySet();
+		return values.toArray(new String[values.size()]);
 	}
-	
-	public ApplicationFacadeInterface getApplicationFacade() {
+
+	public AppFacade getApplicationFacade() {
 		return applicationFacade;
 	}
 
-	public void setApplicationFacade(ApplicationFacadeInterface applicationFacade) {
+	public void setApplicationFacade(AppFacade applicationFacade) {
 		this.applicationFacade = applicationFacade;
 	}
-	
-	public String establecer() {
-		return "setok";
+
+	public String getRuralHouseLabel() {
+		return ruralHouseLabel;
 	}
 
-	public String getRuralHouse() {
-		return ruralHouse;
+	public void setRuralHouse(String ruralHouseLabel) {
+		this.ruralHouseLabel = ruralHouseLabel;
 	}
 
-	public void setRuralHouse(String ruralHouse) {
-		this.ruralHouse = ruralHouse;
+	public void dynamicRender(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		if(!context.isValidationFailed()) {
+			RuralHouse rh = getRuralHouses().get(getRuralHouseLabel());
+			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
+			try {
+				getApplicationFacade().getImpl().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", ""));
+			} catch (OverlappingOfferException e) {
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas coincidentes a otra oferta.", e.getMessage()));
+				context.validationFailed();
+			} catch (BadDatesException e) {
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas incompatibles.", e.getMessage()));
+				context.validationFailed();
+			}
+		}
 	}
 	
+	private FacesMessage createMessage(FacesMessage.Severity severity, String summary, String content) {
+		return new FacesMessage(severity, summary, content);
+	}
+
 }
