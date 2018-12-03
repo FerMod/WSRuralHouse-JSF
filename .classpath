@@ -35,12 +35,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSF 2.0 (Apache Myfaces JSF Core-2.0 API 2.0.2)">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-			<attribute name="owner.project.facets" value="jst.jsf"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/primefaces-6.2.jar" sourcepath="lib/primefaces-6.2-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
@@ -52,5 +46,22 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSF 2.0 (Apache Myfaces JSF Core-2.0 API 2.0.2)">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+			<attribute name="owner.project.facets" value="jst.jsf"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/mysql-connector-java-3.0.9-stable-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/slf4j-nop-1.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/javassist-3.12.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ehu/git/WSRuralHouse-JSF/lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="output" path="WebContent"/>
 </classpath>
