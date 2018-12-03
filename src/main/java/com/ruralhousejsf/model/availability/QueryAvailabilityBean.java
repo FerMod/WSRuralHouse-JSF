@@ -11,11 +11,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import com.ruralhousejsf.AppFacade;
-
-import domain.Offer;
-import domain.Review.ReviewState;
-import domain.RuralHouse;
-import exceptions.BadDatesException;
+import com.ruralhousejsf.domain.Offer;
+import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.domain.Review.ReviewState;
+import com.ruralhousejsf.exceptions.BadDatesException;
 
 @ManagedBean(name="queryAvailability")
 @SessionScoped

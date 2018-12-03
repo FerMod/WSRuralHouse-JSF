@@ -17,12 +17,12 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import com.ruralhousejsf.AppFacade;
+import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.domain.Review.ReviewState;
+import com.ruralhousejsf.exceptions.BadDatesException;
+import com.ruralhousejsf.exceptions.OverlappingOfferException;
 
 import businessLogic.ApplicationFacadeInterface;
-import domain.RuralHouse;
-import exceptions.BadDatesException;
-import exceptions.OverlappingOfferException;
-import domain.Review.ReviewState;
 
 @FacesValidator("setAvailabilityValidator")
 public class SetAvailabilityValidator implements Validator {

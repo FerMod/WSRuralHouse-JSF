@@ -5,12 +5,12 @@ import javax.faces.context.FacesContext;
 import javax.security.auth.login.AccountNotFoundException;
 
 import com.ruralhousejsf.AppFacade;
+import com.ruralhousejsf.domain.AbstractUser;
+import com.ruralhousejsf.domain.UserType;
+import com.ruralhousejsf.exceptions.AuthException;
 import com.ruralhousejsf.exceptions.UserRoleException;
 
 import businessLogic.ApplicationFacadeInterface;
-import domain.AbstractUser;
-import domain.UserType;
-import exceptions.AuthException;
 
 public class LoginBean {
 

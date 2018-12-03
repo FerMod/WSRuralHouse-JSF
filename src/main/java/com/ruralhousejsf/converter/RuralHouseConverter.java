@@ -6,7 +6,7 @@ import javax.faces.convert.FacesConverter;
 
 import org.omnifaces.converter.SelectItemsConverter;
 
-import domain.RuralHouse;
+import com.ruralhousejsf.domain.RuralHouse;
 
 @FacesConverter("ruralHouseConverter")
 public class RuralHouseConverter extends SelectItemsConverter  {
