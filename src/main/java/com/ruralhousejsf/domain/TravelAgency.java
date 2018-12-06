@@ -7,9 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-
 import com.ruralhousejsf.domain.event.ValueAddedListener;
 
 //@XmlAccessorType(XmlAccessType.FIELD)

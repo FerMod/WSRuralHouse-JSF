@@ -13,13 +13,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 
-import com.ruralhousejsf.AppFacade;
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.domain.Review.ReviewState;
 import com.ruralhousejsf.exceptions.BadDatesException;
 import com.ruralhousejsf.exceptions.OverlappingOfferException;
-
-import businessLogic.ApplicationFacadeInterface;
 
 @ManagedBean(name="setAvailability")
 @SessionScoped
@@ -102,7 +99,7 @@ public class SetAvailabilityBean {
 			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
 			try {
 				getApplicationFacade().getImpl().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", ""));
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "Â¡Oferta creada correctamente!", ""));
 			} catch (OverlappingOfferException e) {
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas coincidentes a otra oferta.", e.getMessage()));
 				context.validationFailed();

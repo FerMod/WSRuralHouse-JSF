@@ -3,7 +3,8 @@ package com.ruralhousejsf.domain.util;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import domain.RuralHouse;
+import com.ruralhousejsf.domain.RuralHouse;
+
 
 public class RuralHouseIterator implements ExtendedIterator<RuralHouse> {
 

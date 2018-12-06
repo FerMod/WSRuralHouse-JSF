@@ -19,15 +19,4 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-    <validator>
-    	<display-name>loginVal</display-name>
-    	<validator-id>loginValidator</validator-id>
-        <validator-class>com.ruralhousejsf.validator.LoginValidator</validator-class>
-    </validator>
-    <validator>
-    	<description></description>
-    	<display-name>setavVal</display-name>
-    	<validator-id>setAvailabilityValidator</validator-id>
-    	<validator-class>com.ruralhousejsf.validator.SetAvailabilityValidator</validator-class>
-    </validator>
 </faces-config>
