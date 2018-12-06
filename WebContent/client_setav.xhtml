@@ -20,22 +20,6 @@
 			crossorigin="anonymous" />
 		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="resources/js/docReady.js"></script>
-		<script type="text/javascript">
-			docReady(function() {
-
-				var jq = jQuery.noConflict();
-
-				jq(".tablinks").click(function() {
-					jq(".tabcontent").css('display', 'none');
-					jq(".tablinks").removeClass('active');
-					jq("#" + $(this).data('tab')).css('display', 'block');
-					jq(this).addClass('active');
-				});
-
-				jq("#defaultOpen").click();
-
-			});
-		</script>
 	</h:head>
 	<h:body>
 		<div class="logbot">
@@ -50,100 +34,13 @@
 		</h2>
 		<div class="panel">
 			<div class="tab">
-				<button class="tablinks" data-tab="info" id="defaultOpen">
-					<i class="glyphicon glyphicon-info-sign"></i> Información
-				</button>
-				<button class="tablinks" data-tab="profile">
-					<i class="glyphicon glyphicon-user"></i> Perfil
-				</button>
-				<button class="tablinks" data-tab="queryav">
+				<h:commandButton class="tablinks" data-tab="queryav" action="#{control.controlQueryAv}">
 					<i class="glyphicon glyphicon-calendar"></i> Consultar
 					disponibilidad
-				</button>
-				<button class="tablinks" data-tab="setav">
+				</h:commandButton>
+				<h:commandButton class="tablinks" data-tab="setav" action="#{control.controlSetAv}">
 					<i class="glyphicon glyphicon-home"></i> Establecer disponibilidad
-				</button>
-			</div>
-
-			<div id="info" class="tabcontent">
-				<h3>Información</h3>
-				<p>Esta página completa permite al cliente buscar y comprobar la
-					disponibilidad de las casas rurales.</p>
-			</div>
-
-			<div id="profile" class="tabcontent">
-				<h3>Perfil</h3>
-				<p>Esta página muestra el perfil.</p>
-				<div>Usuario: #{login.loggedUser.username}</div>
-			</div>
-
-			<div id="queryav" class="tabcontent">
-				<h3>Consultar disponibilidad</h3>
-				<p>Esta página sirve para consultar la disponibilidad.</p>
-				<h:form id="queryAvailability">
-					<h:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
-						<h:outputLabel for="ruralHouse" value="Casa rural: " />
-						<p:selectOneMenu id="ruralHouse"
-							value="#{queryAvailability.ruralHouse}"
-							styleclass="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-disabled"
-							converter="omnifaces.SelectItemsConverter">
-							<f:selectItems value="#{queryAvailability.ruralHouseList}"
-								var="rh" itemLabel="#{rh.name}" itemValue="#{rh}" />
-						</p:selectOneMenu>
-						<h:outputLabel for="startDate" value="Fecha inicial: " />
-						<p:calendar id="startDate" value="#{queryAvailability.startDate}"
-							showOn="button" pattern="dd/MM/yyyy" mask="true" required="true"
-							requiredMessage="Inserte la fecha inicial de la oferta."
-							converterMessage="El valor introducido para la fecha inicial no cumple el patrón.">
-						</p:calendar>
-
-						<h:outputLabel for="nights" value="Número de noches: " />
-						<p:spinner id="nights" value="#{queryAvailability.nights}" min="1" />
-
-					</h:panelGrid>
-
-					<h:dataTable id="queryTable" value="#{queryAvailability.offerList}"
-						var="offer" styleClass="offer-table"
-						headerClass="offer-table-header"
-						rowClasses="offer-table-odd-row,offer-table-even-row">
-						<h:column>
-							<!-- column header -->
-							<f:facet name="header">Offer Id</f:facet>
-							<!-- row record -->
-							#{offer.id}
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Start Date</f:facet>
-							#{offer.startDate}
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">End Date</f:facet>
-							#{offer.endDate}
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Rural House</f:facet>
-							#{offer.ruralHouse}
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Price</f:facet>
-							#{offer.price}
-						</h:column>
-					</h:dataTable>
-
-					<h:commandButton value="Buscar">
-						<f:ajax execute="@form"
-							listener="#{queryAvailability.dynamicRender}" />
-					</h:commandButton>
-					<br />
-					<p:messages id="msg" showIcon="true" showSummary="false"
-						showDetail="true" closable="true" style="margin:8px;">
-						<p:autoUpdate />
-					</p:messages>
-				</h:form>
+				</h:commandButton>
 			</div>
 
 			<div id="setav" class="tabcontent">
