@@ -10,7 +10,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import com.ruralhousejsf.AppFacade;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.domain.Review.ReviewState;

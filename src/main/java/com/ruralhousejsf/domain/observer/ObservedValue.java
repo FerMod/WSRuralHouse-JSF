@@ -6,8 +6,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Optional;
 
-import domain.event.EventPublisher;
-import domain.event.ValueChangeListener;
+import com.ruralhousejsf.domain.event.EventPublisher;
+import com.ruralhousejsf.domain.event.ValueChangeListener;
 
 public class ObservedValue<T> extends EventPublisher<ValueChangeListener<T>> implements Serializable {
 
