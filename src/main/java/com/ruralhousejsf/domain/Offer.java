@@ -2,8 +2,6 @@ package com.ruralhousejsf.domain;
 
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -61,6 +59,12 @@ public class Offer implements Serializable {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	@Override
+	public String toString() {
+		return "Offer [id=" + id + ", ruralHouse=" + ruralHouse + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", price=" + price + "]";
 	}
 
 }

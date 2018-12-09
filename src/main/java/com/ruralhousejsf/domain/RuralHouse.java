@@ -51,4 +51,10 @@ public class RuralHouse implements Serializable {
 		this.offers = offers;
 	}
 
+	@Override
+	public String toString() {
+		return "RuralHouse [id=" + id + ", description=" + description + ", city=" + city + "]";
+	}
+	
+
 }

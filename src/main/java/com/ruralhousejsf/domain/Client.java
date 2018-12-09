@@ -1,37 +1,36 @@
 package com.ruralhousejsf.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-//@XmlAccessorType(XmlAccessType.FIELD)
-//@Entity
-public class Client extends AbstractUser {
+public class Client implements Serializable {
 
 	private static final long serialVersionUID = -1989696498234692075L;
 	
-	private List<Booking> bookings;
+	private String username;
+	private String password;
 
-	public Client(String email, String username, String password) {
-		super(email, username, password, UserType.CLIENT);
-		bookings = new ArrayList<Booking>();
+	public Client() {
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString();
-	}
-
-	@Override
-	public UserType getRole() {
-		return UserType.CLIENT;
-	}
-
-	public List<Booking> getBookings() {
-		return bookings;
-	}
-
-	public void setBookings(List<Booking> bookings) {
-		this.bookings = bookings;
+		return "Client [username=" + username + ", password=" + password + "]";
 	}
 
 }
