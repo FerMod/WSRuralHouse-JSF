@@ -11,7 +11,7 @@ public class RuralHouse implements Serializable {
 	 */
 	private static final long serialVersionUID = -7593429026088916515L;
 	
-	private Long id;
+	private long id;
 	private String description;
 	private String city; 
 	private Set<Offer> offers;

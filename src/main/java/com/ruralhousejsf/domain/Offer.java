@@ -12,7 +12,7 @@ public class Offer implements Serializable {
 	 */
 	private static final long serialVersionUID = -7297495978806951469L;
 	
-	private Long id;
+	private long id;
 	private RuralHouse ruralHouse;
 	private Date startDate; 
 	private Date endDate;
