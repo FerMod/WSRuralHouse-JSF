@@ -1,6 +1,6 @@
 package com.ruralhousejsf.dataAccess;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Vector;
 
 import com.ruralhousejsf.domain.Client;
@@ -33,7 +33,7 @@ public interface HibernateDataAccessInterface {
 	 * @param price
 	 * @return Offer of the RuralHouse created
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay, double price);
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay, double price);
 
 	/**
 	 * Creates a Client in the database with his username and his password.
@@ -54,12 +54,12 @@ public interface HibernateDataAccessInterface {
 	/**
 	 * Obtain all of the offers of a RuralHouse between a range of dates.
 	 * 
-	 * @param rh
+	 * @param ruralHouse
 	 * @param firstDay
 	 * @param lastDay
 	 * @return vector of offers
 	 */
-	public Vector<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay);
+	public Vector<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay);
 	
 	/**
 	 * Obtain a Client with the username and the password given.

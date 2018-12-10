@@ -2,7 +2,7 @@ package com.ruralhousejsf.domain;
 
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 
 public class Offer implements Serializable {
@@ -14,8 +14,8 @@ public class Offer implements Serializable {
 	
 	private Long id;
 	private RuralHouse ruralHouse;
-	private Date startDate; 
-	private Date endDate;
+	private LocalDate startDate; 
+	private LocalDate endDate;
 	private double price;
 	
 	public Offer() {
@@ -37,19 +37,19 @@ public class Offer implements Serializable {
 		this.ruralHouse = ruralHouse;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

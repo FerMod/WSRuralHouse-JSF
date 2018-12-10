@@ -40,27 +40,6 @@ public class ParticularClient extends AbstractUser {
 		this.bookings = bookings;
 	}
 
-	public void enableOfferAlert(RuralHouse ruralHouse) {
-		enableOfferAlert(ruralHouse, this::alert);
-	}
-
-	public void enableOfferAlert(RuralHouse ruralHouse, Consumer<Optional<Offer>> consumer) {
-		ValueAddedListener<Offer> listener = ruralHouse.registerListener((optValue) -> consumer.accept(optValue));
-		eventListenersMap.put(ruralHouse, listener);
-	}
-
-	private void alert(Optional<Offer> offer) {
-		System.out.println("(default) New offer added! " + offer);
-	}
-
-	public void disableOfferAlert(RuralHouse ruralHouse) {		
-		ruralHouse.unregisterListener(eventListenersMap.get(ruralHouse));
-	}
-
-	public void disableAllAlerts() {
-		eventListenersMap.keySet().forEach(rh -> rh.unregisterListener(eventListenersMap.get(rh)));
-	}
-
 	private static final long serialVersionUID = -1989696498234692075L;
 
 }

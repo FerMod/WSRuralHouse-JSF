@@ -6,11 +6,6 @@ import java.util.Set;
 
 public class RuralHouse implements Serializable {
 
-	/**
-	 * Generated serial version ID
-	 */
-	private static final long serialVersionUID = -7593429026088916515L;
-	
 	private Long id;
 	private String description;
 	private String city; 
@@ -55,6 +50,11 @@ public class RuralHouse implements Serializable {
 	public String toString() {
 		return "RuralHouse [id=" + id + ", description=" + description + ", city=" + city + "]";
 	}
+
+	/**
+	 * Generated serial version ID
+	 */
+	private static final long serialVersionUID = -7593429026088916515L;
 	
 
 }
