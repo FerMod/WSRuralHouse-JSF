@@ -13,8 +13,7 @@ public class RuralHouse implements Serializable {
 	private Set<Offer> offers;
 
 	@SuppressWarnings("unused")
-	private RuralHouse() {
-	}
+	private RuralHouse() {}
 
 	public RuralHouse(String description, String city) {
 		this.description = description;
@@ -60,7 +59,7 @@ public class RuralHouse implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RuralHouse [id=" + id + ", description=" + description + ", city=" + city + "]";
+		return String.format("RuralHouse [id: %s, description: %s, city: %s, offers: %s]", id, description, city, offers);
 	}
 
 	/**

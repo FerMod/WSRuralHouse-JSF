@@ -2,22 +2,23 @@ package com.ruralhousejsf.businessLogic;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
-import com.ruralhousejsf.dataAccess.HibernateDataAccess;
+import org.apache.log4j.Logger;
+
 import com.ruralhousejsf.dataAccess.HibernateDataAccessInterface;
+import com.ruralhousejsf.debug.ConsoleLogger;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.domain.util.ParseDate;
 
 public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	
 	private HibernateDataAccessInterface dataAccess;
-	
-	public ApplicationFacadeImpl() {
-	}
+	private static final Logger LOGGER = ConsoleLogger.createLogger(ApplicationFacadeImpl.class); 
 	
 	public ApplicationFacadeImpl(HibernateDataAccessInterface dataAccess) {
 		setDataAccess(dataAccess);
@@ -35,45 +36,55 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 
 	@Override
 	public RuralHouse createRuralHouse(String description, String city) {
-		RuralHouse rh = dataAccess.createRuralHouse(description, city);
-		System.out.println(">> ApplicationFacadeImpl: createRuralHouse() " + rh.toString());
-		return rh;
+		RuralHouse ruralHouse = dataAccess.createRuralHouse(description, city);
+		LOGGER.debug(ruralHouse.toString());
+		return ruralHouse;
+	}
+	
+	@Override
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay, double price) {
+		return createOffer(ruralHouse, ParseDate.asDate(firstDay), ParseDate.asDate(lastDay), price);
 	}
 
 	@Override
 	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay, double price) {
 		Offer o = dataAccess.createOffer(ruralHouse, firstDay, lastDay, price);
-		System.out.println(">> ApplicationFacadeImpl: createOffer() " + o.toString());
+		LOGGER.debug(o.toString());
 		return o;
 	}
 
 	@Override
 	public Client createClient(String user, String pass) {
-		System.out.println(">> ApplicationFacadeImpl: createClient() with user: " + user + " and pass: " + pass + ".");
+		LOGGER.debug("Create Client with user: " + user + " and pass: " + pass + ".");
 		return dataAccess.createClient(user, pass);
 	}
 
 	@Override
 	public List<RuralHouse> getAllRuralHouses() {
-		System.out.println(">> ApplicationFacadeImpl: getAllRuralHouses()");
+		LOGGER.debug("Get all RuralHouses");
 		return dataAccess.getAllRuralHouses();
+	}
+	
+	@Override
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay) {
+		return getOffers(ruralHouse, ParseDate.asDate(firstDay), ParseDate.asDate(lastDay));
 	}
 
 	@Override
-	public List<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay) {
-		System.out.println(">> ApplicationFacadeImpl: getOffers() of " + rh.toString() + " in startDate: " + firstDay.toString() + " and in finalDate: " + lastDay.toString() + ".");
-		return dataAccess.getOffers(rh, firstDay, lastDay);
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date lastDay) {
+		LOGGER.debug("Get offers of " + ruralHouse.toString() + " in startDate: " + firstDay.toString() + " and in finalDate: " + lastDay.toString() + ".");
+		return dataAccess.getOffers(ruralHouse, firstDay, lastDay);
 	}
 
 	@Override
 	public boolean login(String user, String pass) {
-		System.out.println(">> ApplicationFacadeImpl: login() with username=" + user + " and password=" + pass + ".");
+		LOGGER.debug("Login with username=" + user + " and password=" + pass + ".");
 		List<Client> clients = dataAccess.getClient(user, pass);
 		return clients.size() == 1;
 	}
 	
 	public static void main(String[] args) {
-		ApplicationFacadeInterface afi = new ApplicationFacadeFactory().createApplicationFacade();
+		ApplicationFacadeInterface afi = AppFacade.getImpl();
 		afi.initializeDB();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		System.out.println(afi.getAllRuralHouses().toString());

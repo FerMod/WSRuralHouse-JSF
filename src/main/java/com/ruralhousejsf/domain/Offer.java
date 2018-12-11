@@ -17,8 +17,7 @@ public class Offer implements Serializable {
 	private double price;
 		
 	@SuppressWarnings("unused")
-	private Offer() {
-	}
+	private Offer() {}
 	
 	public Offer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
 		this.ruralHouse = ruralHouse;
@@ -71,10 +70,11 @@ public class Offer implements Serializable {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Offer [id=" + id + ", ruralHouse=" + ruralHouse + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price + "]";
+		return String.format("Offer [id: %s, ruralHouse: %s, startDate: %s, endDate: %s, price: %s]", id, ruralHouse,
+				startDate, endDate, price);
 	}
 
 	/**

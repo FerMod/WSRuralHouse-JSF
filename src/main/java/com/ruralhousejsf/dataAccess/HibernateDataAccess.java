@@ -20,11 +20,10 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	private static final Logger LOGGER = ConsoleLogger.createLogger(HibernateDataAccess.class);
 
 	public static void main(String[] args) {
-		new HibernateDataAccess();
+		new HibernateDataAccess().initializeDB();
 	}
 
 	public HibernateDataAccess() {
-		initializeDB();
 	}
 
 	public void initializeDB() {
@@ -48,7 +47,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Tabla RuralHouse eliminada");
 
 		session.getTransaction().commit();
-		LOGGER.trace("Commit de los cambios y sesión cerrada");
+		LOGGER.trace("Commit de transaccion y sesión cerrada");
 		LOGGER.debug("BD borrada");
 
 		createClient("cliente", "cliente123");
@@ -119,10 +118,11 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	}
 
 	public List<RuralHouse> getAllRuralHouses() {
-		LOGGER.debug("getAllRuralHouses()");
+		LOGGER.debug("Obtener todas las casa rurales");
 		
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
+		LOGGER.trace("Sesion creada y empezada transaccion");
 		
 		Query query = session.createQuery("FROM RuralHouse");
 		
@@ -130,6 +130,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		List<RuralHouse> result = query.list();
 		
 		session.getTransaction().commit();
+		LOGGER.trace("Commit de transaccion y sesión cerrada");
 		
 		return result;
 	}

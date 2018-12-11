@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 08-dic-2018 20:37:40 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
-    <class name="com.ruralhousejsf.domain.RuralHouse" table="RURALHOUSE">
-        <id name="id" type="long">
-            <column name="ID" />
-            <generator class="increment" />
-        </id>
-        <property name="description" type="java.lang.String">
-            <column name="DESCRIPTION" />
-        </property>
-        <property name="city" type="java.lang.String">
-            <column name="CITY" />
-        </property>
-        <set name="offers" table="OFFER" inverse="false" lazy="true">
-            <key>
-                <column name="ID" />
-            </key>
-            <one-to-many class="com.ruralhousejsf.domain.Offer" />
-        </set>
-    </class>
+ <class name="com.ruralhousejsf.domain.RuralHouse" table="RURALHOUSE">
+  <id name="id" type="long">
+   <column name="ID"/>
+   <generator class="increment"/>
+  </id>
+  <property generated="never" lazy="false" name="description" type="java.lang.String">
+   <column name="DESCRIPTION"/>
+  </property>
+  <property generated="never" lazy="false" name="city" type="java.lang.String">
+   <column name="CITY"/>
+  </property>
+  <set name="offers" lazy="true" inverse="true" sort="unsorted" table="OFFER">
+   <key update="true">
+    <column name="ID" not-null="true"/>
+   </key>
+   <one-to-many class="com.ruralhousejsf.domain.Offer"/>
+  </set>
+ </class>
 </hibernate-mapping>

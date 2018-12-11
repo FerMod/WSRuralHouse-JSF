@@ -13,17 +13,25 @@ public final class ConsoleLogger {
 	 * <p>Log messages level priority. This means, if level is <code>WARN</code>, 
 	 * only <code>WARN</code>, <code>ERROR</code> and <code>FATAL</code> logs will show up.
 	 */
-	private static final Level ROOT_LOGGER_LEVEL = Level.OFF;
+	private static final Level ROOT_LOGGER_LEVEL = Level.ALL;
 	
 	private static final Level LOGGER_LEVEL = Level.ALL;
 	private static final String LOGGER_PATTERN = "[%-5p] [%d{dd/MM/yyyy HH:mm:ss}] %c %M - %m%n";
 	
 	private ConsoleLogger() {}
 	
-	public static Logger createLogger(Class<?> cls) {
+	public static Logger createLogger() {
+		return createLogger(Thread.currentThread().getStackTrace()[2].getClassName());
+	}
+	
+	public static Logger createLogger(Class<?> clss) {		
+		return createLogger(clss.getSimpleName());
+	}
+	
+	public static Logger createLogger(String name) {
 		
-		Logger logger = Logger.getLogger(cls.getSimpleName());
-
+		Logger logger = Logger.getLogger(name);
+		
 		// Setup basic configuration
 		BasicConfigurator.configure();
 

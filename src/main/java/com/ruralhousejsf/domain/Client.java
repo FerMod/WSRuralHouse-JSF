@@ -9,7 +9,7 @@ public class Client implements Serializable {
 	private String password;
 
 	@SuppressWarnings("unused")
-	private Client(){}
+	private Client() {}
 
 	public Client(String username, String password) {
 		this.username = username;
@@ -42,7 +42,7 @@ public class Client implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Client [username=" + username + ", password=" + password + "]";
+		return String.format("Client [id: %s, username: %s, password: %s]", id, username, password);
 	}
 
 	/**
