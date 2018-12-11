@@ -2,7 +2,10 @@ package com.ruralhousejsf.domain;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
+
+import com.ruralhousejsf.domain.util.ParseDate;
 
 
 public class Offer implements Serializable {
@@ -12,8 +15,21 @@ public class Offer implements Serializable {
 	private Date startDate; 
 	private Date endDate;
 	private double price;
+		
+	@SuppressWarnings("unused")
+	private Offer() {
+	}
 	
-	public Offer() {
+	public Offer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
+		this.ruralHouse = ruralHouse;
+		this.startDate = startDate;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.price = price;
+	}
+	
+	public Offer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) {
+		this(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
 	}
 
 	public Long getId() {
@@ -58,8 +74,7 @@ public class Offer implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Offer [id=" + id + ", ruralHouse=" + ruralHouse + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", price=" + price + "]";
+		return "Offer [id=" + id + ", ruralHouse=" + ruralHouse + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price + "]";
 	}
 
 	/**
