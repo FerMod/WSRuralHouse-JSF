@@ -115,9 +115,10 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	public Vector<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		SimpleDateFormat formateador = new SimpleDateFormat("yy-MM-dd");
-		List<Offer> resultOf = session.createQuery("from Offer where firstDay>='" + formateador.format(firstDay)
-				+ "' and lastDay<='" + formateador.format(lastDay) + "'").list();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(sdf.format(firstDay) + " " + sdf.format(lastDay));
+		List<Offer> resultOf = session.createQuery("from Offer where ruralHouse=" + rh.getId() + " and startDate>='" + sdf.format(firstDay)
+				+ "' and endDate<='" + sdf.format(lastDay) + "'").list();
 		Vector<Offer> v = new Vector(resultOf);
 		System.out.println(">> HibernateDataAccess: getOffers of " + rh.toString() + " with startDate: " + firstDay.toString() + " and finalDate" + lastDay.toString());
 		session.getTransaction().commit();
@@ -135,8 +136,4 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		return v;
 	}
 
-	public static void main(String[] args) {
-		HibernateDataAccess hba = new HibernateDataAccess();
-		hba.initializeDB();
-	}
 }

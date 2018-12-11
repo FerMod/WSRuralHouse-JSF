@@ -4,7 +4,7 @@ import com.ruralhousejsf.dataAccess.HibernateDataAccess;
 
 public final class ApplicationFacadeFactory {
 	
-	private ApplicationFacadeFactory() {
+	public ApplicationFacadeFactory() {
 	}
 
 	public static ApplicationFacadeInterface createApplicationFacade() {

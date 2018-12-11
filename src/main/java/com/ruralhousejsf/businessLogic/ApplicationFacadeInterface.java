@@ -11,6 +11,11 @@ import com.ruralhousejsf.domain.RuralHouse;
 public interface ApplicationFacadeInterface {
 	
 	/**
+	 * Initialize the data base.
+	 */
+	public void initializeDB();
+	
+	/**
 	 * Set the DataAccess object for the business logic
 	 * 
 	 * @param dataAccess
