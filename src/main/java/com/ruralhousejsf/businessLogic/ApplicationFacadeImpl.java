@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
@@ -16,10 +17,10 @@ import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.domain.util.ParseDate;
 
 public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
-	
+
 	private HibernateDataAccessInterface dataAccess;
 	private static final Logger LOGGER = ConsoleLogger.createLogger(ApplicationFacadeImpl.class); 
-	
+
 	public ApplicationFacadeImpl(HibernateDataAccessInterface dataAccess) {
 		setDataAccess(dataAccess);
 	}
@@ -28,7 +29,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	public void setDataAccess(HibernateDataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;
 	}
-	
+
 	@Override
 	public void initializeDB() {
 		dataAccess.initializeDB();
@@ -40,7 +41,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		LOGGER.debug(ruralHouse.toString());
 		return ruralHouse;
 	}
-	
+
 	@Override
 	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay, double price) {
 		return createOffer(ruralHouse, ParseDate.asDate(firstDay), ParseDate.asDate(lastDay), price);
@@ -64,7 +65,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		LOGGER.debug("Get all RuralHouses");
 		return dataAccess.getAllRuralHouses();
 	}
-	
+
 	@Override
 	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay) {
 		return getOffers(ruralHouse, ParseDate.asDate(firstDay), ParseDate.asDate(lastDay));
@@ -77,24 +78,30 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	}
 
 	@Override
-	public boolean login(String user, String pass) {
-		LOGGER.debug("Login with username=" + user + " and password=" + pass + ".");
-		List<Client> clients = dataAccess.getClient(user, pass);
-		return clients.size() == 1;
+	public boolean login(String username, String password) {
+		LOGGER.debug("Login with username: " + username + " and password: " + password + ".");
+		Optional<Client> clients = dataAccess.getClient(username, password);
+		return clients.isPresent();
 	}
-	
+
 	public static void main(String[] args) {
 		ApplicationFacadeInterface afi = AppFacade.getImpl();
 		afi.initializeDB();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		System.out.println(afi.getAllRuralHouses().toString());
-		System.out.println(afi.login("user", "user1234"));
+		try {
+			for (RuralHouse ruralHouse : afi.getAllRuralHouses()) {
+				LOGGER.trace(ruralHouse);
+			}
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+		LOGGER.trace("Login user: " + afi.login("user", "user1234"));
 		try {
 			System.out.println(afi.getOffers(afi.getAllRuralHouses().get(0), sdf.parse("04/12/2018"), sdf.parse("07/01/2018")).toString());
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
-		
+
 	}
 
 }

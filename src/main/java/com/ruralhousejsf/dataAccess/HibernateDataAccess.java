@@ -4,8 +4,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -145,7 +147,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 
-		Query query = session.createQuery("FROM Offer WHERE firstDay >= ':firstDay' AND lastDay <= ':lastDay'");
+		Query query = session.createQuery("FROM Offer WHERE firstDay >= :firstDay AND lastDay <= :lastDay");
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		query.setParameter("firstDay", formatter.format(firstDay));
@@ -159,18 +161,17 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		return result;
 	}
 
-	public List<Client> getClient(String username, String password) {
+	public Optional<Client> getClient(String username, String password) {
 		LOGGER.debug("getUser " + username + " with password " + password + ".");
 		
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
-		Query query = session.createQuery("FROM Client WHERE username LIKE ':username' and password LIKE ':password'");
+		Query query = session.createQuery("FROM Client WHERE username = :username AND password = :password");
 		query.setParameter("username", username);
 		query.setParameter("password", password);
 		
-		@SuppressWarnings("unchecked")
-		List<Client> result = query.list();
+		Optional<Client> result = Optional.ofNullable((Client) query.uniqueResult());
 		session.getTransaction().commit();
 		
 		return result;

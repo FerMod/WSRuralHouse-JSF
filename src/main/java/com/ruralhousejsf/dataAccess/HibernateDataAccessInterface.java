@@ -3,6 +3,8 @@ package com.ruralhousejsf.dataAccess;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
@@ -87,8 +89,8 @@ public interface HibernateDataAccessInterface {
 	 * 
 	 * @param user
 	 * @param pass
-	 * @return client
+	 * @return optional with the found client or a <code>Optional.Empty()</code> if none was found
 	 */
-	public List<Client> getClient(String user, String pass);
+	public Optional<Client> getClient(String user, String pass);
 	
 }

@@ -8,8 +8,8 @@
    <column name="ID"/>
    <generator class="increment"/>
   </id>
-  <many-to-one class="com.ruralhousejsf.domain.RuralHouse" fetch="join" name="ruralHouse">
-   <column name="RURALHOUSE" not-null="true"/>
+  <many-to-one name="ruralHouse" class="com.ruralhousejsf.domain.RuralHouse" fetch="join">
+   <column name="RURALHOUSE"/>
   </many-to-one>
   <property generated="never" lazy="false" name="startDate" type="date">
    <column name="STARTDATE"/>

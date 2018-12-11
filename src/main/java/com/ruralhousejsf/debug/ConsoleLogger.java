@@ -13,22 +13,34 @@ public final class ConsoleLogger {
 	 * <p>Log messages level priority. This means, if level is <code>WARN</code>, 
 	 * only <code>WARN</code>, <code>ERROR</code> and <code>FATAL</code> logs will show up.
 	 */
-	private static final Level ROOT_LOGGER_LEVEL = Level.ALL;
+	private static final Level ROOT_LOGGER_LEVEL = Level.DEBUG;
 	
-	private static final Level LOGGER_LEVEL = Level.ALL;
+	private static final Level DEFAULT_LOGGER_LEVEL = Level.ALL;
 	private static final String LOGGER_PATTERN = "[%-5p] [%d{dd/MM/yyyy HH:mm:ss}] %c %M - %m%n";
 	
 	private ConsoleLogger() {}
 	
 	public static Logger createLogger() {
-		return createLogger(Thread.currentThread().getStackTrace()[2].getClassName());
+		return createLogger(Thread.currentThread().getStackTrace()[2].getClassName(), DEFAULT_LOGGER_LEVEL);
 	}
 	
-	public static Logger createLogger(Class<?> clss) {		
-		return createLogger(clss.getSimpleName());
+	public static Logger createLogger(Class<?> clss) {
+		return createLogger(clss, DEFAULT_LOGGER_LEVEL);
 	}
 	
 	public static Logger createLogger(String name) {
+		return createLogger(name, DEFAULT_LOGGER_LEVEL);
+	}
+	
+	public static Logger createLogger(Level level) {
+		return createLogger(Thread.currentThread().getStackTrace()[2].getClassName(), level);
+	}
+	
+	public static Logger createLogger(Class<?> clss, Level level) {		
+		return createLogger(clss.getSimpleName(), level);
+	}
+	
+	public static Logger createLogger(String name, Level level) {
 		
 		Logger logger = Logger.getLogger(name);
 		
@@ -43,7 +55,7 @@ public final class ConsoleLogger {
 		logger.setAdditivity(false);
 		
 		// Set the message level. It will use the more restrictive level 
-		logger.setLevel(ROOT_LOGGER_LEVEL.isGreaterOrEqual(LOGGER_LEVEL) ? ROOT_LOGGER_LEVEL : LOGGER_LEVEL);
+		logger.setLevel(ROOT_LOGGER_LEVEL.isGreaterOrEqual(level) ? ROOT_LOGGER_LEVEL : level);
 		
 		// Set all loggers messages level
 		Logger.getRootLogger().setLevel(ROOT_LOGGER_LEVEL);
