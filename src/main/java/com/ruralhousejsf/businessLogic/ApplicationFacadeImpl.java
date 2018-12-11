@@ -3,6 +3,7 @@ package com.ruralhousejsf.businessLogic;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import com.ruralhousejsf.dataAccess.HibernateDataAccess;
@@ -53,13 +54,13 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	}
 
 	@Override
-	public Vector<RuralHouse> getAllRuralHouses() {
+	public List<RuralHouse> getAllRuralHouses() {
 		System.out.println(">> ApplicationFacadeImpl: getAllRuralHouses()");
 		return dataAccess.getAllRuralHouses();
 	}
 
 	@Override
-	public Vector<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay) {
+	public List<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay) {
 		System.out.println(">> ApplicationFacadeImpl: getOffers() of " + rh.toString() + " in startDate: " + firstDay.toString() + " and in finalDate: " + lastDay.toString() + ".");
 		return dataAccess.getOffers(rh, firstDay, lastDay);
 	}
@@ -67,7 +68,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	@Override
 	public boolean login(String user, String pass) {
 		System.out.println(">> ApplicationFacadeImpl: login() with username=" + user + " and password=" + pass + ".");
-		Vector<Client> clients = dataAccess.getClient(user, pass);
+		List<Client> clients = dataAccess.getClient(user, pass);
 		return clients.size() == 1;
 	}
 	

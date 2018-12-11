@@ -5,7 +5,7 @@ import java.util.Set;
 
 
 public class RuralHouse implements Serializable {
-	
+
 	private long id;
 	private String description;
 	private String city; 
