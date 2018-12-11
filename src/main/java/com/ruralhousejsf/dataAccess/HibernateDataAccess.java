@@ -125,21 +125,15 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	public List<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println(sdf.format(firstDay) + " " + sdf.format(lastDay));
-		List<Offer> resultOf = session.createQuery("from Offer where ruralHouse=" + rh.getId() + " and startDate>='" + sdf.format(firstDay)
-				+ "' and endDate<='" + sdf.format(lastDay) + "'").list();
-		Vector<Offer> v = new Vector(resultOf);
-		System.out.println(">> HibernateDataAccess: getOffers of " + rh.toString() + " with startDate: " + firstDay.toString() + " and finalDate" + lastDay.toString());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		@SuppressWarnings("unchecked")
 		List<Offer> result = session.createQuery("from Offer where firstDay >= '" + formatter.format(firstDay) + "' and lastDay <= '" + formatter.format(lastDay) + "'").list();
 		logger.debug("getOffers of " + rh.toString() + " with startDate: " + firstDay.toString() + " and finalDate" + lastDay.toString());
 		session.getTransaction().commit();
-		return v;
+		return result;
 	}
 	
-	public Vector<Client> getClient(String user, String pass) {
+	public List<Client> getClient(String user, String pass) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		@SuppressWarnings("unchecked")

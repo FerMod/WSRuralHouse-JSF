@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public class Client implements Serializable {
 
-	private static final long serialVersionUID = -1989696498234692075L;
-	
 	private String username;
 	private String password;
 
@@ -32,5 +30,10 @@ public class Client implements Serializable {
 	public String toString() {
 		return "Client [username=" + username + ", password=" + password + "]";
 	}
+
+	/**
+	 * Auto-generated serial version ID
+	 */
+	private static final long serialVersionUID = -1989696498234692075L;
 
 }

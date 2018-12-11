@@ -7,14 +7,6 @@ import java.util.Date;
 
 public class Offer implements Serializable {
 
-<<<<<<< HEAD
-	/**
-	 * Auto-generated serial version ID
-	 */
-	private static final long serialVersionUID = -7297495978806951469L;
-	
-=======
->>>>>>> refs/remotes/origin/FerMod
 	private long id;
 	private RuralHouse ruralHouse;
 	private Date startDate; 
