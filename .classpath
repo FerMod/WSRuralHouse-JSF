@@ -84,6 +84,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://logging.apache.org/log4j/1.2/apidocs/"/>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
