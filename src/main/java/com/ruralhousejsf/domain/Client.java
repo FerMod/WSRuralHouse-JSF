@@ -4,10 +4,24 @@ import java.io.Serializable;
 
 public class Client implements Serializable {
 
+	private long id;
 	private String username;
 	private String password;
 
-	public Client() {
+	@SuppressWarnings("unused")
+	private Client(){}
+
+	public Client(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
