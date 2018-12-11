@@ -82,34 +82,34 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		rh.setCity(city);
 		session.save(rh);
 		session.getTransaction().commit();
-		logger.debug("" + rh.toString() + " created.");
+		logger.debug(rh.toString() + " created.");
 		return rh;
 	}
 
 	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay, double price) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Offer o = new Offer();
-		o.setStartDate(firstDay);
-		o.setEndDate(lastDay);
-		o.setPrice(price);
-		o.setRuralHouse(ruralHouse);
-		session.save(o);
-		logger.debug("" + o.toString() + " for " + ruralHouse.toString() + " created.");
+		Offer offer = new Offer();
+		offer.setStartDate(firstDay);
+		offer.setEndDate(lastDay);
+		offer.setPrice(price);
+		offer.setRuralHouse(ruralHouse);
+		session.save(offer);
+		logger.debug(offer.toString() + " for " + ruralHouse.toString() + " created.");
 		session.getTransaction().commit();
-		return o;
+		return offer;
 	}
 
 	public Client createClient(String user, String pass) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Client c = new Client();
-		c.setUsername(user);
-		c.setPassword(pass);
-		session.save(c);
-		logger.debug("" + c.toString() + " created.");
+		Client client = new Client();
+		client.setUsername(user);
+		client.setPassword(pass);
+		session.save(client);
+		logger.debug(client.toString() + " created.");
 		session.getTransaction().commit();
-		return c;
+		return client;
 	}
 
 	public List<RuralHouse> getAllRuralHouses() {
@@ -125,7 +125,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	public List<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		@SuppressWarnings("unchecked")
 		List<Offer> result = session.createQuery("from Offer where firstDay >= '" + formatter.format(firstDay) + "' and lastDay <= '" + formatter.format(lastDay) + "'").list();
 		logger.debug("getOffers of " + rh.toString() + " with startDate: " + firstDay.toString() + " and finalDate" + lastDay.toString());
