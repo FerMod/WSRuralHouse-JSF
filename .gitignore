@@ -64,5 +64,5 @@ local.properties
 .scala_dependencies
 .worksheet
 
-#Ignore build folder
+# Ignore build folder
 /build

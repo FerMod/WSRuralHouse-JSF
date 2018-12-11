@@ -1,5 +1,6 @@
 package com.ruralhousejsf.dataAccess;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import com.ruralhousejsf.domain.Client;
@@ -30,7 +31,18 @@ public interface HibernateDataAccessInterface {
 	 * @param firstDay
 	 * @param lastDay
 	 * @param price
-	 * @return Offer of the RuralHouse created
+	 * @return the created Offer for the RuralHouse passed as parameter
+	 */
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay, double price);
+	
+	/**
+	 * Creates a Offer of a RuralHouse with his firstDay, his lastDay and his price.
+	 * 
+	 * @param ruralHouse
+	 * @param firstDay
+	 * @param lastDay
+	 * @param price
+	 * @return the created offer for the RuralHouse passed as parameter
 	 */
 	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay, double price);
 
@@ -49,6 +61,16 @@ public interface HibernateDataAccessInterface {
 	 * @return list of rural houses
 	 */
 	public List<RuralHouse> getAllRuralHouses();
+	
+	/**
+	 * Obtain all of the offers of a RuralHouse between a range of dates.
+	 * 
+	 * @param ruralHouse
+	 * @param firstDay
+	 * @param lastDay
+	 * @return list of offers
+	 */
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay);
 
 	/**
 	 * Obtain all of the offers of a RuralHouse between a range of dates.
