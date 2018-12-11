@@ -2,20 +2,15 @@ package com.ruralhousejsf.domain;
 
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 
 public class Offer implements Serializable {
 
-	/**
-	 * Auto-generated serial version ID
-	 */
-	private static final long serialVersionUID = -7297495978806951469L;
-	
-	private Long id;
+	private long id;
 	private RuralHouse ruralHouse;
-	private LocalDate startDate; 
-	private LocalDate endDate;
+	private Date startDate; 
+	private Date endDate;
 	private double price;
 	
 	public Offer() {
@@ -37,19 +32,19 @@ public class Offer implements Serializable {
 		this.ruralHouse = ruralHouse;
 	}
 
-	public LocalDate getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDate getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -66,5 +61,10 @@ public class Offer implements Serializable {
 		return "Offer [id=" + id + ", ruralHouse=" + ruralHouse + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", price=" + price + "]";
 	}
+
+	/**
+	 * Auto-generated serial version ID
+	 */
+	private static final long serialVersionUID = -7297495978806951469L;
 
 }
