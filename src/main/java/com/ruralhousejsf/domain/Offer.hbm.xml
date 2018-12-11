@@ -11,10 +11,10 @@
         <many-to-one name="ruralHouse" class="com.ruralhousejsf.domain.RuralHouse" fetch="join">
             <column name="RURALHOUSE" />
         </many-to-one>
-        <property name="startDate" type="java.util.Date">
+        <property name="startDate" type="date">
             <column name="STARTDATE" />
         </property>
-        <property name="endDate" type="java.util.Date">
+        <property name="endDate" type="date">
             <column name="ENDDATE" />
         </property>
         <property name="price" type="double">
