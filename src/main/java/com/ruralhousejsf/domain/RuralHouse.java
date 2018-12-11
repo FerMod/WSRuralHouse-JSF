@@ -6,16 +6,7 @@ import java.util.Set;
 
 public class RuralHouse implements Serializable {
 
-<<<<<<< HEAD
-	/**
-	 * Generated serial version ID
-	 */
-	private static final long serialVersionUID = -7593429026088916515L;
-	
 	private long id;
-=======
-	private Long id;
->>>>>>> refs/remotes/origin/FerMod
 	private String description;
 	private String city; 
 	private Set<Offer> offers;

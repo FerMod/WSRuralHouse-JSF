@@ -1,7 +1,7 @@
 package com.ruralhousejsf.businessLogic;
 
 import java.util.Date;
-import java.util.Vector;
+import java.util.List;
 
 import com.ruralhousejsf.dataAccess.HibernateDataAccessInterface;
 import com.ruralhousejsf.domain.Client;
@@ -56,7 +56,7 @@ public interface ApplicationFacadeInterface {
 	 * 
 	 * @return vector of rural houses
 	 */
-	public Vector<RuralHouse> getAllRuralHouses();
+	public List<RuralHouse> getAllRuralHouses();
 	
 	/**
 	 * Obtain all of the offers of a RuralHouse between a range of dates.
@@ -66,7 +66,7 @@ public interface ApplicationFacadeInterface {
 	 * @param lastDay
 	 * @return vector of offers
 	 */
-	public Vector<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay);
+	public List<Offer> getOffers(RuralHouse rh, Date firstDay, Date lastDay);
 	
 	/**
 	 * Verify that the login is correct with a user and a pass given.
