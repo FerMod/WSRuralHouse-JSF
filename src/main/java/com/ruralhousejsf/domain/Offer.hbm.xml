@@ -2,23 +2,29 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 08-dic-2018 20:37:40 by Hibernate Tools 3.5.0.Final -->
-<hibernate-mapping>
- <class name="com.ruralhousejsf.domain.Offer" table="OFFER">
+<hibernate-mapping package="com.ruralhousejsf.domain">
+ <class name="Offer" table="OFFER">
+ 
   <id name="id" type="long">
    <column name="ID"/>
    <generator class="increment"/>
   </id>
-  <many-to-one name="ruralHouse" class="com.ruralhousejsf.domain.RuralHouse" fetch="join">
+  
+  <many-to-one name="ruralHouse" class="RuralHouse" cascade="all" fetch="join" lazy="no-proxy">
    <column name="RURALHOUSE"/>
   </many-to-one>
-  <property generated="never" lazy="false" name="startDate" type="date">
+  
+  <property name="startDate" generated="never" lazy="false" type="date">
    <column name="STARTDATE"/>
   </property>
-  <property generated="never" lazy="false" name="endDate" type="date">
+  
+  <property name="endDate" generated="never" lazy="false" type="date">
    <column name="ENDDATE"/>
   </property>
-  <property generated="never" lazy="false" name="price" type="double">
-   <column default="0.0" name="PRICE"/>
+  
+  <property name="price" generated="never" lazy="false" type="double">
+   <column name="PRICE" default="0.0" />
   </property>
+  
  </class>
 </hibernate-mapping>

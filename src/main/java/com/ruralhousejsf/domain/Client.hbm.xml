@@ -2,17 +2,21 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09-dic-2018 21:13:04 by Hibernate Tools 3.5.0.Final -->
-<hibernate-mapping>
- <class name="com.ruralhousejsf.domain.Client" table="CLIENT">
+<hibernate-mapping package="com.ruralhousejsf.domain">
+ <class name="Client" table="CLIENT">
+ 
   <id name="id" type="long">
    <column name="ID"/>
    <generator class="increment"/>
   </id>
-  <property generated="never" lazy="false" name="username" type="java.lang.String">
+  
+  <property name="username" generated="never" lazy="false" type="string">
    <column name="USERNAME" unique="true"/>
   </property>
-  <property generated="never" lazy="false" name="password" type="java.lang.String">
+  
+  <property name="password" generated="never" lazy="false" type="string">
    <column name="PASSWORD"/>
   </property>
+  
  </class>
 </hibernate-mapping>

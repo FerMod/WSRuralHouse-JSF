@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import com.ruralhousejsf.dataAccess.HibernateDataAccessInterface;
+import com.ruralhousejsf.dataAccess.HibernateSession;
 import com.ruralhousejsf.debug.ConsoleLogger;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;

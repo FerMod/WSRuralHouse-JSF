@@ -66,7 +66,7 @@ public interface ApplicationFacadeInterface {
 	/**
 	 * Obtain all the rural houses.
 	 * 
-	 * @return vector of rural houses
+	 * @return list of rural houses
 	 */
 	public List<RuralHouse> getAllRuralHouses();
 	
