@@ -73,8 +73,7 @@ public class Offer implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("Offer [id: %s, ruralHouse: %s, startDate: %s, endDate: %s, price: %s]", id, ruralHouse,
-				startDate, endDate, price);
+		return "Offer [id: " + id + ", ruralHouse: " + ruralHouse + ", startDate: " + startDate + ", endDate: "	+ endDate + ", price: " + price + "]";
 	}
 
 	/**

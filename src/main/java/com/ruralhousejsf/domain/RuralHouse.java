@@ -59,7 +59,7 @@ public class RuralHouse implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("RuralHouse [id: %s, description: %s, city: %s, offers: %s]", id, description, city, offers);
+		return "RuralHouse [id: " + id + ", description: " + description + ", city: " + city + ", offers: " + offers + "]";
 	}
 
 	/**

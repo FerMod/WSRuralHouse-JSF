@@ -87,16 +87,13 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		ApplicationFacadeInterface afi = AppFacade.getImpl();
 		afi.initializeDB();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			for (RuralHouse ruralHouse : afi.getAllRuralHouses()) {
-				LOGGER.trace(ruralHouse);
-			}
-		} catch (Exception e) {
-			LOGGER.error(e);
+		
+		for (RuralHouse ruralHouse : afi.getAllRuralHouses()) {
+			LOGGER.trace(ruralHouse);
 		}
 		LOGGER.trace("Login user: " + afi.login("user", "user1234"));
 		try {
-			System.out.println(afi.getOffers(afi.getAllRuralHouses().get(0), sdf.parse("04/12/2018"), sdf.parse("07/01/2018")).toString());
+			LOGGER.trace(afi.getOffers(afi.getAllRuralHouses().get(0), sdf.parse("04/12/2018"), sdf.parse("07/01/2018")).toString());
 		} catch (ParseException e) {
 			LOGGER.error(e);
 		}

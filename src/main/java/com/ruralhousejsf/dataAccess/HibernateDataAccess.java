@@ -48,7 +48,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Tabla RuralHouse eliminada");
 
 		session.getTransaction().commit();
-		LOGGER.trace("Commit de transaccion y sesión cerrada");
+		LOGGER.trace("Commit of transaction and session closed");
 		LOGGER.debug("BD borrada");
 
 		createClient("cliente", "cliente123");

@@ -42,7 +42,7 @@ public class Client implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("Client [id: %s, username: %s, password: %s]", id, username, password);
+		return "Client [id: " + id + ", username: " + username + ", password: " + password + "]";
 	}
 
 	/**

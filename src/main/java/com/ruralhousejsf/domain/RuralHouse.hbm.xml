@@ -18,7 +18,7 @@
    <column name="CITY"/>
   </property>
   
-  <set name="offers" table="OFFER" cascade="all" inverse="true" lazy="true" sort="unsorted" >
+  <set name="offers" table="OFFER" cascade="all" inverse="true" lazy="true" >
    <key column="ID" />
    <one-to-many class="Offer" />
   </set>
