@@ -14,11 +14,11 @@
    <column name="DESCRIPTION"/>
   </property>
   
-  <property name="city"  generated="never" lazy="false" type="string">
+  <property name="city" generated="never" lazy="false" type="string">
    <column name="CITY"/>
   </property>
   
-  <set name="offers" table="OFFER" cascade="all" inverse="true" lazy="true" >
+  <set name="offers" inverse="true">
    <key column="ID" />
    <one-to-many class="Offer" />
   </set>

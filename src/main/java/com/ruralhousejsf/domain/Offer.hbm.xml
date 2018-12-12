@@ -10,10 +10,8 @@
    <generator class="increment"/>
   </id>
   
-  <many-to-one name="ruralHouse" class="RuralHouse" fetch="join">
-   <column name="RURALHOUSE"/>
-  </many-to-one>
-  
+  <many-to-one name="ruralHouse" class="RuralHouse" column="RURALHOUSE" not-null="true"/>
+     
   <property name="startDate" generated="never" lazy="false" type="date">
    <column name="STARTDATE"/>
   </property>
