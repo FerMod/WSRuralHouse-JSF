@@ -10,7 +10,7 @@
    <generator class="increment"/>
   </id>
   
-  <many-to-one name="ruralHouse" class="RuralHouse" cascade="all" fetch="join" lazy="no-proxy">
+  <many-to-one name="ruralHouse" class="RuralHouse" cascade="all" fetch="join" lazy="proxy">
    <column name="RURALHOUSE"/>
   </many-to-one>
   
