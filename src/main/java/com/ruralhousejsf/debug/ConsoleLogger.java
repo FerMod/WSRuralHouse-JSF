@@ -13,7 +13,7 @@ public final class ConsoleLogger {
 	 * <p>Log messages level priority. This means, if level is <code>WARN</code>, 
 	 * only <code>WARN</code>, <code>ERROR</code> and <code>FATAL</code> logs will show up.
 	 */
-	private static final Level ROOT_LOGGER_LEVEL = Level.DEBUG;
+	private static final Level ROOT_LOGGER_LEVEL = Level.ALL;
 	
 	private static final Level DEFAULT_LOGGER_LEVEL = Level.ALL;
 	private static final String LOGGER_PATTERN = "[%-5p] [%d{dd/MM/yyyy HH:mm:ss}] %c %M - %m%n";

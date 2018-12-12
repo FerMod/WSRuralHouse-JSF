@@ -14,6 +14,7 @@ import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.domain.util.ParseDate;
+import com.ruralhousejsf.exceptions.BadDatesException;
 
 public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 
@@ -42,12 +43,12 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	}
 
 	@Override
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) {
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException {
 		return createOffer(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
 	}
 
 	@Override
-	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
+	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException {
 		Offer o = dataAccess.createOffer(ruralHouse, startDate, endDate, price);
 		LOGGER.debug(o.toString());
 		return o;
@@ -66,12 +67,12 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	}
 
 	@Override
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate) {
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate) throws BadDatesException {
 		return getOffers(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate));
 	}
 
 	@Override
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) {
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException {
 		LOGGER.debug("Get offers of " + ruralHouse.toString() + " in startDate: " + startDate.toString() + " and in finalDate: " + endDate.toString() + ".");
 		return dataAccess.getOffers(ruralHouse, startDate, endDate);
 	}
@@ -98,6 +99,8 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		try {
 			System.out.println(afi.getOffers(afi.getAllRuralHouses().get(0), sdf.parse("04/12/2018"), sdf.parse("07/01/2018")).toString());
 		} catch (ParseException e) {
+			LOGGER.error(e);
+		} catch (BadDatesException e) {
 			LOGGER.error(e);
 		}
 
