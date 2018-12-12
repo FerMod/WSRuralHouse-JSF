@@ -27,26 +27,26 @@ public interface HibernateDataAccessInterface {
 	public RuralHouse createRuralHouse(String description, String city);
 	
 	/**
-	 * Creates a Offer of a RuralHouse with his firstDay, his lastDay and his price.
+	 * Creates a Offer of a RuralHouse with his firstDay, his endDate and his price.
 	 * 
 	 * @param ruralHouse
-	 * @param firstDay
-	 * @param lastDay
+	 * @param startDate
+	 * @param endDate
 	 * @param price
 	 * @return the created Offer for the RuralHouse passed as parameter
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay, double price);
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate endDate, double price);
 	
 	/**
-	 * Creates a Offer of a RuralHouse with his firstDay, his lastDay and his price.
+	 * Creates a Offer of a RuralHouse with his firstDay, his endDate and his price.
 	 * 
 	 * @param ruralHouse
 	 * @param firstDay
-	 * @param lastDay
+	 * @param endDate
 	 * @param price
 	 * @return the created offer for the RuralHouse passed as parameter
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay, double price);
+	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date endDate, double price);
 
 	/**
 	 * Creates a Client in the database with his username and his password.
@@ -69,20 +69,20 @@ public interface HibernateDataAccessInterface {
 	 * 
 	 * @param ruralHouse
 	 * @param firstDay
-	 * @param lastDay
+	 * @param endDate
 	 * @return list of offers
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay);
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate endDate);
 
 	/**
 	 * Obtain all of the offers of a RuralHouse between a range of dates.
 	 * 
 	 * @param ruralHouse
 	 * @param firstDay
-	 * @param lastDay
+	 * @param endDate
 	 * @return list of offers
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date lastDay);
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date endDate);
 	
 	/**
 	 * Obtain a Client with the username and the password given.

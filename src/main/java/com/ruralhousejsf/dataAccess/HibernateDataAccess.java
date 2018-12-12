@@ -86,16 +86,16 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		return ruralHouse;
 	}
 
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay, double price) {		
-		return createOffer(ruralHouse, ParseDate.asDate(firstDay), ParseDate.asDate(lastDay), price);
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) {		
+		return createOffer(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
 	}
 
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay, double price) {
+	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
 		
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
-		Offer offer = new Offer(ruralHouse, firstDay, lastDay, price);
+		Offer offer = new Offer(ruralHouse, startDate, endDate, price);
 		session.save(offer);
 		
 		session.getTransaction().commit();
@@ -131,26 +131,26 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		List<RuralHouse> result = query.list();
 		
 		session.getTransaction().commit();
-		LOGGER.trace("Commit de transaccion y sesión cerrada");
+		LOGGER.trace("Commit de transaccion y sesion cerrada");
 		
 		return result;
 	}
 
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay) {		
-		return getOffers(ruralHouse, ParseDate.asDate(firstDay), ParseDate.asDate(lastDay));
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDate, LocalDate endDate) {		
+		return getOffers(ruralHouse, ParseDate.asDate(firstDate), ParseDate.asDate(endDate));
 	}
 
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date lastDay) {
-		LOGGER.debug("getOffers of " + ruralHouse.toString() + " with startDate " + firstDay.toString() + " and finalDate " + lastDay.toString());
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) {
+		LOGGER.debug("getOffers of " + ruralHouse.toString() + " with startDate " + startDate.toString() + " and endDate " + endDate.toString());
 
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 
-		Query query = session.createQuery("FROM Offer WHERE firstDay >= :firstDay AND lastDay <= :lastDay");
+		Query query = session.createQuery("FROM Offer WHERE startDate >= :startDate AND endDate <= :endDate");
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		query.setParameter("firstDay", formatter.format(firstDay));
-		query.setParameter("lastDay", formatter.format(lastDay));
+		query.setParameter("startDate", formatter.format(startDate));
+		query.setParameter("endDate", formatter.format(endDate));
 		
 		@SuppressWarnings("unchecked")
 		List<Offer> result = query.list();

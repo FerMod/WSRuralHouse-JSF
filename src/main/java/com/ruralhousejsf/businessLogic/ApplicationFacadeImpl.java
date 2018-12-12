@@ -8,10 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-
 import com.ruralhousejsf.dataAccess.HibernateDataAccessInterface;
-import com.ruralhousejsf.dataAccess.HibernateSession;
 import com.ruralhousejsf.debug.ConsoleLogger;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
@@ -45,13 +42,13 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	}
 
 	@Override
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay, double price) {
-		return createOffer(ruralHouse, ParseDate.asDate(firstDay), ParseDate.asDate(lastDay), price);
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) {
+		return createOffer(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
 	}
 
 	@Override
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay, double price) {
-		Offer o = dataAccess.createOffer(ruralHouse, firstDay, lastDay, price);
+	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
+		Offer o = dataAccess.createOffer(ruralHouse, startDate, endDate, price);
 		LOGGER.debug(o.toString());
 		return o;
 	}
@@ -69,14 +66,14 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	}
 
 	@Override
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay) {
-		return getOffers(ruralHouse, ParseDate.asDate(firstDay), ParseDate.asDate(lastDay));
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate) {
+		return getOffers(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate));
 	}
 
 	@Override
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date lastDay) {
-		LOGGER.debug("Get offers of " + ruralHouse.toString() + " in startDate: " + firstDay.toString() + " and in finalDate: " + lastDay.toString() + ".");
-		return dataAccess.getOffers(ruralHouse, firstDay, lastDay);
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) {
+		LOGGER.debug("Get offers of " + ruralHouse.toString() + " in startDate: " + startDate.toString() + " and in finalDate: " + endDate.toString() + ".");
+		return dataAccess.getOffers(ruralHouse, startDate, endDate);
 	}
 
 	@Override

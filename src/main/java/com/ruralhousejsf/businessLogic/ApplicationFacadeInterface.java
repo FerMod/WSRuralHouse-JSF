@@ -33,26 +33,26 @@ public interface ApplicationFacadeInterface {
 	public RuralHouse createRuralHouse(String description, String city);
 	
 	/**
-	 * Creates a Offer of a RuralHouse with his firstDay, his lastDay and his price.
+	 * Creates a Offer of a RuralHouse with his startDate, his endDate and his price.
 	 * 
 	 * @param ruralHouse
-	 * @param firstDay
-	 * @param lastDay
+	 * @param startDate
+	 * @param endDate
 	 * @param price
 	 * @return Offer of the RuralHouse created
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay, double price);
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price);
 	
 	/**
-	 * Creates a Offer of a RuralHouse with his firstDay, his lastDay and his price.
+	 * Creates a Offer of a RuralHouse with his startDate, his endDate and his price.
 	 * 
 	 * @param ruralHouse
-	 * @param firstDay
-	 * @param lastDay
+	 * @param startDate
+	 * @param endDate
 	 * @param price
 	 * @return Offer of the RuralHouse created
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay, double price);
+	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price);
 	
 	/**
 	 * Creates a Client in the database and returns the created client
@@ -74,21 +74,21 @@ public interface ApplicationFacadeInterface {
 	 * Obtain all the offers of a RuralHouse between the given range of dates.
 	 * 
 	 * @param ruralHouse
-	 * @param firstDay
-	 * @param lastDay
+	 * @param startDate
+	 * @param endDate
 	 * @return vector of offers
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate lastDay);
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate);
 	
 	/**
 	 * Obtain all the offers of a RuralHouse between the given range of dates.
 	 * 
 	 * @param ruralHouse
-	 * @param firstDay
-	 * @param lastDay
+	 * @param startDate
+	 * @param endDate
 	 * @return vector of offers
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date lastDay);
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate);
 	
 	/**
 	 * Verify that the login is correct with for the given username and a password.
