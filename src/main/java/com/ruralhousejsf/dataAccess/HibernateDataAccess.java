@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -126,7 +127,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Sesion creada y empezada transaccion");
 		
 		Query query = session.createQuery("FROM RuralHouse");
-		
+	
 		@SuppressWarnings("unchecked")
 		List<RuralHouse> result = query.list();
 		

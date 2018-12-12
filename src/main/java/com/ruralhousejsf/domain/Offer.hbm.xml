@@ -10,17 +10,19 @@
    <generator class="increment"/>
   </id>
   
-  <many-to-one name="ruralHouse" class="RuralHouse" column="RURALHOUSE" not-null="true"/>
+  <many-to-one name="ruralHouse" class="RuralHouse" not-null="true">
+   <column name="RURALHOUSE"/>
+  </many-to-one>
      
-  <property name="startDate" generated="never" lazy="false" type="date">
+  <property name="startDate" type="date">
    <column name="STARTDATE"/>
   </property>
   
-  <property name="endDate" generated="never" lazy="false" type="date">
+  <property name="endDate" type="date">
    <column name="ENDDATE"/>
   </property>
   
-  <property name="price" generated="never" lazy="false" type="double">
+  <property name="price" type="double">
    <column name="PRICE" default="0.0" />
   </property>
   

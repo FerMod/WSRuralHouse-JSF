@@ -10,11 +10,11 @@
    <generator class="increment"/>
   </id>
   
-  <property name="description" generated="never" lazy="false" type="string">
+  <property name="description" lazy="false" type="string">
    <column name="DESCRIPTION"/>
   </property>
   
-  <property name="city" generated="never" lazy="false" type="string">
+  <property name="city" type="string">
    <column name="CITY"/>
   </property>
   
