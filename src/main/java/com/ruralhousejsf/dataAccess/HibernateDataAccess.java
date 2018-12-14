@@ -15,6 +15,7 @@ import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.domain.util.ParseDate;
+import com.ruralhousejsf.exceptions.BadDatesException;
 
 public class HibernateDataAccess implements HibernateDataAccessInterface {
 
@@ -67,15 +68,19 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		RuralHouse rh4 = createRuralHouse("Gaztetxea","Renteria");
 		LOGGER.trace("Data of RuralHouse created");
 
-		createOffer(rh1, LocalDate.of(2018, 12, 9), LocalDate.of(2018, 12, 11), 25.0);
-		createOffer(rh1, LocalDate.of(2018, 12, 12), LocalDate.of(2018, 12, 15), 25.0);
-		createOffer(rh2, LocalDate.of(2018, 12, 5), LocalDate.of(2018, 12, 10), 35.5);
-		createOffer(rh3, LocalDate.of(2019, 1, 3), LocalDate.of(2019, 1, 9), 40.0);
-		createOffer(rh4, LocalDate.of(2019, 1, 07), LocalDate.of(2019, 1, 21), 36.0);
+		try {
+			createOffer(rh1, LocalDate.of(2018, 12, 9), LocalDate.of(2018, 12, 11), 25.0);
+			createOffer(rh1, LocalDate.of(2018, 12, 12), LocalDate.of(2018, 12, 15), 25.0);
+			createOffer(rh2, LocalDate.of(2018, 12, 5), LocalDate.of(2018, 12, 10), 35.5);
+			createOffer(rh3, LocalDate.of(2019, 1, 3), LocalDate.of(2019, 1, 9), 40.0);
+			createOffer(rh4, LocalDate.of(2019, 1, 07), LocalDate.of(2019, 1, 21), 36.0);
+		} catch (BadDatesException e) {
+			e.printStackTrace();
+		}
 		LOGGER.trace("Data of Offer created");
 
 		LOGGER.debug("DB data created");		
-		LOGGER.debug("Initialization of BD finished");
+		LOGGER.debug("Initialization of BD finished");		
 
 	}
 
@@ -96,11 +101,15 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		return ruralHouse;
 	}
 
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) {		
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException {		
 		return createOffer(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
 	}
 
-	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
+	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException {
+
+		if(!startDate.before(endDate)) {
+			throw new BadDatesException("The startDate have to be before than the endDate.");
+		}
 
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		LOGGER.trace("Hibernate session obtained");	
@@ -153,11 +162,16 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		return result;
 	}
 
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDate, LocalDate endDate) {		
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDate, LocalDate endDate) throws BadDatesException {		
 		return getOffers(ruralHouse, ParseDate.asDate(firstDate), ParseDate.asDate(endDate));
 	}
 
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) {
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException {
+
+		if(startDate.before(endDate)) {
+			throw new BadDatesException("The startDate have to be before than the endDate.");
+		}
+
 		LOGGER.debug("getOffers of " + ruralHouse.toString() + " with startDate " + startDate.toString() + " and endDate " + endDate.toString());
 
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();

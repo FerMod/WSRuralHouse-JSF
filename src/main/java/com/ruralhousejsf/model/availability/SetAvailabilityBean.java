@@ -14,7 +14,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 
 import com.ruralhousejsf.domain.RuralHouse;
-import com.ruralhousejsf.domain.Review.ReviewState;
+import com.ruralhousejsf.businessLogic.AppFacade;
 import com.ruralhousejsf.exceptions.BadDatesException;
 import com.ruralhousejsf.exceptions.OverlappingOfferException;
 

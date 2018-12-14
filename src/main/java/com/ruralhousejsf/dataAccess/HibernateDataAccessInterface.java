@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.exceptions.BadDatesException;
 
 public interface HibernateDataAccessInterface {
 	
@@ -34,8 +35,9 @@ public interface HibernateDataAccessInterface {
 	 * @param endDate
 	 * @param price
 	 * @return the created Offer for the RuralHouse passed as parameter
+	 * @throws BadDatesException 
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate endDate, double price);
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate endDate, double price) throws BadDatesException;
 	
 	/**
 	 * Creates a Offer of a RuralHouse with his firstDay, his endDate and his price.
@@ -45,8 +47,9 @@ public interface HibernateDataAccessInterface {
 	 * @param endDate
 	 * @param price
 	 * @return the created offer for the RuralHouse passed as parameter
+	 * @throws BadDatesException 
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date endDate, double price);
+	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date endDate, double price) throws BadDatesException;
 
 	/**
 	 * Creates a Client in the database with his username and his password.
@@ -71,8 +74,9 @@ public interface HibernateDataAccessInterface {
 	 * @param firstDay
 	 * @param endDate
 	 * @return list of offers
+	 * @throws BadDatesException 
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate endDate);
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate endDate) throws BadDatesException;
 
 	/**
 	 * Obtain all of the offers of a RuralHouse between a range of dates.
@@ -81,8 +85,9 @@ public interface HibernateDataAccessInterface {
 	 * @param firstDay
 	 * @param endDate
 	 * @return list of offers
+	 * @throws BadDatesException 
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date endDate);
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date endDate) throws BadDatesException;
 	
 	/**
 	 * Obtain a Client with the username and the password given.

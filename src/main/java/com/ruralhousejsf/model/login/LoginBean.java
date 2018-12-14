@@ -2,23 +2,24 @@ package com.ruralhousejsf.model.login;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.security.auth.login.AccountNotFoundException;
 
-import com.ruralhousejsf.domain.AbstractUser;
-import com.ruralhousejsf.domain.UserType;
-import com.ruralhousejsf.exceptions.AuthException;
-import com.ruralhousejsf.exceptions.UserRoleException;
+
+import com.ruralhousejsf.businessLogic.AppFacade;
+import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
 
 public class LoginBean {
 
 	private String user;
 	private String pass;
 
-	private AbstractUser logedinUser;
 	private ApplicationFacadeInterface applicationFacade;
 
 	public LoginBean(){
-		applicationFacade = AppFacade.getInstance();
+		if(!AppFacade.isDBInitialized()) {
+			AppFacade.initializeDB();
+		}
+		
+		applicationFacade = AppFacade.getImpl();
 	}
 
 	public String getUser() {
@@ -37,31 +38,17 @@ public class LoginBean {
 		this.pass = pass;
 	}
 
-	public AbstractUser getLoggedUser() {
-		return logedinUser;
+	public Boolean getLoggedUser() {
+		return null;
 	}
 
-	public AbstractUser login(String user, String pass) throws UserRoleException, AccountNotFoundException, AuthException {		
-
-		try {
-
-			UserType userType = applicationFacade.getTypeOfUser(user);
-
-			if (userType != UserType.CLIENT || userType != UserType.OWNER) {
-				return applicationFacade.login(getUser(), getPass());
-			} else {
-				throw new UserRoleException();
-			}
-
-		} catch (AccountNotFoundException e) {
-			throw e;
-		}
-
+	public boolean login(String user, String pass) {		
+			return applicationFacade.login(user, pass);
 	}
 
 	public String validate() {
 
-		boolean login = false;
+		/*boolean login = false;
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
@@ -75,7 +62,8 @@ public class LoginBean {
 			failedValidationMsg("La contraseña o el usuario indicado es incorrecto.", fc, fc.getCurrentPhaseId().toString());
 		}
 		System.out.println(login ? "ok" : "error");
-		return login ? "ok" : "error";
+		return login ? "ok" : "error";*/
+		return null;
 	}
 
 	private void failedValidationMsg(String message, FacesContext fc, String clientId) {

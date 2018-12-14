@@ -8,6 +8,7 @@ import com.ruralhousejsf.dataAccess.HibernateDataAccessInterface;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.exceptions.BadDatesException;
 
 public interface ApplicationFacadeInterface {
 	
@@ -40,8 +41,9 @@ public interface ApplicationFacadeInterface {
 	 * @param endDate
 	 * @param price
 	 * @return Offer of the RuralHouse created
+	 * @throws BadDatesException 
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price);
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException;
 	
 	/**
 	 * Creates a Offer of a RuralHouse with his startDate, his endDate and his price.
@@ -51,8 +53,9 @@ public interface ApplicationFacadeInterface {
 	 * @param endDate
 	 * @param price
 	 * @return Offer of the RuralHouse created
+	 * @throws BadDatesException 
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price);
+	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException;
 	
 	/**
 	 * Creates a Client in the database and returns the created client
@@ -77,8 +80,9 @@ public interface ApplicationFacadeInterface {
 	 * @param startDate
 	 * @param endDate
 	 * @return vector of offers
+	 * @throws BadDatesException 
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate);
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate) throws BadDatesException;
 	
 	/**
 	 * Obtain all the offers of a RuralHouse between the given range of dates.
@@ -87,8 +91,9 @@ public interface ApplicationFacadeInterface {
 	 * @param startDate
 	 * @param endDate
 	 * @return vector of offers
+	 * @throws BadDatesException 
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate);
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException;
 	
 	/**
 	 * Verify that the login is correct with for the given username and a password.
