@@ -5,9 +5,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -18,7 +17,7 @@ import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.domain.util.ParseDate;
 
 public class HibernateDataAccess implements HibernateDataAccessInterface {
-	
+
 	private static final Logger LOGGER = ConsoleLogger.createLogger(HibernateDataAccess.class);
 
 	public static void main(String[] args) {
@@ -30,60 +29,70 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 	public void initializeDB() {
 
-		LOGGER.debug("Inicializando la BD");
-		
+		LOGGER.debug("Initializing DB...");
+
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");		
 		session.beginTransaction();
-		LOGGER.trace("Sesion creada y empezada transaccion");
+		LOGGER.trace("Transaction started");
+
+		LOGGER.debug("Deleting DB data...");
 
 		Query queryClient = session.createSQLQuery("TRUNCATE Client");
 		queryClient.executeUpdate();
-		LOGGER.trace("Tabla Client eliminada");
-		
+		LOGGER.trace("Table Client truncated");
+
 		Query queryOffer = session.createSQLQuery("TRUNCATE Offer");
 		queryOffer.executeUpdate();
-		LOGGER.trace("Tabla Offer eliminada.");
-		
+		LOGGER.trace("Table Offer truncated");
+
 		Query queryRuralHouse = session.createSQLQuery("TRUNCATE RuralHouse");
 		queryRuralHouse.executeUpdate();
-		LOGGER.trace("Tabla RuralHouse eliminada");
+		LOGGER.trace("Table RuralHouse truncated");
 
 		session.getTransaction().commit();
-		LOGGER.trace("Commit of transaction and session closed");
-		LOGGER.debug("BD borrada");
+		LOGGER.trace("Transaction commit and session closed");
+		LOGGER.debug("DB data deleted");
+
+		LOGGER.debug("Creating DB data...");
 
 		createClient("cliente", "cliente123");
 		createClient("user", "user123");
 		createClient("paco", "paco123");
-		LOGGER.trace("Datos de la tabla Client creados");
-		
+		LOGGER.trace("Data of Client created");
+
 		RuralHouse rh1 = createRuralHouse("Ezkioko etxea","Ezkio");
 		RuralHouse rh2 = createRuralHouse("Eskiatzeko etxea","Jaca");
 		RuralHouse rh3 = createRuralHouse("Udaletxea","Bilbo");
 		RuralHouse rh4 = createRuralHouse("Gaztetxea","Renteria");
-		LOGGER.trace("Datos de la tabla RuralHouse creados");
+		LOGGER.trace("Data of RuralHouse created");
 
 		createOffer(rh1, LocalDate.of(2018, 12, 9), LocalDate.of(2018, 12, 11), 25.0);
 		createOffer(rh1, LocalDate.of(2018, 12, 12), LocalDate.of(2018, 12, 15), 25.0);
 		createOffer(rh2, LocalDate.of(2018, 12, 5), LocalDate.of(2018, 12, 10), 35.5);
 		createOffer(rh3, LocalDate.of(2019, 1, 3), LocalDate.of(2019, 1, 9), 40.0);
 		createOffer(rh4, LocalDate.of(2019, 1, 07), LocalDate.of(2019, 1, 21), 36.0);
-		LOGGER.trace("Datos de la tabla Offer creados");
-		
-		LOGGER.debug("Inicializacion de la BD terminada");
-		
+		LOGGER.trace("Data of Offer created");
+
+		LOGGER.debug("DB data created");		
+		LOGGER.debug("Initialization of BD finished");
+
 	}
 
 	public RuralHouse createRuralHouse(String description, String city) {
-		
+
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
-		
+		LOGGER.trace("Transaction started");
+
 		RuralHouse ruralHouse = new RuralHouse(description, city);
 		session.save(ruralHouse);
+
 		session.getTransaction().commit();
-		
-		LOGGER.debug(ruralHouse.toString() + " created.");
+		LOGGER.trace("Transaction commit and session closed");
+
+		LOGGER.debug(ruralHouse.toString() + " created");
 		return ruralHouse;
 	}
 
@@ -92,48 +101,55 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	}
 
 	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
-		
+
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
-		
+		LOGGER.trace("Transaction started");
+
 		Offer offer = new Offer(ruralHouse, startDate, endDate, price);
 		session.save(offer);
-		
+
 		session.getTransaction().commit();
-		
-		LOGGER.debug(offer.toString() + " for " + ruralHouse.toString() + " created.");
+		LOGGER.trace("Transaction commit and session closed");
+
+		LOGGER.debug(offer.toString() + " for " + ruralHouse.toString() + " created");
+
 		return offer;
 	}
 
 	public Client createClient(String user, String pass) {
-		
+
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
-		
+		LOGGER.trace("Transaction started");
+
 		Client client = new Client(user, pass);
 		session.save(client);
-		
+
 		session.getTransaction().commit();
-		
-		LOGGER.debug(client.toString() + " created.");
+		LOGGER.trace("Transaction commit and session closed");
+
+		LOGGER.debug(client.toString() + " created");
 		return client;
 	}
 
 	public List<RuralHouse> getAllRuralHouses() {
-		LOGGER.debug("Obtener todas las casa rurales");
-		
+		LOGGER.debug("Get all rural houses");
+
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
-		LOGGER.trace("Sesion creada y empezada transaccion");
-		
-		Query query = session.createQuery("FROM RuralHouse");
-	
+		LOGGER.trace("Transaction started");
+
+		Criteria criteria = session.createCriteria(RuralHouse.class);
 		@SuppressWarnings("unchecked")
-		List<RuralHouse> result = query.list();
-		
+		List<RuralHouse> result = criteria.list();
+
 		session.getTransaction().commit();
-		LOGGER.trace("Commit de transaccion y sesion cerrada");
-		
+		LOGGER.trace("Transaction commit and session closed");
+
 		return result;
 	}
 
@@ -145,35 +161,42 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.debug("getOffers of " + ruralHouse.toString() + " with startDate " + startDate.toString() + " and endDate " + endDate.toString());
 
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
+		LOGGER.trace("Transaction started");
 
-		Query query = session.createQuery("FROM Offer WHERE startDate >= :startDate AND endDate <= :endDate");
-		
+		Query query = session.createQuery("FROM Offer WHERE start_date >= :startDate AND end_date <= :endDate");
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		query.setParameter("startDate", formatter.format(startDate));
 		query.setParameter("endDate", formatter.format(endDate));
-		
+
 		@SuppressWarnings("unchecked")
 		List<Offer> result = query.list();
-		
+
 		session.getTransaction().commit();
+		LOGGER.trace("Transaction commit and session closed");
 
 		return result;
 	}
 
 	public Optional<Client> getClient(String username, String password) {
-		LOGGER.debug("getUser " + username + " with password " + password + ".");
-		
+		LOGGER.debug("getUser " + username + " with password " + password);
+
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
-		
+		LOGGER.trace("Transaction started");
+
 		Query query = session.createQuery("FROM Client WHERE username = :username AND password = :password");
 		query.setParameter("username", username);
 		query.setParameter("password", password);
-		
+
 		Optional<Client> result = Optional.ofNullable((Client) query.uniqueResult());
+
 		session.getTransaction().commit();
-		
+		LOGGER.trace("Transaction commit and session closed");
+
 		return result;
 	}
 

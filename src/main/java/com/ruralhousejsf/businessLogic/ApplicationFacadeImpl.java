@@ -48,15 +48,15 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 
 	@Override
 	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
-		Offer o = dataAccess.createOffer(ruralHouse, startDate, endDate, price);
-		LOGGER.debug(o.toString());
-		return o;
+		Offer offer = dataAccess.createOffer(ruralHouse, startDate, endDate, price);
+		LOGGER.debug(offer.toString());
+		return offer;
 	}
 
 	@Override
-	public Client createClient(String user, String pass) {
-		LOGGER.debug("Create Client with user: " + user + " and pass: " + pass + ".");
-		return dataAccess.createClient(user, pass);
+	public Client createClient(String username, String password) {
+		LOGGER.debug("Create Client with user: " + username + " and pass: " + password + ".");
+		return dataAccess.createClient(username, password);
 	}
 
 	@Override
@@ -88,8 +88,11 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		afi.initializeDB();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		for (RuralHouse ruralHouse : afi.getAllRuralHouses()) {
-			LOGGER.trace(ruralHouse);
+		List<RuralHouse> ruralHouseList = afi.getAllRuralHouses();
+		
+		LOGGER.trace("Iterate rural house list");
+		for (RuralHouse ruralHouse : ruralHouseList) {
+			LOGGER.trace(""+ ruralHouse.toString());
 		}
 		LOGGER.trace("Login user: " + afi.login("user", "user1234"));
 		try {

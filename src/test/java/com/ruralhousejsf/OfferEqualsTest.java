@@ -11,59 +11,32 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import com.ruralhousejsf.businessLogic.AppFacade;
+import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
 import com.ruralhousejsf.contract.EqualsContract;
-import com.ruralhousejsf.domain.Admin;
-import com.ruralhousejsf.domain.Booking;
-import com.ruralhousejsf.domain.City;
 import com.ruralhousejsf.domain.Offer;
-import com.ruralhousejsf.domain.Owner;
-import com.ruralhousejsf.domain.ParticularClient;
 import com.ruralhousejsf.domain.RuralHouse;
-import com.ruralhousejsf.domain.TravelAgency;
-import com.ruralhousejsf.domain.UserType;
-import com.ruralhousejsf.domain.Review.ReviewState;
 import com.ruralhousejsf.util.TestUtilities;
-
-import businessLogic.ApplicationFacadeInterface;
 
 public class OfferEqualsTest implements EqualsContract<Offer> {
 
-	static RuralHouse rh;
-	static Admin admin;
-	static ParticularClient particularClient;
-	static TravelAgency travelAgency;
-	static Owner owner;
-	static City city;
 	static ApplicationFacadeInterface afi;
-	
-	Date startDate;
-	Date endDate;
-	Offer offer1, offer2;
-	Booking booking;
-	double price;
 
 	@BeforeAll
 	static void beforeAll() {
-		afi = TestUtilities.getApplicationFacadeInstance();
-		createTestData();
-	}
-
-	static void createTestData() {
+		
 		try {
-			
-			admin = (Admin) afi.createUser("adminTest@admin.com", "adminTest", "adminTest", UserType.ADMIN).get();
-			owner = (Owner) afi.createUser("ownerTest@gmail.com", "ownerTest", "ownerTest", UserType.OWNER).get();
-			particularClient = (ParticularClient) afi.createUser("particularClient@gamail.com", "ParticularClientTest", "ParticularClientTest", UserType.PARTICULAR_CLIENT).get();
-			travelAgency = (TravelAgency) afi.createUser("travelagencytest@gamail.com", "TravelAgencyTest", "TravelAgencyTest", UserType.TRAVEL_AGENCY).get();
-			city = afi.createCity("TestCity");
-
-			rh = afi.createRuralHouse(owner, "Casa Test", "Descripción Test", city, "Calle Test / 12Test");
-			rh.getReview().setState(admin, ReviewState.APPROVED);
-			afi.update(rh);
 
 		} catch (Exception e) {
 			assumeNoException("Exception raised when creating the test data.", e);
-		}		
+		}	
+
+		afi = AppFacade.getImpl();
+		
+	}
+
+	static void createTestData() {
+
 	}
 
 	@BeforeEach

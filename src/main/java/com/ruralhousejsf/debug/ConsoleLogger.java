@@ -16,7 +16,8 @@ public final class ConsoleLogger {
 	private static final Level ROOT_LOGGER_LEVEL = Level.ALL;
 	
 	private static final Level DEFAULT_LOGGER_LEVEL = Level.ALL;
-	private static final String LOGGER_PATTERN = "[%-5p] [%d{dd/MM/yyyy HH:mm:ss.SSS}] %c %M - %m%n";
+	private static final String LOGGER_PATTERN = "[%-5p] [%d{dd/MM/yyyy HH:mm:ss.SSS}] (%F:%L) %m%n";
+	//private static final String LOGGER_PATTERN = "[%-5p] [%d{dd/MM/yyyy HH:mm:ss.SSS}] %c %M - %m%n";
 	
 	private ConsoleLogger() {}
 	

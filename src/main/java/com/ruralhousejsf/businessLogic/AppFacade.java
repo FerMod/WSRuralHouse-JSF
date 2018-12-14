@@ -8,7 +8,7 @@ public final class AppFacade {
 	
 	private AppFacade() {}
 	
-	public static ApplicationFacadeInterface createAppImpl() {
+	private static ApplicationFacadeInterface createAppImpl() {
 		try {
 			return new ApplicationFacadeImpl(new HibernateDataAccess());
 		} catch (Throwable e) {

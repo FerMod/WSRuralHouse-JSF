@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class RuralHouse implements Serializable {
 
 	private long id;
@@ -16,13 +15,13 @@ public class RuralHouse implements Serializable {
 	private RuralHouse() {}
 
 	public RuralHouse(String description, String city) {
-		this.description = description;
-		this.city = city;
+		this(description, city, new HashSet<Offer>());		
 	}
 
 	public RuralHouse(String description, String city, Set<Offer> offers) {
-		this(description, city);		
-		this.offers = new HashSet<Offer>();
+		this.description = description;
+		this.city = city;	
+		this.offers = offers;
 	}
 
 	public Long getId() {
@@ -57,9 +56,21 @@ public class RuralHouse implements Serializable {
 		this.offers = offers;
 	}
 
+	public boolean addOffer(Offer offer) {
+		return offers.add(offer);
+	}
+	
+	public boolean removeOffer(long id) {
+		return offers.removeIf(offer -> offer.getId().equals(id));
+	}
+	
+	public boolean removeOffer(Offer offer) {
+		return offers.remove(offer);
+	}
+
 	@Override
 	public String toString() {
-		return "RuralHouse [id: " + id + ", description: " + description + ", city: " + city + ", offers: " + offers + "]";
+		return String.format("RuralHouse [id: %s, description: %s, city: %s, offers: %s]", id, description, city, offers);
 	}
 
 	/**

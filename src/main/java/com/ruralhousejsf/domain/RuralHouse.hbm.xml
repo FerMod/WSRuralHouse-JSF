@@ -3,23 +3,20 @@
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 08-dic-2018 20:37:40 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping package="com.ruralhousejsf.domain">
- <class name="RuralHouse" table="RURALHOUSE">
+ <class name="RuralHouse" table="ruralhouse">
  
-  <id name="id" type="long">
-   <column name="ID"/>
-   <generator class="increment"/>
+  <id name="id" column="ruralhouse_id"  type="long">
+   <generator class="native"/>
   </id>
   
-  <property name="description" lazy="false" type="string">
-   <column name="DESCRIPTION"/>
-  </property>
+  <property name="description" column="description" type="string"/>
   
-  <property name="city" type="string">
-   <column name="CITY"/>
-  </property>
+  <property name="city" column="city" type="string"/>
   
-  <set name="offers" inverse="true">
-   <key column="ID" />
+  <set name="offers" table="offer" inverse="true" cascade="save-update" lazy="false" fetch="join">
+   <key>
+    <column name="ruralhouse"/>
+   </key>
    <one-to-many class="Offer" />
   </set>
   

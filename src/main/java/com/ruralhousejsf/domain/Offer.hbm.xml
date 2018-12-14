@@ -3,27 +3,26 @@
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 08-dic-2018 20:37:40 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping package="com.ruralhousejsf.domain">
- <class name="Offer" table="OFFER">
+ <class name="Offer" table="offer">
  
-  <id name="id" type="long">
-   <column name="ID"/>
-   <generator class="increment"/>
+  <id name="id" column="offer_id" type="long">
+   <generator class="native"/>
   </id>
   
-  <many-to-one name="ruralHouse" class="RuralHouse" not-null="true">
-   <column name="RURALHOUSE"/>
+  <many-to-one name="ruralHouse" class="RuralHouse" fetch="join">
+   <column name="ruralhouse_id"/>
   </many-to-one>
      
   <property name="startDate" type="date">
-   <column name="STARTDATE"/>
+   <column name="start_date"/>
   </property>
   
   <property name="endDate" type="date">
-   <column name="ENDDATE"/>
+   <column name="end_date"/>
   </property>
   
   <property name="price" type="double">
-   <column name="PRICE" default="0.0" />
+   <column name="price" default="0.0" />
   </property>
   
  </class>
