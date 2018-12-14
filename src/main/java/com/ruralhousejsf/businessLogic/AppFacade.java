@@ -5,7 +5,6 @@ import com.ruralhousejsf.dataAccess.HibernateDataAccess;
 public final class AppFacade {
 
 	private static final ApplicationFacadeInterface APP_FACADE = createAppImpl();
-	private static boolean initialized = false;
 	
 	private AppFacade() {}
 	
@@ -17,17 +16,16 @@ public final class AppFacade {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
-
+	
 	public static ApplicationFacadeInterface getImpl() {
+		return getImpl(false);
+	}
+
+	public static ApplicationFacadeInterface getImpl(boolean shouldInitializeDb) {
+		if(shouldInitializeDb) {
+			APP_FACADE.initializeDB();
+		}
 		return APP_FACADE;
 	}
 	
-	public static void initializeDB() {
-		getImpl().initializeDB();
-		initialized = true;
-	}
-	
-	public static boolean isDBInitialized() {
-		return initialized;
-	}
 }

@@ -14,12 +14,8 @@ public class LoginBean {
 
 	private ApplicationFacadeInterface applicationFacade;
 
-	public LoginBean(){
-		if(!AppFacade.isDBInitialized()) {
-			AppFacade.initializeDB();
-		}
-		
-		applicationFacade = AppFacade.getImpl();
+	public LoginBean(){		
+		applicationFacade = AppFacade.getImpl(true);
 	}
 
 	public String getUser() {
