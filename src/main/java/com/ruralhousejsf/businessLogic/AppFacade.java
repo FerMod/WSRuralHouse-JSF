@@ -5,6 +5,7 @@ import com.ruralhousejsf.dataAccess.HibernateDataAccess;
 public final class AppFacade {
 
 	private static final ApplicationFacadeInterface APP_FACADE = createAppImpl();
+	private static boolean initializeDb = true;
 	
 	private AppFacade() {}
 	
@@ -18,11 +19,12 @@ public final class AppFacade {
 	}
 	
 	public static ApplicationFacadeInterface getImpl() {
-		return getImpl(false);
+		return getImpl(initializeDb);
 	}
 
 	public static ApplicationFacadeInterface getImpl(boolean shouldInitializeDb) {
 		if(shouldInitializeDb) {
+			initializeDb = false;
 			APP_FACADE.initializeDB();
 		}
 		return APP_FACADE;

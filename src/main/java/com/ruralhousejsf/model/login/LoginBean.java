@@ -14,7 +14,7 @@ public class LoginBean {
 	private ApplicationFacadeInterface applicationFacade;
 
 	public LoginBean(){		
-		applicationFacade = AppFacade.getImpl(true);
+		applicationFacade = AppFacade.getImpl();
 	}
 
 	public String getUser() {
