@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -150,9 +150,9 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
 
-		Criteria criteria = session.createCriteria(RuralHouse.class);
+		Query query = session.createQuery("FROM RuralHouse");
 		@SuppressWarnings("unchecked")
-		List<RuralHouse> result = criteria.list();
+		List<RuralHouse> result = query.list();
 
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
