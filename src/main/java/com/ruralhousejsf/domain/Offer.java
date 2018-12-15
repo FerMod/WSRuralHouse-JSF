@@ -4,7 +4,6 @@ package com.ruralhousejsf.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
-
 import com.ruralhousejsf.domain.util.ParseDate;
 
 
@@ -71,9 +70,8 @@ public class Offer implements Serializable {
 		this.price = price;
 	}
 
-	@Override
 	public String toString() {
-		return String.format("Offer [id: %s, ruralHouse: %s, startDate: %s, endDate: %s, price: %s]", id, ruralHouse, startDate, endDate, price);
+		return String.format("Offer [id: %s, ruralHouse: %d, startDate: %s, endDate: %s, price: %s]", id, ruralHouse.getId(), startDate, endDate, price);
 	}
 
 	/**

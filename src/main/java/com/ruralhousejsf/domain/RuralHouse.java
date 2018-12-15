@@ -3,6 +3,7 @@ package com.ruralhousejsf.domain;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RuralHouse implements Serializable {
 
@@ -70,7 +71,11 @@ public class RuralHouse implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("RuralHouse [id: %s, description: %s, city: %s, offers: %s]", id, description, city, offers);
+		Set<Long> offerIdList = offers
+				.stream()
+				.map(o -> o.getId())
+				.collect(Collectors.toSet());
+		return String.format("RuralHouse [id: %s, description: %s, city: %s, offers: %s]", id, description, city, offerIdList);
 	}
 
 	/**
