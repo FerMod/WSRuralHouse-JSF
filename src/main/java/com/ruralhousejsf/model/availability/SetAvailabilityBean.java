@@ -32,7 +32,7 @@ public class SetAvailabilityBean {
 
 	public SetAvailabilityBean() {
 
-		applicationFacade = AppFacade.getImpl(false);
+		applicationFacade = AppFacade.getImpl();
 		List<RuralHouse> ruralHouseList = applicationFacade.getAllRuralHouses();
 
 		ruralHouses = new LinkedHashMap<String, RuralHouse>();
