@@ -25,13 +25,11 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		new HibernateDataAccess().initializeDB();
 	}
 
-	public HibernateDataAccess() {
-	}
+	public HibernateDataAccess() {}
 
 	public void initializeDB() {
 
 		LOGGER.debug("Initializing DB...");
-
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		LOGGER.trace("Hibernate session obtained");		
 		session.beginTransaction();
