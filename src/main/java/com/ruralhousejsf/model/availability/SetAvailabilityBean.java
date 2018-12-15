@@ -11,12 +11,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.validator.ValidatorException;
 
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.businessLogic.AppFacade;
+import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
 import com.ruralhousejsf.exceptions.BadDatesException;
-import com.ruralhousejsf.exceptions.OverlappingOfferException;
+
 
 @ManagedBean(name="setAvailability")
 @SessionScoped
@@ -28,16 +28,16 @@ public class SetAvailabilityBean {
 	private double priceOffer;
 
 	private LinkedHashMap<String, RuralHouse> ruralHouses;
-	private AppFacade applicationFacade;
+	private ApplicationFacadeInterface applicationFacade;
 
 	public SetAvailabilityBean() {
 
-		applicationFacade = AppFacade.getInstance();
-		List<RuralHouse> ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
+		applicationFacade = AppFacade.getImpl(false);
+		List<RuralHouse> ruralHouseList = applicationFacade.getAllRuralHouses();
 
 		ruralHouses = new LinkedHashMap<String, RuralHouse>();
 		for (RuralHouse ruralHouse : ruralHouseList) {
-			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getName(), ruralHouse);
+			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getDescription(), ruralHouse);
 		}
 
 	}
@@ -75,11 +75,11 @@ public class SetAvailabilityBean {
 		return values.toArray(new String[values.size()]);
 	}
 
-	public AppFacade getApplicationFacade() {
+	public ApplicationFacadeInterface getApplicationFacade() {
 		return applicationFacade;
 	}
 
-	public void setApplicationFacade(AppFacade applicationFacade) {
+	public void setApplicationFacade(ApplicationFacadeInterface applicationFacade) {
 		this.applicationFacade = applicationFacade;
 	}
 
@@ -98,11 +98,8 @@ public class SetAvailabilityBean {
 			RuralHouse rh = getRuralHouses().get(getRuralHouseLabel());
 			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
 			try {
-				getApplicationFacade().getImpl().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
+				getApplicationFacade().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", ""));
-			} catch (OverlappingOfferException e) {
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas coincidentes a otra oferta.", e.getMessage()));
-				context.validationFailed();
 			} catch (BadDatesException e) {
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas incompatibles.", e.getMessage()));
 				context.validationFailed();

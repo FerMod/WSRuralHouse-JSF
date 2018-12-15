@@ -44,22 +44,15 @@ public class LoginBean {
 
 	public String validate() {
 
-		/*boolean login = false;
+		boolean login = login(user, pass);
 		FacesContext fc = FacesContext.getCurrentInstance();
-
-		try {
-			logedinUser = login(user, pass);
-			login = true;
-		} catch(UserRoleException e) {
-			failedValidationMsg("El rol de usuario no es adecuado.", fc, fc.getCurrentPhaseId().toString());
-		} catch(AccountNotFoundException e) {
-			failedValidationMsg("Cuenta no encontrada.", fc, fc.getCurrentPhaseId().toString());
-		} catch(AuthException e) {
-			failedValidationMsg("La contraseÃ±a o el usuario indicado es incorrecto.", fc, fc.getCurrentPhaseId().toString());
+		
+		if (login(user, pass)) {
+			return "ok";
+		} else {
+			failedValidationMsg("El nombre de usuario o la contraseña no son correctos.", fc, fc.getCurrentPhaseId().toString());
+			return "error";
 		}
-		System.out.println(login ? "ok" : "error");
-		return login ? "ok" : "error";*/
-		return null;
 	}
 
 	private void failedValidationMsg(String message, FacesContext fc, String clientId) {
