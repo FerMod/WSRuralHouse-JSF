@@ -3,7 +3,6 @@ package com.ruralhousejsf.model.login;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-
 import com.ruralhousejsf.businessLogic.AppFacade;
 import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
 
@@ -43,14 +42,12 @@ public class LoginBean {
 	}
 
 	public String validate() {
-
-		boolean login = login(user, pass);
-		FacesContext fc = FacesContext.getCurrentInstance();
 		
 		if (login(user, pass)) {
 			return "ok";
 		} else {
-			failedValidationMsg("El nombre de usuario o la contraseña no son correctos.", fc, fc.getCurrentPhaseId().toString());
+			FacesContext fc = FacesContext.getCurrentInstance();
+			failedValidationMsg("El nombre de usuario o la contraseÃ±a no son correctos.", fc, fc.getCurrentPhaseId().toString());
 			return "error";
 		}
 	}
