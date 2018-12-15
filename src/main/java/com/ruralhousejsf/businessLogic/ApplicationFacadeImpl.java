@@ -93,7 +93,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 
 		LOGGER.trace("Iterate rural house list");
 		for (RuralHouse ruralHouse : ruralHouseList) {
-			LOGGER.trace(""+ ruralHouse.toString());
+			LOGGER.trace(ruralHouse.toString());
 		}
 		LOGGER.trace("Login user: " + afi.login("user", "user1234"));
 		try {

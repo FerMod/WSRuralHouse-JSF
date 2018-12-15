@@ -6,18 +6,18 @@
  <class name="RuralHouse" table="ruralhouse">
  
   <id name="id" column="ruralhouse_id"  type="long">
-   <generator class="native"/>
+   <generator class="increment"/>
   </id>
   
   <property name="description" column="description" type="string"/>
   
   <property name="city" column="city" type="string"/>
   
-  <set name="offers" table="offer" inverse="true" cascade="save-update" lazy="false" fetch="join">
+  <set name="offers" table="offer" inverse="true" cascade="all" lazy="false" fetch="join">
    <key>
-    <column name="ruralhouse"/>
+	<column name="ruralhouse_id" not-null="true"/>
    </key>
-   <one-to-many class="Offer" />
+   <one-to-many class="Offer"/>
   </set>
   
  </class>

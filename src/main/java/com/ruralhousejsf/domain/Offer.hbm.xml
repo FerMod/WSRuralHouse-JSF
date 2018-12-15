@@ -6,11 +6,11 @@
  <class name="Offer" table="offer">
  
   <id name="id" column="offer_id" type="long">
-   <generator class="native"/>
+   <generator class="increment"/>
   </id>
   
   <many-to-one name="ruralHouse" class="RuralHouse" fetch="join">
-   <column name="ruralhouse_id"/>
+   <column name="ruralhouse_id" not-null="true"/>
   </many-to-one>
      
   <property name="startDate" type="date">
