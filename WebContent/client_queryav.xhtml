@@ -54,7 +54,7 @@
 							styleclass="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-disabled"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItems value="#{queryAvailability.ruralHouseList}"
-								var="rh" itemLabel="#{rh.name}" itemValue="#{rh}" />
+								var="rh" itemLabel="#{rh.description}" itemValue="#{rh}" />
 						</p:selectOneMenu>
 						<h:outputLabel for="startDate" value="Fecha inicial: " />
 						<p:calendar id="startDate" value="#{queryAvailability.startDate}"
