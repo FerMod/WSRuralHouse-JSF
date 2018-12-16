@@ -23,7 +23,7 @@
 		<script type="text/javascript">			
 			docReady(function() {
 
-				jq = jQuery.noConflict(true);
+				jq = jQuery.noConflict();
 
 				function isEmpty($element) {
 					return !jq.trim($element.html());

@@ -18,6 +18,17 @@
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 			crossorigin="anonymous" />
+		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
+		<script type="text/javascript" src="resources/js/docReady.js"></script>
+		<script type="text/javascript">			
+			docReady(function() {
+
+				jq = jQuery.noConflict();
+
+				jq('#queryav').prop("disabled", true);
+				
+			});
+		</script>
 	</h:head>
 	<h:body>
 		<div class="logbot">
@@ -33,14 +44,13 @@
 		<div class="panel">
 			<div class="tab">
 				<div>
-					<h:button class="tablinks" data-tab="queryav"
-						outcome="#{setAvailability.controlQueryAv}"
+					<h:button id="queryav" class="tablinks btn-block" style="margin-bottom:4px; white-space: normal;" data-tab="queryav"
 						value="Consultar disponibilidad">
 					</h:button>
 				</div>
 				<div>
-					<h:button class="tablinks" data-tab="setav"
-						outcome="#{queryAvailability.controlSetAv}"
+					<h:button id="setav" class="tablinks btn-block" style="margin-bottom:4px; white-space: normal;" data-tab="setav"
+						outcome="#{queryAvailability.controlSetAv()}"
 						value="Establecer disponibilidad">
 					</h:button>
 				</div>
