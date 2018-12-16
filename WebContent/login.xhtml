@@ -18,15 +18,13 @@
 		<h:outputStylesheet target="head" library="css" name="index_style.css" />
 		<h:outputStylesheet target="head" library="css"
 			name="index_animate.css" />
-
-		<!-- 		<h:outputScript target="head" library="js" name="jquery-3.3.1.js"></h:outputScript> -->
 		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="resources/js/docReady.js"></script>
 		<script type="text/javascript">			
 			docReady(function() {
-				
-				var jq = jQuery.noConflict();
-				
+
+				jq = jQuery.noConflict(true);
+
 				function isEmpty($element) {
 					return !jq.trim($element.html());
 				}

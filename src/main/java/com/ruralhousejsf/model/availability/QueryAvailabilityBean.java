@@ -6,10 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-
 import com.ruralhousejsf.businessLogic.AppFacade;
 import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
 import com.ruralhousejsf.domain.Offer;
@@ -40,10 +37,6 @@ public class QueryAvailabilityBean {
 
 	public List<RuralHouse> getRuralHouseList() {
 		return ruralHouseList;
-	}
-
-	public void setRuralHouses(List<RuralHouse> ruralHouseList) {
-		this.ruralHouseList = ruralHouseList;
 	}
 
 	public RuralHouse getRuralHouse() {
@@ -96,21 +89,20 @@ public class QueryAvailabilityBean {
 	public String controlSetAv() {
 		return "setav";
 	}
-
-	public void dynamicRender(AjaxBehaviorEvent event) {
-
+	
+	public void search() {
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if(!context.isValidationFailed()) {
 			
-			endDate = addDays(startDate, nights);
+			setEndDate(addDays(startDate, nights));
 			
 			try {
 				offers =  applicationFacade.getOffers(ruralHouse, getStartDate(), getEndDate());
 			} catch (BadDatesException e) {
 				e.printStackTrace();
-				UIComponent target = event.getComponent().findComponent("queryAvailability:msg");
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "Bad Dates Exception", e.getMessage()));
+				context.addMessage("queryAvailability:msg", createMessage(FacesMessage.SEVERITY_INFO, "Bad Dates Exception", e.getMessage()));
 				context.validationFailed();
 			}
 			
@@ -126,7 +118,6 @@ public class QueryAvailabilityBean {
 			// TODO: Show offers
 
 		}
-
 	}
 
 	private FacesMessage createMessage(FacesMessage.Severity severity, String summary, String content) {

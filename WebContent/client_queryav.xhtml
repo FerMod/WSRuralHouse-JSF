@@ -18,8 +18,6 @@
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 			crossorigin="anonymous" />
-		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
-		<script type="text/javascript" src="resources/js/docReady.js"></script>
 	</h:head>
 	<h:body>
 		<div class="logbot">
@@ -106,8 +104,7 @@
 					</h:dataTable>
 
 					<h:commandButton value="Buscar">
-						<f:ajax execute="@form"
-							listener="#{queryAvailability.dynamicRender}" />
+						<f:ajax execute="@form" action="#{queryAvailability.search}" render="queryTable" />
 					</h:commandButton>
 					<br />
 					<p:messages id="msg" showIcon="true" showSummary="false"
