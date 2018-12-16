@@ -117,7 +117,9 @@ public class QueryAvailabilityBean {
 			sb.append("RuralHouseLabel: " + ruralHouse + System.lineSeparator());
 			sb.append("RuralHouses: " + ruralHouseList + System.lineSeparator());
 			sb.append("Offers: " + System.lineSeparator());
-			offers.forEach(o -> sb.append("\t" + o + System.lineSeparator()));
+			for (Offer offer : offers) {
+				sb.append("\t" + offer + System.lineSeparator());
+			}
 			
 			AppFacade.LOGGER.trace(sb.toString());
 
