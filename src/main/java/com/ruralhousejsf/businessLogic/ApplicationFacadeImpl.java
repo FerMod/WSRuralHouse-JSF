@@ -104,7 +104,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		}
 		LOGGER.trace("Login user: " + afi.login("user", "user1234"));
 		try {
-			LOGGER.trace(afi.getOffers(afi.getAllRuralHouses().get(0), sdf.parse("04/12/2018"), sdf.parse("07/01/2018")).toString());
+			LOGGER.trace(afi.getOffers(afi.getAllRuralHouses().get(0), sdf.parse("04/12/2018"), sdf.parse("07/01/2019")).toString());
 		} catch (ParseException e) {
 			LOGGER.error(e);
 		} catch (BadDatesException e) {
