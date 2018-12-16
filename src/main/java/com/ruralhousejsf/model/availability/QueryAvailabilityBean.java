@@ -7,6 +7,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+
 import com.ruralhousejsf.businessLogic.AppFacade;
 import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
 import com.ruralhousejsf.domain.Offer;
@@ -90,7 +92,9 @@ public class QueryAvailabilityBean {
 		return "setav";
 	}
 	
-	public void search() {
+	public void dynamicRenderer(AjaxBehaviorEvent event) {
+		
+		AppFacade.LOGGER.debug("Search method invoked");
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 
@@ -112,12 +116,15 @@ public class QueryAvailabilityBean {
 			sb.append("EndDate: " + endDate + System.lineSeparator());
 			sb.append("RuralHouseLabel: " + ruralHouse + System.lineSeparator());
 			sb.append("RuralHouses: " + ruralHouseList + System.lineSeparator());
-			sb.append("Offers: " + offers + System.lineSeparator());
-			System.out.println(sb.toString());
+			sb.append("Offers: " + System.lineSeparator());
+			offers.forEach(o -> sb.append("\t" + o + System.lineSeparator()));
+			
+			AppFacade.LOGGER.trace(sb.toString());
 
 			// TODO: Show offers
 
 		}
+		
 	}
 
 	private FacesMessage createMessage(FacesMessage.Severity severity, String summary, String content) {

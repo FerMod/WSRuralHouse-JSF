@@ -11,13 +11,13 @@
 <f:view>
 	<h:head>
 		<title>Casas rurales | Panel cliente</title>
-		<h:outputStylesheet target="head" library="css"
-			name="client_style.css" />
 		<!-- 		<h:outputStylesheet target="head" library="css" name="components.css" /> -->
 		<link rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 			crossorigin="anonymous" />
+		<h:outputStylesheet target="head" library="css"
+			name="client_style.css" />
 		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="resources/js/docReady.js"></script>
 		<script type="text/javascript">			
@@ -33,7 +33,8 @@
 	<h:body>
 		<div class="logbot">
 			<a href="login.xhtml?faces-redirect=true" class="btn btn-info btn-lg">
-				<span class="glyphicon glyphicon-log-out"></span> Log out
+				<span class="glyphicon glyphicon-log-out"></span>
+				Log out
 			</a>
 		</div>
 		<h2>
@@ -44,12 +45,14 @@
 		<div class="panel">
 			<div class="tab">
 				<div>
-					<h:button id="queryav" class="tablinks btn-block" style="margin-bottom:4px; white-space: normal;" data-tab="queryav"
+					<h:button id="queryav" class="tablinks btn-block"
+						style="margin-bottom:4px; white-space: normal;" data-tab="queryav"
 						value="Consultar disponibilidad">
 					</h:button>
 				</div>
 				<div>
-					<h:button id="setav" class="tablinks btn-block" style="margin-bottom:4px; white-space: normal;" data-tab="setav"
+					<h:button id="setav" class="tablinks btn-block"
+						style="margin-bottom:4px; white-space: normal;" data-tab="setav"
 						outcome="#{queryAvailability.controlSetAv()}"
 						value="Establecer disponibilidad">
 					</h:button>
@@ -113,8 +116,12 @@
 						</h:column>
 					</h:dataTable>
 
+<!-- 					<h:commandButton value="Buscar"> -->
+<!-- 						<f:ajax execute="@form" action="#{queryAvailability.search}" -->
+<!-- 							render="queryTable" /> -->
+<!-- 					</h:commandButton> -->
 					<h:commandButton value="Buscar">
-						<f:ajax execute="@form" action="#{queryAvailability.search}" render="queryTable" />
+						<f:ajax execute="@form" listener="#{queryAvailability.dynamicRenderer}"/>
 					</h:commandButton>
 					<br />
 					<p:messages id="msg" showIcon="true" showSummary="false"
@@ -122,6 +129,11 @@
 						<p:autoUpdate />
 					</p:messages>
 				</h:form>
+				<p:messages showIcon="true" showSummary="false" showDetail="true"
+					closable="true" redisplay="false" style="margin:8px;">
+					<p:autoUpdate />
+				</p:messages>
+
 			</div>
 		</div>
 	</h:body>

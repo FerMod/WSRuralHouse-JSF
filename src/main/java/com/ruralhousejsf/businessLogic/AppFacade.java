@@ -1,11 +1,15 @@
 package com.ruralhousejsf.businessLogic;
 
+import org.apache.log4j.Logger;
+
 import com.ruralhousejsf.dataAccess.HibernateDataAccess;
+import com.ruralhousejsf.debug.ConsoleLogger;
 
 public final class AppFacade {
 
 	private static final ApplicationFacadeInterface APP_FACADE = createAppImpl();
 	private static boolean initializeDb = true;
+	public static final Logger LOGGER = ConsoleLogger.createLogger(AppFacade.class);
 	
 	private AppFacade() {}
 	

@@ -72,7 +72,9 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 			createOffer(rh1, LocalDate.of(2018, 12, 12), LocalDate.of(2018, 12, 15), 25.0);
 			createOffer(rh2, LocalDate.of(2018, 12, 5), LocalDate.of(2018, 12, 10), 35.5);
 			createOffer(rh3, LocalDate.of(2019, 1, 3), LocalDate.of(2019, 1, 9), 40.0);
-			createOffer(rh4, LocalDate.of(2019, 1, 07), LocalDate.of(2019, 1, 21), 36.0);
+			createOffer(rh4, LocalDate.of(2019, 1, 7), LocalDate.of(2019, 1, 21), 36.0);
+			createOffer(rh4, LocalDate.of(2018, 1, 7), LocalDate.of(2019, 1, 7), 78.0);
+
 		} catch (BadDatesException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +108,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException {
 
-		if(!startDate.before(endDate)) {
+		if(startDate.after(endDate)) {
 			throw new BadDatesException("The startDate have to be before than the endDate.");
 		}
 
@@ -167,7 +169,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException {
 
-		if(startDate.before(endDate)) {
+		if(startDate.after(endDate)) {
 			throw new BadDatesException("The startDate have to be before than the endDate.");
 		}
 

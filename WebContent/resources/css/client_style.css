@@ -79,3 +79,19 @@ body {
 #queryAvailability\:messages {
 	text-align: left;
 }
+
+#queryAvailability\:ruralHouse_label {
+       margin-bottom: unset;
+       background: none;
+       -moz-box-shadow: none;
+       -webkit-box-shadow: none;
+       box-shadow: none;
+       border-collapse: separate;
+}
+
+input[type=button]:enabled,
+input[type=submit]:enabled,
+input[type=reset]:enabled,
+button:enabled {
+       cursor: pointer;
+}
