@@ -34,13 +34,18 @@
 		</h2>
 		<div class="panel">
 			<div class="tab">
-				<h:commandButton class="tablinks" data-tab="queryav" action="#{setAvailability.controlQueryAv}">
-					<i class="glyphicon glyphicon-calendar"></i> Consultar
-					disponibilidad
-				</h:commandButton>
-				<h:commandButton class="tablinks" data-tab="setav" action="#{queryAvailability.controlSetAv}">
-					<i class="glyphicon glyphicon-home"></i> Establecer disponibilidad
-				</h:commandButton>
+				<div>
+					<h:commandButton class="tablinks" data-tab="queryav"
+						action="#{setAvailability.controlQueryAv}"
+						value="Consultar disponibilidad">
+					</h:commandButton>
+				</div>
+				<div>
+					<h:commandButton class="tablinks" data-tab="setav"
+						action="#{queryAvailability.controlSetAv}"
+						value="Establecer disponibilidad">
+					</h:commandButton>
+				</div>
 			</div>
 
 			<div id="queryav" class="tabcontent">
