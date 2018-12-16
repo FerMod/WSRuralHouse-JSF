@@ -1,4 +1,4 @@
-package com.ruralhousejsf.debug;
+package com.ruralhousejsf.logger;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.ConsoleAppender;

@@ -3,7 +3,7 @@ package com.ruralhousejsf.businessLogic;
 import org.apache.log4j.Logger;
 
 import com.ruralhousejsf.dataAccess.HibernateDataAccess;
-import com.ruralhousejsf.debug.ConsoleLogger;
+import com.ruralhousejsf.logger.ConsoleLogger;
 
 public final class AppFacade {
 

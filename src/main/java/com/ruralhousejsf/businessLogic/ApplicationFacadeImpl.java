@@ -10,12 +10,12 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import com.ruralhousejsf.dataAccess.HibernateDataAccessInterface;
-import com.ruralhousejsf.debug.ConsoleLogger;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.domain.util.ParseDate;
 import com.ruralhousejsf.exceptions.BadDatesException;
+import com.ruralhousejsf.logger.ConsoleLogger;
 
 public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 

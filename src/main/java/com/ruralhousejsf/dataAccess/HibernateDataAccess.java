@@ -11,12 +11,12 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.ruralhousejsf.debug.ConsoleLogger;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.domain.util.ParseDate;
 import com.ruralhousejsf.exceptions.BadDatesException;
+import com.ruralhousejsf.logger.ConsoleLogger;
 
 public class HibernateDataAccess implements HibernateDataAccessInterface {
 

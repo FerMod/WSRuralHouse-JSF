@@ -12,7 +12,7 @@ import com.ruralhousejsf.domain.RuralHouse;
 public class RuralHouseConverter extends SelectItemsConverter  {
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object value) {		
+	public String getAsString(FacesContext context, UIComponent component, Object value) {	
 		Long id = (value instanceof RuralHouse) ? ((RuralHouse) value).getId() : null;
 		return (id != null) ? String.valueOf(id) : null;
 	}
