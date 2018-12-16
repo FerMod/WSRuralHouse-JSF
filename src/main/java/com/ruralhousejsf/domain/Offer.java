@@ -15,8 +15,7 @@ public class Offer implements Serializable {
 	private Date endDate;
 	private double price;
 		
-	@SuppressWarnings("unused")
-	private Offer() {}
+	public Offer() {}
 	
 	public Offer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
 		this.ruralHouse = ruralHouse;

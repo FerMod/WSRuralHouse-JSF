@@ -180,7 +180,11 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
 
-		Query query = session.createQuery("FROM Offer WHERE start_date >= :startDate AND end_date <= :endDate");
+		Query query = session.createQuery("FROM Offer " + 
+				"WHERE (start_date BETWEEN :startDate AND :endDate) " + 
+				"OR (end_date BETWEEN :startDate AND :endDate) " + 
+				"OR (start_date <= :startDate AND end_date >= :endDate)"
+				);
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		query.setParameter("startDate", formatter.format(startDate));
@@ -214,7 +218,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 		return result;
 	}
-	
+
 	public <T extends Serializable> void delete(Class<?> cls, T key) {
 		LOGGER.debug("delete " + cls.getSimpleName() + " with key " + key);
 
@@ -222,9 +226,9 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
-		
+
 		Optional<Object> persistantInstance = Optional.ofNullable(session.get(cls, key));
-		
+
 		if(persistantInstance.isPresent()) {
 			session.delete(persistantInstance.get());
 			LOGGER.debug("Persistance instance " + cls.getSimpleName() + " with key " + key + " deleted.");
@@ -234,7 +238,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
-		
+
 	}
 
 }

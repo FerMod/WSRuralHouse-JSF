@@ -12,8 +12,7 @@ public class RuralHouse implements Serializable {
 	private String city; 
 	private Set<Offer> offers;
 
-	@SuppressWarnings("unused")
-	private RuralHouse() {}
+	public RuralHouse() {}
 
 	public RuralHouse(String description, String city) {
 		this(description, city, new HashSet<Offer>());		

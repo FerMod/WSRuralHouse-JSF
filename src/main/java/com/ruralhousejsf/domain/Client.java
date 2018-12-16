@@ -8,8 +8,7 @@ public class Client implements Serializable {
 	private String username;
 	private String password;
 
-	@SuppressWarnings("unused")
-	private Client() {}
+	public Client() {}
 
 	public Client(String username, String password) {
 		this.username = username;
