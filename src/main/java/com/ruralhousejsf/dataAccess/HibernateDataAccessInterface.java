@@ -1,5 +1,6 @@
 package com.ruralhousejsf.dataAccess;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -97,5 +98,14 @@ public interface HibernateDataAccessInterface {
 	 * @return optional with the found client or a <code>Optional.Empty()</code> if none was found
 	 */
 	public Optional<Client> getClient(String user, String pass);
+	
+	/**
+	 * Delete the persistent instance with the given id
+	 * 
+	 * @param <T> the key type
+	 * @param cls the instance class
+	 * @param key the instance key
+	 */
+	public <T extends Serializable> void delete(Class<?> cls, T key);
 	
 }
