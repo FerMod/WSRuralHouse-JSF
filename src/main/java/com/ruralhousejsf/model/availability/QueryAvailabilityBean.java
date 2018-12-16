@@ -99,7 +99,7 @@ public class QueryAvailabilityBean {
 			setEndDate(addDays(startDate, nights));
 			
 			try {
-				offers =  applicationFacade.getOffers(ruralHouse, getStartDate(), getEndDate());
+				offers = applicationFacade.getOffers(ruralHouse, getStartDate(), getEndDate());
 			} catch (BadDatesException e) {
 				e.printStackTrace();
 				context.addMessage("queryAvailability:msg", createMessage(FacesMessage.SEVERITY_INFO, "Bad Dates Exception", e.getMessage()));

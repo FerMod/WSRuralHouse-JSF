@@ -18,11 +18,23 @@
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 			crossorigin="anonymous" />
+		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
+		<script type="text/javascript" src="resources/js/docReady.js"></script>
+		<script type="text/javascript">			
+			docReady(function() {
+
+				jq = jQuery.noConflict();
+
+				jq('#setav').prop("disabled", true);
+				
+			});
+		</script>
 	</h:head>
 	<h:body>
 		<div class="logbot">
 			<a href="login.xhtml?faces-redirect=true" class="btn btn-info btn-lg">
-				<span class="glyphicon glyphicon-log-out"></span> Log out
+				<span class="glyphicon glyphicon-log-out"></span>
+				Log out
 			</a>
 		</div>
 		<h2>
@@ -33,13 +45,13 @@
 		<div class="panel">
 			<div class="tab">
 				<div>
-					<h:button class="tablinks" data-tab="queryav"
-						action="#{setAvailability.controlQueryAv}"
+					<h:button id="queryav" class="tablinks btn-block" style="margin-bottom:4px; white-space: normal;" data-tab="queryav"
+						outcome="#{setAvailability.controlQueryAv()}"
 						value="Consultar disponibilidad">
 					</h:button>
 				</div>
 				<div>
-					<h:button class="tablinks" data-tab="setav"
+					<h:button id="setav" class="tablinks btn-block" style="margin-bottom:4px; white-space: normal;" data-tab="setav"
 						value="Establecer disponibilidad">
 					</h:button>
 				</div>
@@ -88,7 +100,6 @@
 							listener="#{setAvailability.dynamicRender}" />
 					</h:commandButton>
 					<br></br>
-					
 					<p:messages id="msg" showIcon="true" showSummary="false"
 						showDetail="true" closable="true" style="margin:8px;">
 						<p:autoUpdate />
