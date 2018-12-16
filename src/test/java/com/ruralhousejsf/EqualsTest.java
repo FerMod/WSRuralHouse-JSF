@@ -179,7 +179,6 @@ class EqualsTest {
 			return offer;
 		}
 
-
 	}
 
 }
