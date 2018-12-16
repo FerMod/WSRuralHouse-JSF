@@ -23,25 +23,33 @@ import com.ruralhousejsf.exceptions.BadDatesException;
 public class SetAvailabilityBean {
 
 	private Date startDate;
-	private String ruralHouseLabel;
 	private Date endDate;
 	private double priceOffer;
 
-	private LinkedHashMap<String, RuralHouse> ruralHouses;
+	private RuralHouse ruralHouse;
+	private List<RuralHouse> ruralHouseList;
+	
 	private ApplicationFacadeInterface applicationFacade;
 
 	public SetAvailabilityBean() {
 
 		applicationFacade = AppFacade.getImpl();
-		List<RuralHouse> ruralHouseList = applicationFacade.getAllRuralHouses();
-
-		ruralHouses = new LinkedHashMap<String, RuralHouse>();
-		for (RuralHouse ruralHouse : ruralHouseList) {
-			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getDescription(), ruralHouse);
-		}
+		ruralHouseList = applicationFacade.getAllRuralHouses();
 
 	}
+	
+	public List<RuralHouse> getRuralHouseList() {
+		return ruralHouseList;
+	}
+	
+	public RuralHouse getRuralHouse() {
+		return ruralHouse;
+	}
 
+	public void setRuralHouse(RuralHouse ruralHouse) {
+		this.ruralHouse = ruralHouse;
+	}
+	
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -62,17 +70,8 @@ public class SetAvailabilityBean {
 		return priceOffer;
 	}
 
-	public void setPriceOffer(int priceOffer) {
+	public void setPriceOffer(double priceOffer) {
 		this.priceOffer = priceOffer;
-	}
-
-	public LinkedHashMap<String, RuralHouse> getRuralHouses() {
-		return ruralHouses;
-	}
-
-	public String[] getRuralHousesValues() {
-		Set<String> values = ruralHouses.keySet();
-		return values.toArray(new String[values.size()]);
 	}
 
 	public ApplicationFacadeInterface getApplicationFacade() {
@@ -81,14 +80,6 @@ public class SetAvailabilityBean {
 
 	public void setApplicationFacade(ApplicationFacadeInterface applicationFacade) {
 		this.applicationFacade = applicationFacade;
-	}
-
-	public String getRuralHouseLabel() {
-		return ruralHouseLabel;
-	}
-
-	public void setRuralHouse(String ruralHouseLabel) {
-		this.ruralHouseLabel = ruralHouseLabel;
 	}
 	
 	public String controlQueryAv() {
@@ -99,13 +90,13 @@ public class SetAvailabilityBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if(!context.isValidationFailed()) {
-			RuralHouse rh = getRuralHouses().get(getRuralHouseLabel());
+			RuralHouse rh = getRuralHouse();
 			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
 			try {
 				getApplicationFacade().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", ""));
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", "¡Oferta creada correctamente!"));
 			} catch (BadDatesException e) {
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas incompatibles.", e.getMessage()));
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas incompatibles.", "La oferta no puede tener fechas incompatibles."));
 				context.validationFailed();
 			}
 		}

@@ -51,11 +51,12 @@
 				<h:form id="setAvailability">
 					<div style="padding-bottom: 10px">
 						<p>Seleccione una casa rural</p>
-						<p:selectOneMenu id="setRuralHouse"
-							value="#{setAvailability.ruralHouseLabel}"
+						<p:selectOneMenu id="ruralHouse"
+							value="#{setAvailability.ruralHouse}"
 							styleclass="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-disabled"
-							editable="false">
-							<f:selectItems value="#{setAvailability.ruralHousesValues}" />
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{setAvailability.ruralHouseList}"
+								var="rh" itemLabel="#{rh.description}" itemValue="#{rh}" />
 						</p:selectOneMenu>
 					</div>
 					<div style="padding-bottom: 10px">
@@ -71,7 +72,7 @@
 						<p:calendar id="setEndDate" value="#{setAvailability.endDate}"
 							showOn="button" pattern="dd/MM/yyyy" mask="true" required="true"
 							requiredMessage="Inserte la fecha final de la oferta."
-							converterMessage="El valor introducido para la fecha inicial no cumple el patrón.">
+							converterMessage="El valor introducido para la fecha final no cumple el patrón.">
 						</p:calendar>
 					</div>
 					<div style="padding-bottom: 10px">
@@ -87,6 +88,7 @@
 							listener="#{setAvailability.dynamicRender}" />
 					</h:commandButton>
 					<br></br>
+					
 					<p:messages id="msg" showIcon="true" showSummary="false"
 						showDetail="true" closable="true" style="margin:8px;">
 						<p:autoUpdate />
