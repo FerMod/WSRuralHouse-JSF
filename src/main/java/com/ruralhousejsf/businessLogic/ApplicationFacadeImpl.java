@@ -1,5 +1,6 @@
 package com.ruralhousejsf.businessLogic;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -82,6 +83,12 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		LOGGER.debug("Login with username: " + username + " and password: " + password + ".");
 		Optional<Client> clients = dataAccess.getClient(username, password);
 		return clients.isPresent();
+	}
+
+	@Override
+	public <T extends Serializable> void delete(Class<?> cls, T key) {
+		LOGGER.debug("Delete " + cls.getSimpleName() + " with key " + key);
+		dataAccess.delete(cls, key);
 	}
 
 	public static void main(String[] args) {

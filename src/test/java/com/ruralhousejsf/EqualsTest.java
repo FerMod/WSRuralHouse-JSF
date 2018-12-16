@@ -5,6 +5,11 @@ import static org.junit.Assume.assumeNotNull;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,25 +25,57 @@ class EqualsTest {
 
 	static ApplicationFacadeInterface afi;
 
-//	@BeforeAll
-//	static void beforeAll() {
-//
-//		try {
-//			afi = AppFacade.getImpl(true);
-//		} catch (Exception e) {
-//			assumeNoException("Exception raised when creating the test data.", e);
-//		}		
-//
-//	}
+	static List<Client> clientList;
+	static List<Offer> offerList;
+	static List<RuralHouse> ruralHouseList;
 
-	@BeforeEach
-	void beforeEach() {
+	@BeforeAll
+	static void beforeAll() {
 
 		try {
 			afi = AppFacade.getImpl(true);
 		} catch (Exception e) {
 			assumeNoException("Exception raised when creating the test data.", e);
 		}		
+
+		clientList = new ArrayList<>();
+		offerList = new ArrayList<>();
+		ruralHouseList = new ArrayList<>();
+
+	}
+
+	@AfterAll
+	static void afterAll() {
+		removeTestData();
+	}
+
+	@BeforeEach
+	void beforeEach() {
+		removeTestData();
+	}
+
+	private static void removeTestData() {
+
+		if(!clientList.isEmpty()) {
+			clientList.forEach(c -> {
+				afi.delete(Client.class, c.getId());
+			});
+			clientList.clear();
+		}
+
+		if(!ruralHouseList.isEmpty()) {
+			ruralHouseList.forEach(c -> {
+				afi.delete(RuralHouse.class, c.getId());
+			});
+			ruralHouseList.clear();
+		}
+
+		if(!offerList.isEmpty()) {
+			offerList.forEach(c -> {
+				afi.delete(Offer.class, c.getId());
+			});
+			offerList.clear();
+		}	
 
 	}
 
@@ -47,13 +84,13 @@ class EqualsTest {
 	class ClientEqualsTest implements EqualsContract<Client> {
 
 		@Override
-		public Client createValue() {		
-			return createTestClient("TestClient", "Client123");
+		public Client createValue() {	
+			return createTestClient("TestClient", "TestClient123");
 		}
 
 		@Override
-		public Client createNotEqualValue() {		
-			return createTestClient("TestDifferentClient", "Client123");
+		public Client createNotEqualValue() {
+			return createTestClient("TestDifferentClient", "TestClient123");
 		}
 
 		private Client createTestClient(String username, String password) {
@@ -67,9 +104,43 @@ class EqualsTest {
 			}
 
 			assumeNotNull(client);
+			clientList.add(client);
 
 			return client;
 		}
+
+	}
+
+	@Nested
+	@DisplayName("RuralHouse Equals Test")
+	class RuralHouseEqualsTest implements EqualsContract<RuralHouse> {
+
+		@Override
+		public RuralHouse createValue() {		
+			return createTestRuralHouse("Test RuralHouse", "Test City");
+		}
+
+		@Override
+		public RuralHouse createNotEqualValue() {		
+			return createTestRuralHouse("Test different RuralHouse", "Test City");
+		}
+
+		private RuralHouse createTestRuralHouse(String description, String city) {
+
+			RuralHouse ruralHouse = null;
+
+			try {
+				ruralHouse = afi.createRuralHouse(description, city);
+			} catch (Exception e) {
+				assumeNoException("Exception raised when creating the test data.", e);
+			}
+
+			assumeNotNull(ruralHouse);
+			ruralHouseList.add(ruralHouse);
+
+			return ruralHouse;
+		}
+
 
 	}
 
@@ -88,54 +159,24 @@ class EqualsTest {
 		}
 
 		private Offer createTestOffer(String rhDescription, String rhCity, LocalDate offerStartDate, LocalDate offerEndDate, double offerPrice) {
-			
+
 			RuralHouse ruralHouse = null;
 			Offer offer = null;
-			
+
 			try {
 				ruralHouse = afi.createRuralHouse(rhDescription, rhCity);
 				assumeNotNull(ruralHouse);
+				ruralHouseList.add(ruralHouse);
+
 				offer = afi.createOffer(ruralHouse, offerStartDate, offerEndDate, offerPrice);
 			} catch (Exception e) {
 				assumeNoException("Exception raised when creating the test data.", e);
 			}
 
 			assumeNotNull(offer);
+			offerList.add(offer);
 
 			return offer;
-		}
-
-
-	}
-
-
-	@Nested
-	@DisplayName("RuralHouse Equals Test")
-	class RuralHouseEqualsTest implements EqualsContract<RuralHouse> {
-
-		@Override
-		public RuralHouse createValue() {		
-			return createTestRuralHouse("Test RuralHouse", "Test City");
-		}
-
-		@Override
-		public RuralHouse createNotEqualValue() {		
-			return createTestRuralHouse("Test different RuralHouse", "Test City");
-		}
-
-		private RuralHouse createTestRuralHouse(String description, String city) {
-			
-			RuralHouse ruralHouse = null;
-			
-			try {
-				ruralHouse = afi.createRuralHouse(description, city);
-			} catch (Exception e) {
-				assumeNoException("Exception raised when creating the test data.", e);
-			}
-
-			assumeNotNull(ruralHouse);
-
-			return ruralHouse;
 		}
 
 

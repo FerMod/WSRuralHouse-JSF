@@ -1,5 +1,6 @@
 package com.ruralhousejsf.dataAccess;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -210,6 +211,28 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Transaction commit and session closed");
 
 		return result;
+	}
+	
+	public <T extends Serializable> void delete(Class<?> cls, T key) {
+		LOGGER.debug("delete " + cls.getSimpleName() + " with key " + key);
+
+		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
+		session.beginTransaction();
+		LOGGER.trace("Transaction started");
+		
+		Optional<Object> persistantInstance = Optional.ofNullable(session.get(cls, key));
+		
+		if(persistantInstance.isPresent()) {
+			session.delete(persistantInstance.get());
+			LOGGER.debug("Persistance instance " + cls.getSimpleName() + " with key " + key + " deleted.");
+		} else {
+			LOGGER.debug("No persistance instance " + cls.getSimpleName()  + " with key " + key + " was found.");
+		}
+
+		session.getTransaction().commit();
+		LOGGER.trace("Transaction commit and session closed");
+		
 	}
 
 }

@@ -12,6 +12,7 @@
   <navigation-case>
    <from-outcome>ok</from-outcome>
    <to-view-id>/client_queryav.xhtml</to-view-id>
+   <redirect />
   </navigation-case>
  </navigation-rule>
  <navigation-rule>
@@ -19,6 +20,7 @@
   <navigation-case>
    <from-outcome>setav</from-outcome>
    <to-view-id>/client_setav.xhtml</to-view-id>
+   <redirect />
   </navigation-case>
  </navigation-rule>
  <navigation-rule>
@@ -26,6 +28,7 @@
   <navigation-case>
    <from-outcome>queryav</from-outcome>
    <to-view-id>/client_queryav.xhtml</to-view-id>
+   <redirect />
   </navigation-case>
  </navigation-rule>
 </faces-config>
