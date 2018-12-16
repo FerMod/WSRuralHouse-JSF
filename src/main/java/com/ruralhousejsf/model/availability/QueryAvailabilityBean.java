@@ -92,7 +92,7 @@ public class QueryAvailabilityBean {
 		return "setav";
 	}
 	
-	public void dynamicRenderer(AjaxBehaviorEvent event) {
+	public void search(AjaxBehaviorEvent event) {
 		
 		AppFacade.LOGGER.debug("Search method invoked");
 		

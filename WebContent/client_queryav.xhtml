@@ -115,13 +115,8 @@
 							#{offer.price}
 						</h:column>
 					</h:dataTable>
-
-<!-- 					<h:commandButton value="Buscar"> -->
-<!-- 						<f:ajax execute="@form" action="#{queryAvailability.search}" -->
-<!-- 							render="queryTable" /> -->
-<!-- 					</h:commandButton> -->
 					<h:commandButton value="Buscar">
-						<f:ajax execute="@form" listener="#{queryAvailability.dynamicRenderer}"/>
+						<f:ajax execute="@form" listener="#{queryAvailability.search}"/>
 					</h:commandButton>
 					<br />
 					<p:messages id="msg" showIcon="true" showSummary="false"
