@@ -35,16 +35,16 @@
 		<div class="panel">
 			<div class="tab">
 				<div>
-					<h:commandButton class="tablinks" data-tab="queryav"
-						action="#{setAvailability.controlQueryAv}"
+					<h:button class="tablinks" data-tab="queryav"
+						outcome="#{setAvailability.controlQueryAv}"
 						value="Consultar disponibilidad">
-					</h:commandButton>
+					</h:button>
 				</div>
 				<div>
-					<h:commandButton class="tablinks" data-tab="setav"
-						action="#{queryAvailability.controlSetAv}"
+					<h:button class="tablinks" data-tab="setav"
+						outcome="#{queryAvailability.controlSetAv}"
 						value="Establecer disponibilidad">
-					</h:commandButton>
+					</h:button>
 				</div>
 			</div>
 
