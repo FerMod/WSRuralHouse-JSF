@@ -7,11 +7,6 @@
   <managed-bean-class>com.ruralhousejsf.model.login.LoginBean</managed-bean-class>
   <managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
- <managed-bean>
-  <managed-bean-name>control</managed-bean-name>
-  <managed-bean-class>com.ruralhousejsf.model.availability.ControlBean</managed-bean-class>
-  <managed-bean-scope>session</managed-bean-scope>
- </managed-bean>
  <navigation-rule>
   <from-view-id>/login.xhtml</from-view-id>
   <navigation-case>

@@ -92,6 +92,10 @@ public class QueryAvailabilityBean {
 		calendar.add(Calendar.DATE, days);
 		return calendar.getTime();
 	}
+	
+	public String controlSetAv() {
+		return "setav";
+	}
 
 	public void dynamicRender(AjaxBehaviorEvent event) {
 
