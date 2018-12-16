@@ -90,10 +90,9 @@ public class SetAvailabilityBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if(!context.isValidationFailed()) {
-			RuralHouse rh = getRuralHouse();
 			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
 			try {
-				getApplicationFacade().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
+				getApplicationFacade().createOffer(ruralHouse, startDate, endDate, priceOffer);
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", "¡Oferta creada correctamente!"));
 			} catch (BadDatesException e) {
 				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas incompatibles.", "La oferta no puede tener fechas incompatibles."));
