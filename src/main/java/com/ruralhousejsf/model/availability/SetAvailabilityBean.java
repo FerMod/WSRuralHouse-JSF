@@ -90,6 +90,10 @@ public class SetAvailabilityBean {
 	public void setRuralHouse(String ruralHouseLabel) {
 		this.ruralHouseLabel = ruralHouseLabel;
 	}
+	
+	public String controlQueryAv() {
+		return "queryav";
+	}
 
 	public void dynamicRender(AjaxBehaviorEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
