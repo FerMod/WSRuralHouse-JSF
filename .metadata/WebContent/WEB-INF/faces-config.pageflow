@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15427101875640" configfile="/WSRuralHouse-JSF/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="Login" x="252" y="204" id="pf15430698984101" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15427312543231" path="/login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="ClientPanel" x="408" y="204" id="pf15430698984102" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15427312543231" path="/client_panel.xhtml"/>
-  <links id="pf15427312543231" target="pf15430698984102" source="pf15430698984101" outcome="ok" redirect="true"/>
+  <nodes xsi:type="pageflow:PFPage" name="Login" x="122" y="562" id="pf15430698984101" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15449660981940" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="ClientPanel" x="122" y="178" id="pf15430698984102" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" path="/client_panel.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="client_queryav.xhtml" x="338" y="946" id="pf15449660981941" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf15449660981942" inlinks="pf15449660981940 pf15449660981943" path="/client_queryav.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="client_setav.xhtml" x="122" y="946" id="pf15449660981944" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf15449660981943" inlinks="pf15449660981942" path="/client_setav.xhtml"/>
+  <links id="pf15449660981940" target="pf15449660981941" source="pf15430698984101" outcome="ok" redirect="true"/>
+  <links id="pf15449660981942" target="pf15449660981944" source="pf15449660981941" outcome="setav" redirect="true"/>
+  <links id="pf15449660981943" target="pf15449660981941" source="pf15449660981944" outcome="queryav" redirect="true"/>
 </pageflow:Pageflow>

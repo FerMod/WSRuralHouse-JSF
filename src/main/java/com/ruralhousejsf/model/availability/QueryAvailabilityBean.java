@@ -3,19 +3,18 @@ package com.ruralhousejsf.model.availability;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import com.ruralhousejsf.AppFacade;
-
-import domain.Offer;
-import domain.Review.ReviewState;
-import domain.RuralHouse;
-import exceptions.BadDatesException;
+import com.ruralhousejsf.businessLogic.AppFacade;
+import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
+import com.ruralhousejsf.domain.Offer;
+import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.exceptions.BadDatesException;
 
 @ManagedBean(name="queryAvailability")
 @SessionScoped
@@ -30,21 +29,17 @@ public class QueryAvailabilityBean {
 
 	private List<Offer> offers;
 
-	private AppFacade applicationFacade;
+	private ApplicationFacadeInterface applicationFacade;
 
 	public QueryAvailabilityBean() {
 
-		applicationFacade = AppFacade.getInstance();
-		ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
+		applicationFacade = AppFacade.getImpl();
+		ruralHouseList = applicationFacade.getAllRuralHouses();
 
 	}
 
 	public List<RuralHouse> getRuralHouseList() {
 		return ruralHouseList;
-	}
-
-	public void setRuralHouses(List<RuralHouse> ruralHouseList) {
-		this.ruralHouseList = ruralHouseList;
 	}
 
 	public RuralHouse getRuralHouse() {
@@ -93,21 +88,26 @@ public class QueryAvailabilityBean {
 		calendar.add(Calendar.DATE, days);
 		return calendar.getTime();
 	}
-
-	public void dynamicRender(AjaxBehaviorEvent event) {
-
+	
+	public String controlSetAv() {
+		return "setav";
+	}
+	
+	public void search(AjaxBehaviorEvent event) {
+		
+		AppFacade.LOGGER.debug("Search method invoked");
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if(!context.isValidationFailed()) {
 			
-			endDate = addDays(startDate, nights);
+			setEndDate(addDays(startDate, nights));
 			
 			try {
-				offers =  applicationFacade.getImpl().getOffers(ruralHouse, getStartDate(), getEndDate());
+				offers = applicationFacade.getOffers(ruralHouse, getStartDate(), getEndDate());
 			} catch (BadDatesException e) {
 				e.printStackTrace();
-				UIComponent target = event.getComponent().findComponent("queryAvailability:msg");
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "Bad Dates Exception", e.getMessage()));
+				context.addMessage("queryAvailability:msg", createMessage(FacesMessage.SEVERITY_INFO, "Bad Dates Exception", e.getMessage()));
 				context.validationFailed();
 			}
 			
@@ -117,13 +117,17 @@ public class QueryAvailabilityBean {
 			sb.append("EndDate: " + endDate + System.lineSeparator());
 			sb.append("RuralHouseLabel: " + ruralHouse + System.lineSeparator());
 			sb.append("RuralHouses: " + ruralHouseList + System.lineSeparator());
-			sb.append("Offers: " + offers + System.lineSeparator());
-			System.out.println(sb.toString());
+			sb.append("Offers: " + System.lineSeparator());
+			for (Offer offer : offers) {
+				sb.append("\t" + offer + System.lineSeparator());
+			}
+			
+			AppFacade.LOGGER.trace(sb.toString());
 
 			// TODO: Show offers
 
 		}
-
+		
 	}
 
 	private FacesMessage createMessage(FacesMessage.Severity severity, String summary, String content) {

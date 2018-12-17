@@ -1,50 +1,52 @@
 package com.ruralhousejsf.model.availability;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.validator.ValidatorException;
 
-import com.ruralhousejsf.AppFacade;
+import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.businessLogic.AppFacade;
+import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
+import com.ruralhousejsf.exceptions.BadDatesException;
 
-import businessLogic.ApplicationFacadeInterface;
-import domain.RuralHouse;
-import exceptions.BadDatesException;
-import exceptions.OverlappingOfferException;
-import domain.Review.ReviewState;
 
 @ManagedBean(name="setAvailability")
 @SessionScoped
 public class SetAvailabilityBean {
 
 	private Date startDate;
-	private String ruralHouseLabel;
 	private Date endDate;
 	private double priceOffer;
 
-	private LinkedHashMap<String, RuralHouse> ruralHouses;
-	private AppFacade applicationFacade;
+	private RuralHouse ruralHouse;
+	private List<RuralHouse> ruralHouseList;
+	
+	private ApplicationFacadeInterface applicationFacade;
 
 	public SetAvailabilityBean() {
 
-		applicationFacade = AppFacade.getInstance();
-		List<RuralHouse> ruralHouseList = applicationFacade.getImpl().getRuralHouses(ReviewState.APPROVED);
-
-		ruralHouses = new LinkedHashMap<String, RuralHouse>();
-		for (RuralHouse ruralHouse : ruralHouseList) {
-			ruralHouses.put(ruralHouse.getId() + " : " + ruralHouse.getName(), ruralHouse);
-		}
+		applicationFacade = AppFacade.getImpl();
+		ruralHouseList = applicationFacade.getAllRuralHouses();
 
 	}
+	
+	public List<RuralHouse> getRuralHouseList() {
+		return ruralHouseList;
+	}
+	
+	public RuralHouse getRuralHouse() {
+		return ruralHouse;
+	}
 
+	public void setRuralHouse(RuralHouse ruralHouse) {
+		this.ruralHouse = ruralHouse;
+	}
+	
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -65,49 +67,32 @@ public class SetAvailabilityBean {
 		return priceOffer;
 	}
 
-	public void setPriceOffer(int priceOffer) {
+	public void setPriceOffer(double priceOffer) {
 		this.priceOffer = priceOffer;
 	}
 
-	public LinkedHashMap<String, RuralHouse> getRuralHouses() {
-		return ruralHouses;
-	}
-
-	public String[] getRuralHousesValues() {
-		Set<String> values = ruralHouses.keySet();
-		return values.toArray(new String[values.size()]);
-	}
-
-	public AppFacade getApplicationFacade() {
+	public ApplicationFacadeInterface getApplicationFacade() {
 		return applicationFacade;
 	}
 
-	public void setApplicationFacade(AppFacade applicationFacade) {
+	public void setApplicationFacade(ApplicationFacadeInterface applicationFacade) {
 		this.applicationFacade = applicationFacade;
 	}
-
-	public String getRuralHouseLabel() {
-		return ruralHouseLabel;
-	}
-
-	public void setRuralHouse(String ruralHouseLabel) {
-		this.ruralHouseLabel = ruralHouseLabel;
+	
+	public String controlQueryAv() {
+		return "queryav";
 	}
 
 	public void dynamicRender(AjaxBehaviorEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if(!context.isValidationFailed()) {
-			RuralHouse rh = getRuralHouses().get(getRuralHouseLabel());
 			UIComponent target = event.getComponent().findComponent("setAvailability:msg");
 			try {
-				getApplicationFacade().getImpl().createOffer(rh, getStartDate(), getEndDate(), getPriceOffer());
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "�Oferta creada correctamente!", ""));
-			} catch (OverlappingOfferException e) {
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas coincidentes a otra oferta.", e.getMessage()));
-				context.validationFailed();
+				getApplicationFacade().createOffer(ruralHouse, startDate, endDate, priceOffer);
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_INFO, "¡Oferta creada correctamente!", "¡Oferta creada correctamente!"));
 			} catch (BadDatesException e) {
-				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas incompatibles.", e.getMessage()));
+				context.addMessage(target.getId(), createMessage(FacesMessage.SEVERITY_ERROR, "La oferta no puede tener fechas incompatibles.", "La oferta no puede tener fechas incompatibles."));
 				context.validationFailed();
 			}
 		}

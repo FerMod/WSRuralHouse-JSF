@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-dic-2018 21:13:04 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.ruralhousejsf.domain">
+ <class name="Client" table="client">
+ 
+  <id name="id" type="long" column="client_id">
+   <generator class="increment"/>
+  </id>
+  
+  <property name="username" column="username" unique="true" generated="never" lazy="false" type="string"/>
+  
+  <property name="password" column="password" generated="never" lazy="false" type="string"/>
+  
+ </class>
+</hibernate-mapping>
