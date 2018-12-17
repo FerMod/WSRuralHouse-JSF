@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+
+		<title>Casas rurales | Login</title>
+
+		<link
+			href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900'
+			rel='stylesheet' type='text/css' />
+		<h:outputStylesheet target="head" library="css" name="index_style.css" />
+		<h:outputStylesheet target="head" library="css"
+			name="index_animate.css" />
+		<script type="text/javascript" src="resources/js/jquery-3.3.1.js"></script>
+		<script type="text/javascript" src="resources/js/docReady.js"></script>
+		<script type="text/javascript">			
+			docReady(function() {
+
+				jq = jQuery.noConflict();
+
+				function isEmpty($element) {
+					return !jq.trim($element.html());
+				}
+
+				function placeholder($element, text) {
+					if (isEmpty($element)) {
+						$element.attr('placeholder', text);
+					} else {
+						$element.removeAttr('placeholder');
+					}
+				}
+
+				jq('#logo').addClass('animated fadeInDown');
+				jq("input:text:visible:first").focus();
+
+				jq('#login\\:username').change(function() {
+					placeholder($(this), 'username');
+				});
+
+				jq('#login\\:password').change(function() {
+					placeholder($(this), 'password');
+				});
+				
+				jq('#login\\:username').focus(function() {
+					jq('label[for="username"]').addClass('selected');
+				});
+				jq('#login\\:username').blur(function() {
+					jq('label[for="username"]').removeClass('selected');
+				});
+				jq('#login\\:password').focus(function() {
+					jq('label[for="password"]').addClass('selected');
+				});
+				jq('#login\\:password').blur(function() {
+					jq('label[for="password"]').removeClass('selected');
+				});
+
+				placeholder(jq('#login\\:username'), 'username');
+				placeholder(jq('#login\\:password'), 'password');
+
+			});
+		</script>
+
+	</h:head>
+
+	<h:body>
+		<div class="container">
+			<div>
+				<h1>Casas Rurales</h1>
+			</div>
+			<h:form id="login">
+				<div class="login-box animated fadeInUp">
+					<div class="box-header">
+						<h2>Inicia sesión</h2>
+					</div>
+					<label for="username">Usuario</label> <br />
+					<h:inputText id="username" value="#{login.user}"
+						placeholder="usuario" required="true"
+						requiredMessage="Inserte su nombre de usuario">
+					</h:inputText>
+					<br /> <label for="password">Contraseña</label> <br />
+					<h:inputSecret type="password" id="password" value="#{login.pass}"
+						placeholder="password" required="true"
+						requiredMessage="Inserte su contraseña">
+					</h:inputSecret>
+					<br />
+					<h:commandButton value="Iniciar sesión" action="#{login.validate}">
+						<f:ajax execute="@form" render="msgList" />
+					</h:commandButton>					
+					<br />
+					<h:messages id="msgList" style="color:red" />
+				</div>
+			</h:form>
+		</div>
+	</h:body>
+</f:view>
+</html>
