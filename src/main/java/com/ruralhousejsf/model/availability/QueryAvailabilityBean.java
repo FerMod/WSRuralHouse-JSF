@@ -124,8 +124,6 @@ public class QueryAvailabilityBean {
 			
 			AppFacade.LOGGER.trace(sb.toString());
 
-			// TODO: Show offers
-
 		}
 		
 	}
