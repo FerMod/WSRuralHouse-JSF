@@ -1,15 +1,18 @@
 package com.ruralhousejsf.dataAccess;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
@@ -21,7 +24,7 @@ import com.ruralhousejsf.logger.ConsoleLogger;
 public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 	private static final Logger LOGGER = ConsoleLogger.createLogger(HibernateDataAccess.class);
-
+	
 	public static void main(String[] args) {
 		new HibernateDataAccess().initializeDB();
 	}
@@ -179,19 +182,34 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
-
+		
+		Criteria criteria = session.createCriteria(Offer.class);
+		criteria.setFetchMode("ruralHouse", FetchMode.JOIN);
+		
+		Criterion betweenStartDate = Restrictions.between("startDate", startDate, endDate);
+		Criterion betweenEndDate = Restrictions.between("endDate", startDate, endDate);
+		Criterion leStartDate = Restrictions.le("startDate", startDate);
+		Criterion geEndDate = Restrictions.ge("endDate", endDate);
+		
+		criteria.add(Restrictions.or(Restrictions.or(betweenStartDate, betweenEndDate), Restrictions.and(leStartDate, geEndDate)));
+		
+		@SuppressWarnings("unchecked")
+		List<Offer> result = criteria.list();
+		
+		/*
 		Query query = session.createQuery("FROM Offer " + 
 				"WHERE (start_date BETWEEN :startDate AND :endDate) " + 
 				"OR (end_date BETWEEN :startDate AND :endDate) " + 
 				"OR (start_date <= :startDate AND end_date >= :endDate)"
 				);
-
+		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		query.setParameter("startDate", formatter.format(startDate));
 		query.setParameter("endDate", formatter.format(endDate));
 
 		@SuppressWarnings("unchecked")
 		List<Offer> result = query.list();
+		*/
 
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");

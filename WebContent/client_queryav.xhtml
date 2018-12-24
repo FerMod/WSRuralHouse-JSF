@@ -37,7 +37,7 @@
 				Log out
 			</a>
 		</div>
-		<h2>
+		<h2 id="welcomeTitle">
 			¡Bienvenido
 			<h:outputText value="&#160;#{login.loggedUser.username}" />
 			!
@@ -81,54 +81,51 @@
 
 						<h:outputLabel for="nights" value="Número de noches: " />
 						<p:spinner id="nights" value="#{queryAvailability.nights}" min="1" />
-
+						
 					</h:panelGrid>
-
-					<h:dataTable id="queryTable" value="#{queryAvailability.offerList}"
+					
+					<h:commandButton value="Buscar">
+						<f:ajax execute="@form" listener="#{queryAvailability.search}" render="queryResultTable"/>
+					</h:commandButton>
+					
+					<h:dataTable id="queryResultTable" class="table table-hover" value="#{queryAvailability.offerList}"
 						var="offer" styleClass="offer-table"
 						headerClass="offer-table-header"
 						rowClasses="offer-table-odd-row,offer-table-even-row">
 						<h:column>
-							<!-- column header -->
-							<f:facet name="header">Offer Id</f:facet>
-							<!-- row record -->
-							#{offer.id}
+							<f:facet name="header" class="col">Offer Id</f:facet>
+							<h:outputText value="#{offer.id}" class="row" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Start Date</f:facet>
-							#{offer.startDate}
+							<f:facet name="header" class="col">Start Date</f:facet>
+							<h:outputText value="#{offer.startDate}" class="row" />							
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">End Date</f:facet>
-							#{offer.endDate}
+							<f:facet name="header" class="col">End Date</f:facet>
+							<h:outputText value="#{offer.endDate}" class="row" />	
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Rural House</f:facet>
-							#{offer.ruralHouse}
+							<f:facet name="header" class="col">Rural House</f:facet>
+							<h:outputText value="#{offer.ruralHouse.description}" class="row" />	
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Price</f:facet>
-							#{offer.price}
+							<f:facet name="header" class="col">Price</f:facet>
+							<h:outputText value="#{offer.price}" class="row" />	
 						</h:column>
 					</h:dataTable>
-					<h:commandButton value="Buscar">
-						<f:ajax execute="@form" listener="#{queryAvailability.search}"/>
-					</h:commandButton>
-					<br />
 					<p:messages id="msg" showIcon="true" showSummary="false"
-						showDetail="true" closable="true" style="margin:8px;">
+						showDetail="true" closable="true">
 						<p:autoUpdate />
 					</p:messages>
 				</h:form>
 				<p:messages showIcon="true" showSummary="false" showDetail="true"
-					closable="true" redisplay="false" style="margin:8px;">
+					closable="true" redisplay="false">
 					<p:autoUpdate />
 				</p:messages>
-
 			</div>
 		</div>
 	</h:body>

@@ -1,13 +1,16 @@
 * {box-sizing: border-box}
 
 /* Style for the body of client panel */
+html,
 body {
-    font-family: "Lato", sans-serif;
+  height: 100%;
+  margin: 0;
+  background-color: #ddd;
+  font-family: "Lato", sans-serif;
 }
 
-
 /* Style for the welcome h2 */
-h2 {
+#welcomeTitle {
     text-align: center;
 }
 
@@ -55,10 +58,6 @@ h2 {
 /* Create an active/current "tab button" class */
 .tab button.active {
     background-color: #38a33a;
-}
-
-body {
-	background-color: #ddd;
 }
 
 /* Style the tab content */
