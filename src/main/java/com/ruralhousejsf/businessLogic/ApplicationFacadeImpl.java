@@ -84,16 +84,29 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		Optional<Client> clients = dataAccess.getClient(username, password);
 		return clients.isPresent();
 	}
+	
+	@Override
+	public <T extends Serializable, U extends Serializable> Optional<T> get(Class<T> cls, U key) {
+		LOGGER.debug("Get " + cls.getSimpleName() + " with key " + key);
+		return dataAccess.get(cls, key);
+	}
+	
+	@Override
+	public <T extends Serializable, U extends Serializable> boolean exists(Class<T> cls, U key) {
+		LOGGER.debug("Exists " + cls.getSimpleName() + " with key " + key);
+		return dataAccess.exists(cls, key);
+	}
 
 	@Override
-	public <T extends Serializable> void delete(Class<?> cls, T key) {
+	public <T extends Serializable, U extends Serializable> void delete(Class<T> cls, U key) {
 		LOGGER.debug("Delete " + cls.getSimpleName() + " with key " + key);
 		dataAccess.delete(cls, key);
 	}
 
 	public static void main(String[] args) {
-		ApplicationFacadeInterface afi = AppFacade.getImpl();
-		afi.initializeDB();
+		
+		ApplicationFacadeInterface afi = AppFacade.getImpl(true);
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		List<RuralHouse> ruralHouseList = afi.getAllRuralHouses();

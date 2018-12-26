@@ -100,12 +100,41 @@ public interface HibernateDataAccessInterface {
 	public Optional<Client> getClient(String user, String pass);
 	
 	/**
+	 * Returns the persistent instance of the given entity class with the given key
+	 * 
+	 * @param <T> the class type
+	 * @param <U> the key type
+	 * 
+	 * @param cls the instance class
+	 * @param key the instance key
+	 * 
+	 * @return <code>Optional</code> with the persistent instance, or <code>Optional.empty()</code> if 
+	 * no persistent instance is found
+	 */
+	public <T extends Serializable, U extends Serializable> Optional<T> get(Class<T> cls, U key);
+	
+	/**
+	 * Check if exists the persistent instance with the given key
+	 * 
+	 * @param <T> the class type
+	 * @param <U> the key type
+	 * 
+	 * @param cls the instance class
+	 * @param key the instance key
+	 * 
+	 * @return <code>true</code> if exists the persistent instance, <code>false</code> otherwise
+	 */
+	public <T extends Serializable, U extends Serializable> boolean exists(Class<T> cls, U key);
+
+	/**
 	 * Delete the persistent instance with the given id
 	 * 
-	 * @param <T> the key type
+	 * @param <T> the class type
+	 * @param <U> the key type
+	 * 
 	 * @param cls the instance class
 	 * @param key the instance key
 	 */
-	public <T extends Serializable> void delete(Class<?> cls, T key);
+	public <T extends Serializable, U extends Serializable> void delete(Class<T> cls, U key);
 	
 }
