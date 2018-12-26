@@ -44,6 +44,24 @@ public class Client implements Serializable {
 		return String.format("Client [id: %s, username: %s, password: %s]", id, username, password);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Client other = (Client) obj;
+		System.out.println("this == obj " + (this == obj));
+		if (this == obj)
+			return true;
+		System.out.println("obj == null " + (obj == null));
+		if (obj == null)
+			return false;
+		System.out.println("this.getClass() != obj.getClass()" + (this.getClass() != obj.getClass()));
+		if (this.getClass() != obj.getClass())
+			return false;
+		System.out.println("this.id != other.id || this.username != other.username || this.password != other.password " + (this.id != other.id || this.username != other.username || this.password != other.password));
+		if (this.id != other.id || !this.username.equals(other.username) || !this.password.equals(other.password))
+			return false;
+		return true;
+	}
+
 	/**
 	 * Auto-generated serial version ID
 	 */

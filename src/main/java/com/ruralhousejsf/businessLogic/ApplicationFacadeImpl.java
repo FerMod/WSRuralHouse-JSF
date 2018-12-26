@@ -86,6 +86,12 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	}
 	
 	@Override
+	public Optional<Client> getClient(String username, String password) {
+		LOGGER.debug("Get client with username: " + username + " and password: " + password + ".");
+		return dataAccess.getClient(username, password);
+	}
+	
+	@Override
 	public <T extends Serializable, U extends Serializable> Optional<T> get(Class<T> cls, U key) {
 		LOGGER.debug("Get " + cls.getSimpleName() + " with key " + key);
 		return dataAccess.get(cls, key);

@@ -76,6 +76,20 @@ public class RuralHouse implements Serializable {
 				.collect(Collectors.toSet());
 		return String.format("RuralHouse [id: %s, description: %s, city: %s, offers: %s]", id, description, city, offerIdList);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		RuralHouse other = (RuralHouse) obj;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		if (this.id != other.id || !this.description.equals(other.description) || !this.city.equals(other.city) || !offers.equals(other.offers))
+			return false;
+		return true;
+	}
 
 	/**
 	 * Auto-generated serial version ID

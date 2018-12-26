@@ -100,11 +100,20 @@ public interface ApplicationFacadeInterface {
 	/**
 	 * Verify that the login is correct with for the given username and a password.
 	 * 
-	 * @param username
-	 * @param password
+	 * @param username the client username
+	 * @param password the client password
 	 * @return <code>true</code> if the operation is successful, <code>false</code> otherwise
 	 */
 	public boolean login(String username, String password);
+	
+	/**
+	 * Verify that the login is correct with for the given username and a password.
+	 * 
+	 * @param username the client username
+	 * @param password the client password
+	 * @return <code>Optional</code> with the user or a <code>Optional.empty()</code> otherwise
+	 */
+	public Optional<Client> getClient(String username, String password);
 	
 	/**
 	 * Returns the persistent instance of the given entity class with the given key

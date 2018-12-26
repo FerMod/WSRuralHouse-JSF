@@ -72,6 +72,20 @@ public class Offer implements Serializable {
 	public String toString() {
 		return String.format("Offer [id: %s, ruralHouse: %d, startDate: %s, endDate: %s, price: %s]", id, ruralHouse.getId(), startDate, endDate, price);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Offer other = (Offer) obj;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		if (this.id != other.id || this.ruralHouse != other.ruralHouse || this.startDate != other.startDate || this.price != other.price)
+			return false;
+		return true;
+	}
 
 	/**
 	 * Auto-generated serial version ID

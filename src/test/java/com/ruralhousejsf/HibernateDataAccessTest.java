@@ -146,7 +146,7 @@ class HibernateDataAccessTest {
 
 		@ParameterizedTest
 		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("CreateClient - Correct Creation")
+		@DisplayName("CreateClient - Correct Execution")
 		void createClientTest(String username, String password) {
 
 			try {
@@ -154,6 +154,48 @@ class HibernateDataAccessTest {
 				assumeNotNull(client);
 				clientList.add(client);
 				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
+			} catch (Exception e) {
+				fail("Exception thrown when trying to create an offer", e);
+			}
+
+		}
+		
+		@ParameterizedTest
+		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
+		@DisplayName("Login - Correct Execution")
+		void loginTest(String username, String password) {
+
+			try {
+			
+				Client client = createTestClient(username, password);			
+				assumeNotNull(client);
+				clientList.add(client);
+				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
+				
+				assertTrue(afi.login(username, password), () -> "Could not login an existing client");
+			
+			} catch (Exception e) {
+				fail("Exception thrown when trying to create an offer", e);
+			}
+
+		}
+		
+		@ParameterizedTest
+		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
+		@DisplayName("GetClient - Correct Execution")
+		void getClientTest(String username, String password) {
+
+			try {
+			
+				Client client = createTestClient(username, password);			
+				assumeNotNull(client);
+				clientList.add(client);
+				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
+				
+				Optional<Client> optClient = afi.getClient(username, password);
+				assertTrue(optClient.isPresent(), () -> "No client returned");
+				assertTrue(optClient.get().equals(client), () -> "The obtained client does not match");
+			
 			} catch (Exception e) {
 				fail("Exception thrown when trying to create an offer", e);
 			}
@@ -325,8 +367,6 @@ class HibernateDataAccessTest {
 			}
 
 		}
-
-
 
 	}
 
