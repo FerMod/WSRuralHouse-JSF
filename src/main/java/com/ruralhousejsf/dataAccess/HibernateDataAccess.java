@@ -156,10 +156,16 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
 
+		Criteria criteria = session.createCriteria(RuralHouse.class);
+		@SuppressWarnings("unchecked")
+		List<RuralHouse> result = criteria.list();
+		
+		/*
 		Query query = session.createQuery("FROM RuralHouse");
 		@SuppressWarnings("unchecked")
 		List<RuralHouse> result = query.list();
-
+		*/
+		
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
 
@@ -224,12 +230,20 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
-
+		
+		Criteria criteria = session.createCriteria(Client.class);
+		criteria.add(Restrictions.eq("username", username));
+		criteria.add(Restrictions.eq("password", password));
+		
+		Optional<Client> result = Optional.ofNullable((Client) criteria.uniqueResult());
+		
+		/*
 		Query query = session.createQuery("FROM Client WHERE username = :username AND password = :password");
 		query.setParameter("username", username);
 		query.setParameter("password", password);
 
 		Optional<Client> result = Optional.ofNullable((Client) query.uniqueResult());
+		*/
 
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");

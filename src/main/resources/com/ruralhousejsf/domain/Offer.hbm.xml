@@ -10,7 +10,7 @@
   </id>
   
   <many-to-one name="ruralHouse" class="RuralHouse" fetch="join">
-   <column name="ruralhouse_id"/>
+   <column name="ruralhouse_id" not-null="true"/>
   </many-to-one>
      
   <property name="startDate" type="date">
