@@ -5,6 +5,7 @@ import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.apache.log4j.varia.LevelRangeFilter;
 
 public final class ConsoleLogger {
 
@@ -25,8 +26,8 @@ public final class ConsoleLogger {
 		return createLogger(Thread.currentThread().getStackTrace()[2].getClassName(), DEFAULT_LOGGER_LEVEL);
 	}
 	
-	public static Logger createLogger(Class<?> clss) {
-		return createLogger(clss, DEFAULT_LOGGER_LEVEL);
+	public static Logger createLogger(Class<?> cls) {
+		return createLogger(cls, DEFAULT_LOGGER_LEVEL);
 	}
 	
 	public static Logger createLogger(String name) {
@@ -37,8 +38,8 @@ public final class ConsoleLogger {
 		return createLogger(Thread.currentThread().getStackTrace()[2].getClassName(), level);
 	}
 	
-	public static Logger createLogger(Class<?> clss, Level level) {		
-		return createLogger(clss.getSimpleName(), level);
+	public static Logger createLogger(Class<?> cls, Level level) {		
+		return createLogger(cls.getSimpleName(), level);
 	}
 	
 	public static Logger createLogger(String name, Level level) {
@@ -47,10 +48,32 @@ public final class ConsoleLogger {
 		
 		// Setup basic configuration
 		BasicConfigurator.configure();
+		
+		
+		// Configure logger to output to the standard output stream
+		ConsoleAppender consoleOut = new ConsoleAppender();
+		consoleOut.setLayout(new PatternLayout(LOGGER_PATTERN));
+		consoleOut.setTarget("System.out");
+		
+		// Ignore the logs between the defined range levels
+		LevelRangeFilter rangeFilter = new LevelRangeFilter();
+		rangeFilter.setLevelMax(Level.INFO);
+		
+		consoleOut.addFilter(rangeFilter);
+		consoleOut.activateOptions();
+		
 
-		// Set the logger pattern
-		PatternLayout layout = new PatternLayout(LOGGER_PATTERN);		
-		logger.addAppender(new ConsoleAppender(layout));
+		// Configure logger to output to the standard error stream
+		ConsoleAppender consoleErr = new ConsoleAppender();
+		consoleErr.setLayout(new PatternLayout(LOGGER_PATTERN));
+		consoleErr.setTarget("System.err");
+		consoleErr.setThreshold(Level.WARN);
+		consoleErr.activateOptions();
+		
+		
+		// Add the console appenders
+		logger.addAppender(consoleOut);
+		logger.addAppender(consoleErr);
 
 		// Dont allow log propagation to parent loggers
 		logger.setAdditivity(false);
