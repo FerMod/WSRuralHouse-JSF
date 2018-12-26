@@ -13,9 +13,9 @@
   
   <property name="city" column="city" type="string"/>
   
-  <set name="offers" table="offer" inverse="true" cascade="all" lazy="false" fetch="join">
+  <set name="offers" table="offer" inverse="true" cascade="save-update, delete" lazy="false" fetch="join">
    <key>
-	<column name="ruralhouse_id" not-null="true"/>
+	<column name="ruralhouse_id"/>
    </key>
    <one-to-many class="Offer"/>
   </set>
