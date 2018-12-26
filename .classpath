@@ -77,7 +77,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar" sourcepath="C:/Users/Ferran/AppData/Local/Temp/.org.sf.feeling.decompiler1545818635522/source/log4j-1.2.14-sources.jar">
+	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="https://logging.apache.org/log4j/1.2/apidocs/"/>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
