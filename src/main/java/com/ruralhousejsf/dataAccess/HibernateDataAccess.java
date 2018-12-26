@@ -160,12 +160,6 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		@SuppressWarnings("unchecked")
 		List<RuralHouse> result = criteria.list();
 		
-		/*
-		Query query = session.createQuery("FROM RuralHouse");
-		@SuppressWarnings("unchecked")
-		List<RuralHouse> result = query.list();
-		*/
-		
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
 
@@ -202,21 +196,6 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		@SuppressWarnings("unchecked")
 		List<Offer> result = criteria.list();
 
-		/*
-		Query query = session.createQuery("FROM Offer " + 
-				"WHERE (start_date BETWEEN :startDate AND :endDate) " + 
-				"OR (end_date BETWEEN :startDate AND :endDate) " + 
-				"OR (start_date <= :startDate AND end_date >= :endDate)"
-				);
-
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		query.setParameter("startDate", formatter.format(startDate));
-		query.setParameter("endDate", formatter.format(endDate));
-
-		@SuppressWarnings("unchecked")
-		List<Offer> result = query.list();
-		 */
-
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
 
@@ -236,14 +215,6 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		criteria.add(Restrictions.eq("password", password));
 		
 		Optional<Client> result = Optional.ofNullable((Client) criteria.uniqueResult());
-		
-		/*
-		Query query = session.createQuery("FROM Client WHERE username = :username AND password = :password");
-		query.setParameter("username", username);
-		query.setParameter("password", password);
-
-		Optional<Client> result = Optional.ofNullable((Client) query.uniqueResult());
-		*/
 
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
