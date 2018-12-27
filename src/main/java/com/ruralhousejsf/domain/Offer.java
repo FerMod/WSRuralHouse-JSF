@@ -75,16 +75,48 @@ public class Offer implements Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		Offer other = (Offer) obj;
-		if (this == obj)
-			return true;
-		if (obj == null)
+		
+		if (obj == null) {
 			return false;
-		if (this.getClass() != obj.getClass())
+		}
+
+		if (!Offer.class.isAssignableFrom(obj.getClass())) {
 			return false;
-		if (this.id != other.id || this.ruralHouse != other.ruralHouse || this.startDate != other.startDate || this.price != other.price)
+		}
+
+		final Offer other = (Offer) obj;
+		if (this.id != other.id) {
 			return false;
+		}
+
+		if ((this.ruralHouse == null) ? (other.ruralHouse != null) : !this.ruralHouse.equals(other.ruralHouse)) {
+			return false;
+		}
+
+		if ((this.startDate == null) ? (other.startDate != null) : !this.startDate.equals(other.startDate)) {
+			return false;
+		}
+		
+		if ((this.endDate == null) ? (other.endDate != null) : !this.endDate.equals(other.endDate)) {
+			return false;
+		}
+		
+		if (this.price != other.price) {
+			return false;
+		}
+		
 		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = 31 * hash + Long.hashCode(this.id);
+		hash = 31 * hash + (this.ruralHouse != null ? this.ruralHouse.hashCode() : 0);
+		hash = 31 * hash + (this.startDate != null ? this.endDate.hashCode() : 0);
+		hash = 31 * hash + (this.endDate != null ? this.endDate.hashCode() : 0);
+		hash = 31 * hash + Double.hashCode(this.price);
+		return hash;
 	}
 
 	/**

@@ -79,22 +79,48 @@ public class RuralHouse implements Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		RuralHouse other = (RuralHouse) obj;
-		if (this == obj)
-			return true;
-		if (obj == null)
+		
+		if (obj == null) {
 			return false;
-		if (this.getClass() != obj.getClass())
+		}
+
+		if (!RuralHouse.class.isAssignableFrom(obj.getClass())) {
 			return false;
-		if (this.id != other.id || !this.description.equals(other.description) || !this.city.equals(other.city) || !offers.equals(other.offers))
+		}
+
+		final RuralHouse other = (RuralHouse) obj;
+		if (this.id != other.id) {
 			return false;
+		}
+
+		if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
+			return false;
+		}
+
+		if ((this.city == null) ? (other.city != null) : !this.city.equals(other.city)) {
+			return false;
+		}
+		
+		if ((this.offers == null) ? (other.offers != null) : !this.offers.equals(other.offers)) {
+			return false;
+		}
+		
 		return true;
 	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = 31 * hash + Long.hashCode(this.id);
+		hash = 31 * hash + (this.description != null ? this.description.hashCode() : 0);
+		hash = 31 * hash + (this.city != null ? this.city.hashCode() : 0);
+		return hash;
+	}
+
 
 	/**
 	 * Auto-generated serial version ID
 	 */
 	private static final long serialVersionUID = -7593429026088916515L;
-
 
 }

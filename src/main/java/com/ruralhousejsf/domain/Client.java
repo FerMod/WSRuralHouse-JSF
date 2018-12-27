@@ -46,20 +46,38 @@ public class Client implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		Client other = (Client) obj;
-		System.out.println("this == obj " + (this == obj));
-		if (this == obj)
-			return true;
-		System.out.println("obj == null " + (obj == null));
-		if (obj == null)
+		
+		if (obj == null) {
 			return false;
-		System.out.println("this.getClass() != obj.getClass()" + (this.getClass() != obj.getClass()));
-		if (this.getClass() != obj.getClass())
+		}
+
+		if (!Client.class.isAssignableFrom(obj.getClass())) {
 			return false;
-		System.out.println("this.id != other.id || this.username != other.username || this.password != other.password " + (this.id != other.id || this.username != other.username || this.password != other.password));
-		if (this.id != other.id || !this.username.equals(other.username) || !this.password.equals(other.password))
+		}
+
+		final Client other = (Client) obj;
+		if (this.id != other.id) {
 			return false;
+		}
+
+		if ((this.username == null) ? (other.username != null) : !this.username.equals(other.username)) {
+			return false;
+		}
+
+		if ((this.password == null) ? (other.password != null) : !this.password.equals(other.password)) {
+			return false;
+		}
+		
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = 31 * hash + Long.hashCode(this.id);
+		hash = 31 * hash + (this.username != null ? this.username.hashCode() : 0);
+		hash = 31 * hash + (this.password != null ? this.password.hashCode() : 0);
+		return hash;
 	}
 
 	/**
