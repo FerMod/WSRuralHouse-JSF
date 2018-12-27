@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -61,24 +62,25 @@ class EqualsTest {
 	private static void removeTestData() {
 
 		if(!clientList.isEmpty()) {
-			clientList.forEach(c -> {
-				afi.delete(Client.class, c.getId());
-			});
+			clientList.forEach(c -> afi.delete(Client.class, c.getId()));
 			clientList.clear();
-		}
-
-		if(!ruralHouseList.isEmpty()) {
-			ruralHouseList.forEach(c -> {
-				afi.delete(RuralHouse.class, c.getId());
-			});
-			ruralHouseList.clear();
 		}
 
 		if(!offerList.isEmpty()) {
 			offerList.forEach(c -> {
-				afi.delete(Offer.class, c.getId());
+				Optional<RuralHouse> rh = afi.get(RuralHouse.class, c.getRuralHouse().getId());
+				if(rh.isPresent()) {
+					rh.get().removeOffer(c.getId());
+				} else {
+					afi.delete(Offer.class, c.getId());
+				}	
 			});
 			offerList.clear();
+		}
+
+		if(!ruralHouseList.isEmpty()) {
+			ruralHouseList.forEach(c -> afi.delete(RuralHouse.class, c.getId()));
+			ruralHouseList.clear();
 		}	
 
 	}
