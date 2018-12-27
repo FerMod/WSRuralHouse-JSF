@@ -26,7 +26,7 @@ public class Offer implements Serializable {
 	}
 	
 	public Offer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) {
-		this(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
+		this(ruralHouse, ParseDate.toDate(startDate), ParseDate.toDate(endDate), price);
 	}
 
 	public Long getId() {

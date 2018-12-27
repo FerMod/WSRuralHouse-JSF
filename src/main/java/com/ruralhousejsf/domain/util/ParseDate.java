@@ -11,19 +11,19 @@ public final class ParseDate {
 	private ParseDate() {
 	}
 
-	public static Date asDate(LocalDate localDate) {
+	public static Date toDate(LocalDate localDate) {
 		return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 	}
 
-	public static Date asDate(LocalDateTime localDateTime) {
+	public static Date toDate(LocalDateTime localDateTime) {
 		return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}
 
-	public static LocalDate asLocalDate(Date date) {
+	public static LocalDate toLocalDate(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
-	public static LocalDateTime asLocalDateTime(Date date) {
+	public static LocalDateTime toLocalDateTime(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
 	}
 

@@ -113,7 +113,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	}
 
 	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException {		
-		return createOffer(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
+		return createOffer(ruralHouse, ParseDate.toDate(startDate), ParseDate.toDate(endDate), price);
 	}
 
 	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException {
@@ -174,7 +174,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	}
 
 	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDate, LocalDate endDate) throws BadDatesException {		
-		return getOffers(ruralHouse, ParseDate.asDate(firstDate), ParseDate.asDate(endDate));
+		return getOffers(ruralHouse, ParseDate.toDate(firstDate), ParseDate.toDate(endDate));
 	}
 
 	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException {
@@ -192,12 +192,13 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 		Criteria criteria = session.createCriteria(Offer.class);
 		criteria.setFetchMode("ruralHouse", FetchMode.JOIN);
-
+		criteria.add(Restrictions.eq("ruralHouse.id", ruralHouse.getId()));
+		
 		Criterion betweenStartDate = Restrictions.between("startDate", startDate, endDate);
 		Criterion betweenEndDate = Restrictions.between("endDate", startDate, endDate);
 		Criterion leStartDate = Restrictions.le("startDate", startDate);
-		Criterion geEndDate = Restrictions.ge("endDate", endDate);
-
+		Criterion geEndDate = Restrictions.ge("endDate", endDate);		
+		
 		criteria.add(Restrictions.or(Restrictions.or(betweenStartDate, betweenEndDate), Restrictions.and(leStartDate, geEndDate)));
 
 		@SuppressWarnings("unchecked")

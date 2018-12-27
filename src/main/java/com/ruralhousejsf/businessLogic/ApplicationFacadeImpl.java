@@ -50,7 +50,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 
 	@Override
 	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException {
-		return createOffer(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
+		return createOffer(ruralHouse, ParseDate.toDate(startDate), ParseDate.toDate(endDate), price);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 
 	@Override
 	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate) throws BadDatesException {
-		return getOffers(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate));
+		return getOffers(ruralHouse, ParseDate.toDate(startDate), ParseDate.toDate(endDate));
 	}
 
 	@Override
