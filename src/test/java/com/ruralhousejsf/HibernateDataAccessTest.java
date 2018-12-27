@@ -2,6 +2,7 @@ package com.ruralhousejsf;
 
 import static org.junit.Assume.assumeNoException;
 import static org.junit.Assume.assumeNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -41,7 +42,7 @@ import com.ruralhousejsf.logger.ConsoleLogger;
 class HibernateDataAccessTest {
 
 	static final Logger LOGGER = ConsoleLogger.createLogger(HibernateDataAccessTest.class);
-	
+
 	final static String CLIENT_TEST_DATA = "/ClientTestData.csv";
 	final static String OFFER_TEST_DATA = "/OfferTestData.csv";
 	final static String OFFER_BAD_DATES_DATA = "/OfferBadDates.csv";
@@ -162,46 +163,65 @@ class HibernateDataAccessTest {
 			}
 
 		}
-		
+
 		@ParameterizedTest
 		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
 		@DisplayName("GetClient - Correct Execution")
 		void getClientTest(String username, String password) {
-		
+
 			try {
-			
+
 				Client client = createTestClient(username, password);			
 				assumeNotNull(client);
 				clientList.add(client);
 				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
-				
+
 				Optional<Client> optClient = afi.getClient(username, password);
 				assertTrue(optClient.isPresent(), () -> "No client returned");
 				assertTrue(optClient.get().equals(client), () -> "The obtained client does not match");
 				LOGGER.debug("Obtained cliend hash: " + optClient.get().hashCode() + "Created client hash: " + client.hashCode());
-				
-				
+
+
 			} catch (Exception e) {
 				fail("Exception thrown when trying to create an offer", e);
 			}
-		
+
 		}
 
 		@ParameterizedTest
 		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("Login - Correct Execution")
-		void loginTest(String username, String password) {
+		@DisplayName("Login - True")
+		void loginTest1(String username, String password) {
 
 			try {
-			
+
 				Client client = createTestClient(username, password);			
 				assumeNotNull(client);
 				clientList.add(client);
 				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
-				
+
 				assertTrue(afi.login(username, password), () -> "Could not login an existing client");
+
+			} catch (Exception e) {
+				fail("Exception thrown when trying to create an offer", e);
+			}
+
+		}
+
+		@ParameterizedTest
+		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
+		@DisplayName("Login - False")
+		void loginTest2(String username, String password) {
+
+			try {
+
+				Client client = createTestClient(username, password);			
+				assumeNotNull(client);
+				clientList.add(client);
+				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
+
 				assertFalse(afi.login(username, password + "wrong"), () -> "Unexpected client login occurred");
-			
+
 			} catch (Exception e) {
 				fail("Exception thrown when trying to create an offer", e);
 			}
@@ -286,8 +306,8 @@ class HibernateDataAccessTest {
 
 		@ParameterizedTest
 		@CsvFileSource(resources = OFFER_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("GetOffers - Correct Execution")
-		void getOffersTest2(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
+		@DisplayName("GetOffers - Empty")
+		void getOffersTest3(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
 
 			try {
 
@@ -297,7 +317,34 @@ class HibernateDataAccessTest {
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
 
 				List<Offer> offers = afi.getOffers(ruralHouse, startDate, endDate);
-				assertFalse(offers.isEmpty(), () -> "No offers obtained");
+				assertTrue(offers.isEmpty(), () -> "Offers obtained");
+
+			} catch (Exception e) {
+				fail("Unexpected exception " + e.getClass().getCanonicalName() + " thrown", e);
+			}
+
+		}
+
+		@ParameterizedTest
+		@CsvFileSource(resources = OFFER_TEST_DATA, numLinesToSkip = 1)
+		@DisplayName("GetOffers - Not Empty")
+		void getOffersTest4(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
+
+			try {
+
+				RuralHouse ruralHouse = createTestRuralHouse(description, city);
+				assumeNotNull(ruralHouse);
+				ruralHouseList.add(ruralHouse);
+				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
+
+				int initialSize = afi.getOffers(ruralHouse, startDate, endDate).size();
+
+				Offer offer = createTestOffer(ruralHouse, startDate, endDate, price);
+				assumeNotNull(offer);
+				offerList.add(offer);
+
+				List<Offer> offers = afi.getOffers(ruralHouse, startDate, endDate);
+				assertEquals(initialSize + offerList.size(), offers.size(), () -> "No offers obtained");
 
 			} catch (Exception e) {
 				fail("Unexpected exception " + e.getClass().getCanonicalName() + " thrown", e);
@@ -328,14 +375,27 @@ class HibernateDataAccessTest {
 		}
 
 		@Test
-		@DisplayName("GetAllRuralHouses - Correct Execution")
+		@DisplayName("GetAllRuralHouses - List Not Empty")
 		void getAllRuralHousesTest() {
 
 			try {
 
+				int initialSize = afi.getAllRuralHouses().size();
+
+				RuralHouse ruralHouse =	createTestRuralHouse("Test1", "City1");
+				assumeNotNull(ruralHouse);
+				ruralHouseList.add(ruralHouse);
+				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
+
+				RuralHouse ruralHouse2 = createTestRuralHouse("Test2", "City2");
+				assumeNotNull(ruralHouse2);
+				ruralHouseList.add(ruralHouse2);
+				assumeTrue(afi.exists(RuralHouse.class, ruralHouse2.getId()), () -> "Persistent instance not found in the database");
+
 				List<RuralHouse> ruralHouseListResult = afi.getAllRuralHouses();
 				assertNotNull(ruralHouseListResult, () -> "The list is null");
 				assertFalse(ruralHouseListResult.isEmpty(), () -> "The list is empty");
+				assertEquals(initialSize + ruralHouseList.size(), ruralHouseListResult.size(), () -> "The returned number of instances does not match the expected");
 
 			} catch (Exception e) {
 				fail("Exception thrown when trying to obtain all rural houses.", e);
