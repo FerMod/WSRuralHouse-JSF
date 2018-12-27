@@ -31,9 +31,8 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 	public HibernateDataAccess() {}
 
-	public void initializeDB() {
-
-		LOGGER.debug("Initializing DB...");
+	public void truncateDB() {
+		
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		LOGGER.trace("Hibernate session obtained");		
 		session.beginTransaction();
@@ -56,9 +55,18 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
 		LOGGER.debug("DB data deleted");
-
-		LOGGER.debug("Creating DB data...");
-
+		
+	}
+	
+	public void initializeDB() {
+		
+		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");		
+		session.beginTransaction();
+		LOGGER.trace("Transaction started");
+		
+		LOGGER.debug("Initializing DB...");
+		
 		createClient("cliente", "cliente123");
 		createClient("user", "user123");
 		createClient("paco", "paco123");
@@ -82,8 +90,7 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 			e.printStackTrace();
 		}
 		LOGGER.trace("Data of Offer created");
-
-		LOGGER.debug("DB data created");		
+	
 		LOGGER.debug("Initialization of BD finished");		
 
 	}

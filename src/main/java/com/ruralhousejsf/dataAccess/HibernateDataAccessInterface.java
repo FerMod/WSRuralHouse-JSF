@@ -13,6 +13,12 @@ import com.ruralhousejsf.exceptions.BadDatesException;
 
 public interface HibernateDataAccessInterface {
 	
+
+	/**
+	 * Method used to truncate the data base.
+	 */
+	public void truncateDB();
+	
 	/**
 	 * Method used to initialize the database
 	 * 

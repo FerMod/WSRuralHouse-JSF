@@ -30,6 +30,11 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	public void setDataAccess(HibernateDataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;
 	}
+	
+	@Override
+	public void truncateDB() {
+		dataAccess.truncateDB();
+	}
 
 	@Override
 	public void initializeDB() {

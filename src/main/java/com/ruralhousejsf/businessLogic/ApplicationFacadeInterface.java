@@ -15,6 +15,11 @@ import com.ruralhousejsf.exceptions.BadDatesException;
 public interface ApplicationFacadeInterface {
 
 	/**
+	 * Truncate the data base.
+	 */
+	public void truncateDB();
+	
+	/**
 	 * Initialize the data base.
 	 */
 	public void initializeDB();
