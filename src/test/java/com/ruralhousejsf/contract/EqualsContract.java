@@ -11,7 +11,11 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Equals Test")
 @Tag("equals")
 public interface EqualsContract<T> extends Testable<T> {
-
+	
+	/**
+	 * Create and return a non equal value to use in the equals tests
+	 * @return the created value
+	 */
     T createNotEqualValue();
     
     @DisplayName("Equals Itself - True")

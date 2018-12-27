@@ -10,7 +10,11 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Comparable Test")
 @Tag("comparable")
 public interface ComparableContract<T extends Comparable<T>> extends Testable<T> {
-
+	
+	/**
+	 * Create and return a smaller value to use in the comparable tests
+	 * @return the created value
+	 */
 	T createSmallerValue();
 
 	@DisplayName("Compare Itself - Return Zero")
