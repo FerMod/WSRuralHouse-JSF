@@ -17,7 +17,7 @@ public class BadDatesException extends Exception {
 	/**
 	 * Constructs a {@code BadDates} with the specified detail message.
 	 *
-	 * @param   s   the detail message.
+	 * @param s the detail message.
 	 * 
 	 */
 	public BadDatesException(String s) {
