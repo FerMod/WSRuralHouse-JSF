@@ -22,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.JavaTimeConversionPattern;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -32,17 +33,19 @@ import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.exceptions.BadDatesException;
+import com.ruralhousejsf.extension.TimingExtension;
 import com.ruralhousejsf.logger.ConsoleLogger;
 
 @DisplayName("Hibernate Data Access Test")
+@ExtendWith(TimingExtension.class)
 class HibernateDataAccessTest {
 
+	static final Logger LOGGER = ConsoleLogger.createLogger(HibernateDataAccessTest.class);
+	
 	final static String CLIENT_TEST_DATA = "/ClientTestData.csv";
 	final static String OFFER_TEST_DATA = "/OfferTestData.csv";
 	final static String OFFER_BAD_DATES_DATA = "/OfferBadDates.csv";
 	final static String RURALHOUSE_TEST_DATA = "/RuralHouseTestData.csv";
-
-	static final Logger LOG = ConsoleLogger.createLogger(HibernateDataAccessTest.class);
 
 	static ApplicationFacadeInterface afi;
 
@@ -54,9 +57,9 @@ class HibernateDataAccessTest {
 	static void beforeAll() {
 
 		try {
-			afi = AppFacade.getImpl(true);
+			afi = AppFacade.getImpl();
 		} catch (Exception e) {
-			assumeNoException("Exception raised when creating the test data.", e);
+			assumeNoException("Exception raised when obtaining the application facade implementation instance", e);
 		}		
 
 		clientList = new ArrayList<>();
@@ -162,6 +165,30 @@ class HibernateDataAccessTest {
 		
 		@ParameterizedTest
 		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
+		@DisplayName("GetClient - Correct Execution")
+		void getClientTest(String username, String password) {
+		
+			try {
+			
+				Client client = createTestClient(username, password);			
+				assumeNotNull(client);
+				clientList.add(client);
+				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
+				
+				Optional<Client> optClient = afi.getClient(username, password);
+				assertTrue(optClient.isPresent(), () -> "No client returned");
+				assertTrue(optClient.get().equals(client), () -> "The obtained client does not match");
+				LOGGER.debug("Obtained cliend hash: " + optClient.get().hashCode() + "Created client hash: " + client.hashCode());
+				
+				
+			} catch (Exception e) {
+				fail("Exception thrown when trying to create an offer", e);
+			}
+		
+		}
+
+		@ParameterizedTest
+		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
 		@DisplayName("Login - Correct Execution")
 		void loginTest(String username, String password) {
 
@@ -173,28 +200,7 @@ class HibernateDataAccessTest {
 				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
 				
 				assertTrue(afi.login(username, password), () -> "Could not login an existing client");
-			
-			} catch (Exception e) {
-				fail("Exception thrown when trying to create an offer", e);
-			}
-
-		}
-		
-		@ParameterizedTest
-		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("GetClient - Correct Execution")
-		void getClientTest(String username, String password) {
-
-			try {
-			
-				Client client = createTestClient(username, password);			
-				assumeNotNull(client);
-				clientList.add(client);
-				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
-				
-				Optional<Client> optClient = afi.getClient(username, password);
-				assertTrue(optClient.isPresent(), () -> "No client returned");
-				assertTrue(optClient.get().equals(client), () -> "The obtained client does not match");
+				assertFalse(afi.login(username, password + "wrong"), () -> "Unexpected client login occurred");
 			
 			} catch (Exception e) {
 				fail("Exception thrown when trying to create an offer", e);

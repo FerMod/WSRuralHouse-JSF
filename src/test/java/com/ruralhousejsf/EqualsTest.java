@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.ruralhousejsf.businessLogic.AppFacade;
 import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
@@ -20,7 +21,10 @@ import com.ruralhousejsf.contract.EqualsContract;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.extension.TimingExtension;
 
+@DisplayName("Equals Test")
+@ExtendWith(TimingExtension.class)
 class EqualsTest {
 
 	static ApplicationFacadeInterface afi;
@@ -33,7 +37,7 @@ class EqualsTest {
 	static void beforeAll() {
 
 		try {
-			afi = AppFacade.getImpl(true);
+			afi = AppFacade.getImpl();
 		} catch (Exception e) {
 			assumeNoException("Exception raised when creating the test data.", e);
 		}		
