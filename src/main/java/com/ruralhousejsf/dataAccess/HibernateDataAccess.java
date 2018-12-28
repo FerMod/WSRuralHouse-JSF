@@ -81,7 +81,6 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 			createOffer(rh3, LocalDate.of(2019, 1, 3), LocalDate.of(2019, 1, 9), 40.0);
 			createOffer(rh4, LocalDate.of(2019, 1, 7), LocalDate.of(2019, 1, 21), 36.0);
 			createOffer(rh4, LocalDate.of(2018, 1, 7), LocalDate.of(2019, 1, 7), 78.0);
-
 		} catch (BadDatesException e) {
 			e.printStackTrace();
 		}

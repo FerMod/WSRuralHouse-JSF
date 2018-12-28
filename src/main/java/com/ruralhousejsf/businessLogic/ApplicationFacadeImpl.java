@@ -131,7 +131,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	 * 
 	 * @param args the arguments
 	 * 
-	 * @deprecated
+	 * @deprecated Planned for removal
 	 */
 	public static void main(String[] args) {
 

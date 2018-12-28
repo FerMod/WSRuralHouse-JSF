@@ -21,89 +21,103 @@ public interface HibernateDataAccessInterface {
 	
 	/**
 	 * Method used to initialize the database
-	 * 
 	 */
 	public void initializeDB();
 	
 	/**
-	 * Creates a {@link RuralHouse} in the database with his description and his city.
+	 * Creates and stores in the database a {@link RuralHouse} in the database with his description and his city.
 	 * 
-	 * @param description
-	 * @param city
+	 * @param description the rural house description
+	 * @param city the rural house city
+	 * 
 	 * @return the created {@link RuralHouse}
 	 */
 	public RuralHouse createRuralHouse(String description, String city);
 	
 	/**
-	 * Creates a Offer of a RuralHouse with his firstDay, his endDate and his price.
+	 * Creates and stores in the database an {@link Offer} for the given {@link RuralHouse} that will start and end in the given dates, and will 
+	 * have the passed price.
 	 * 
-	 * @param ruralHouse
-	 * @param startDate
-	 * @param endDate
-	 * @param price
+	 * @param ruralHouse this offers associated rural house  
+	 * @param startDate the offer start date
+	 * @param endDate the offer end date
+	 * @param price the cost per day of the offer
+	 * 
 	 * @return the created Offer for the RuralHouse passed as parameter
-	 * @throws BadDatesException 
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, LocalDate firstDay, LocalDate endDate, double price) throws BadDatesException;
+	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException;
 	
 	/**
-	 * Creates a Offer of a RuralHouse with his firstDay, his endDate and his price.
+	 * Creates and stores in the database an {@link Offer} for the given {@link RuralHouse} that will start and end in the given dates, and will 
+	 * have the passed price.
 	 * 
-	 * @param ruralHouse
-	 * @param firstDay
-	 * @param endDate
-	 * @param price
-	 * @return the created offer for the RuralHouse passed as parameter
-	 * @throws BadDatesException 
+	 * @param ruralHouse this offers associated rural house  
+	 * @param startDate the offer start date
+	 * @param endDate the offer end date
+	 * @param price the cost per day of the offer
+	 * 
+	 * @return the created {@link Offer}
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date 
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date endDate, double price) throws BadDatesException;
+	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException;
 
 	/**
-	 * Creates a Client in the database with his username and his password.
+	 * Creates and stores in the database a {@link Client} with the passed user name and password.
 	 * 
-	 * @param user
-	 * @param pass
-	 * @return Client created
+	 * @param username the client user name
+	 * @param password the client password
+	 * 
+	 * @return the created {@link Client}
 	 */
-	public Client createClient(String user, String pass);
+	public Client createClient(String username, String password);
 
 	/**
-	 * Obtain all the rural houses.
+	 * Obtains all rural houses stored in the database.
 	 * 
 	 * @return list of rural houses
 	 */
 	public List<RuralHouse> getAllRuralHouses();
 	
 	/**
-	 * Obtain all of the offers of a RuralHouse between a range of dates.
+	 * Obtains all offers of a given {@link RuralHouse} between the defined start and end dates 
+	 * range (both inclusive).
 	 * 
-	 * @param ruralHouse
-	 * @param firstDay
-	 * @param endDate
-	 * @return list of offers
-	 * @throws BadDatesException 
+	 * @param ruralHouse the rural house to apply this search
+	 * @param startDate the start date  
+	 * @param endDate the end date
+	 * 
+	 * @return list of offers between both dates of the given rural house
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date 
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDay, LocalDate endDate) throws BadDatesException;
+	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate) throws BadDatesException;
 
 	/**
-	 * Obtain all of the offers of a RuralHouse between a range of dates.
+	 * Obtains all offers of a given {@link RuralHouse} between the defined start and end dates 
+	 * range (both inclusive).
 	 * 
-	 * @param ruralHouse
-	 * @param firstDay
-	 * @param endDate
-	 * @return list of offers
-	 * @throws BadDatesException 
+	 * @param ruralHouse the rural house to apply this search
+	 * @param startDate the start date  
+	 * @param endDate the end date
+	 * 
+	 * @return list of offers between both dates of the given rural house
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date 
 	 */
-	public List<Offer> getOffers(RuralHouse ruralHouse, Date firstDay, Date endDate) throws BadDatesException;
+	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException;
 	
 	/**
-	 * Obtain a Client with the username and the password given.
+	 * Obtains a Client with the given user name and the password, if exists and is found. 
 	 * 
-	 * @param user
-	 * @param pass
-	 * @return optional with the found client or a <code>Optional.Empty()</code> if none was found
+	 * @param username the client user name
+	 * @param password the client password
+	 * 
+	 * @return optional containing the found client or an <code>Optional.Empty()</code> if none was found
 	 */
-	public Optional<Client> getClient(String user, String pass);
+	public Optional<Client> getClient(String username, String password);
 	
 	/**
 	 * Returns the persistent instance of the given entity class with the given key
