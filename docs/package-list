@@ -1,0 +1,12 @@
+com.ruralhousejsf.businessLogic
+com.ruralhousejsf.contract
+com.ruralhousejsf.converter
+com.ruralhousejsf.dataAccess
+com.ruralhousejsf.domain
+com.ruralhousejsf.domain.event
+com.ruralhousejsf.domain.observer
+com.ruralhousejsf.domain.util
+com.ruralhousejsf.exceptions
+com.ruralhousejsf.logger
+com.ruralhousejsf.model.availability
+com.ruralhousejsf.model.login
