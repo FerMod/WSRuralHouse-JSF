@@ -26,11 +26,11 @@ public interface HibernateDataAccessInterface {
 	public void initializeDB();
 	
 	/**
-	 * Creates a RuralHouse in the database with his description and his city.
+	 * Creates a {@link RuralHouse} in the database with his description and his city.
 	 * 
 	 * @param description
 	 * @param city
-	 * @return RuralHouse created
+	 * @return the created {@link RuralHouse}
 	 */
 	public RuralHouse createRuralHouse(String description, String city);
 	

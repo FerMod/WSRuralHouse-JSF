@@ -79,7 +79,7 @@ public class RuralHouse implements Serializable {
 	/**
 	 * Change this rural house description to the new one.
 	 * 
-	 * @param id the new description
+	 * @param description the new description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -97,14 +97,14 @@ public class RuralHouse implements Serializable {
 	/**
 	 * Change this rural house city to the new one.
 	 * 
-	 * @param id the new city
+	 * @param city the new city
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
 	/**
-	 * Returns a set of {@link Offers} that are available for this rural house.
+	 * Returns the set of type {@link Offer} that are available for this rural house.
 	 * 
 	 * @return this rural houses set of offers
 	 */
