@@ -25,7 +25,7 @@ public interface ApplicationFacadeInterface {
 	public void initializeDB();
 
 	/**
-	 * Set the DataAccess object for the business logic
+	 * Set the {@link HibernateDataAccessInterface} for this business logic
 	 * 
 	 * @param dataAccess
 	 */

@@ -6,7 +6,11 @@ import java.time.LocalDate;
 import java.util.Date;
 import com.ruralhousejsf.domain.util.ParseDate;
 
-
+/**
+ * The {@code Offer} is a {@code Serializable} class that represents an offer.
+ * 
+ * @see Serializable
+ */
 public class Offer implements Serializable {
 
 	private long id;
@@ -14,9 +18,36 @@ public class Offer implements Serializable {
 	private Date startDate; 
 	private Date endDate;
 	private double price;
-		
-	public Offer() {}
-	
+
+	/**
+	 * An empty constructor used by hibernate.
+	 * <p>
+	 * Hibernate creates objects via reflection using {@linkplain java.lang.Class#newInstance()} to 
+	 * create a new instance the classes.For that reason, it requires a no-arg constructor of at least
+	 * package visibility, to be able to instantiate this object.
+	 */
+	Offer() {}
+
+	/**
+	 * Constructs a new Offer.
+	 * 
+	 * @param ruralHouse the rural house that this offer applies to
+	 * @param startDate the offer start date
+	 * @param endDate the offer end date
+	 * @param price the offer price per day
+	 */
+	public Offer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) {
+		this(ruralHouse, ParseDate.toDate(startDate), ParseDate.toDate(endDate), price);
+	}
+
+	/**
+	 * Constructs a new Offer.
+	 *
+	 * @param ruralHouse the rural house that this offer applies to
+	 * @param startDate the offer start date
+	 * @param endDate the offer end date
+	 * @param price the offer price per day
+	 */
 	public Offer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) {
 		this.ruralHouse = ruralHouse;
 		this.startDate = startDate;
@@ -24,58 +55,105 @@ public class Offer implements Serializable {
 		this.endDate = endDate;
 		this.price = price;
 	}
-	
-	public Offer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) {
-		this(ruralHouse, ParseDate.toDate(startDate), ParseDate.toDate(endDate), price);
-	}
 
+	/**
+	 * Returns the Offer id.
+	 * 
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	/**
+	 * Change the Offer id to a new one.
+	 * 
+	 * @param id the new id
+	 */
+	public void setId(long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Get this offers associated {@link RuralHouse}.
+	 * 
+	 * @return the rural house
+	 */
 	public RuralHouse getRuralHouse() {
 		return ruralHouse;
 	}
 
+	/**
+	 * Set this offers associated {@link RuralHouse} to the value passed as parameter .
+	 * 
+	 * @param ruralHouse the offers associated {@link RuralHouse}
+	 */
 	public void setRuralHouse(RuralHouse ruralHouse) {
 		this.ruralHouse = ruralHouse;
 	}
 
+	/**
+	 * Obtain this offers start date.
+	 * 
+	 * @return the offer start date
+	 */
 	public Date getStartDate() {
 		return startDate;
 	}
 
+	/**
+	 * Change this offers start date to the new date passed as parameter.
+	 * 
+	 * @param startDate the new start date
+	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
+	/**
+	 * Obtain this offers end date.
+	 * 
+	 * @return the offer end date
+	 */
 	public Date getEndDate() {
 		return endDate;
 	}
 
+	/**
+	 * Change this offers end date to the new date passed as parameter.
+	 * 
+	 * @param endDate the end start date
+	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
+	/**
+	 * Obtain this offers price cost.
+	 * 
+	 * @return the offers price
+	 */
 	public double getPrice() {
 		return price;
 	}
-
+	
+	/**
+	 * Change this offers price cost for the new price passed as parameter.
+	 * 
+	 * @param price the new price of this offer
+	 */
 	public void setPrice(double price) {
 		this.price = price;
 	}
 
+	@Override
 	public String toString() {
 		return String.format("Offer [id: %s, ruralHouse: %d, startDate: %s, endDate: %s, price: %s]", id, ruralHouse.getId(), startDate, endDate, price);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		
+
 		if (obj == null) {
 			return false;
 		}
@@ -96,18 +174,18 @@ public class Offer implements Serializable {
 		if ((this.startDate == null) ? (other.startDate != null) : !this.startDate.equals(other.startDate)) {
 			return false;
 		}
-		
+
 		if ((this.endDate == null) ? (other.endDate != null) : !this.endDate.equals(other.endDate)) {
 			return false;
 		}
-		
+
 		if (this.price != other.price) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		int hash = 17;

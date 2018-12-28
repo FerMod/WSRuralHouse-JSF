@@ -17,11 +17,23 @@ import com.ruralhousejsf.domain.util.ParseDate;
 import com.ruralhousejsf.exceptions.BadDatesException;
 import com.ruralhousejsf.logger.ConsoleLogger;
 
+/**
+ * The {@code ApplicationFacadeImpl} is a class in charge of the business logic that implements 
+ * the application facade and provides methods to access the data base and other necessary features 
+ * by the application.
+ *
+ */
 public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 
 	private HibernateDataAccessInterface dataAccess;
 	private static final Logger LOGGER = ConsoleLogger.createLogger(ApplicationFacadeImpl.class); 
 
+	/**
+	 * Constructs a new ApplicationFacadeImpl that requires a {@link HibernateDataAccessInterface}, which
+	 * is in charge of the database access and the operations over the database.
+	 * 
+	 * @param dataAccess the data access class
+	 */
 	public ApplicationFacadeImpl(HibernateDataAccessInterface dataAccess) {
 		setDataAccess(dataAccess);
 	}
@@ -30,7 +42,7 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	public void setDataAccess(HibernateDataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;
 	}
-	
+
 	@Override
 	public void truncateDB() {
 		dataAccess.truncateDB();
@@ -89,19 +101,19 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		Optional<Client> clients = dataAccess.getClient(username, password);
 		return clients.isPresent();
 	}
-	
+
 	@Override
 	public Optional<Client> getClient(String username, String password) {
 		LOGGER.debug("Get client with username: " + username + " and password: " + password + ".");
 		return dataAccess.getClient(username, password);
 	}
-	
+
 	@Override
 	public <T extends Serializable, U extends Serializable> Optional<T> get(Class<T> cls, U key) {
 		LOGGER.debug("Get " + cls.getSimpleName() + " with key " + key);
 		return dataAccess.get(cls, key);
 	}
-	
+
 	@Override
 	public <T extends Serializable, U extends Serializable> boolean exists(Class<T> cls, U key) {
 		LOGGER.debug("Exists " + cls.getSimpleName() + " with key " + key);
@@ -114,10 +126,17 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 		dataAccess.delete(cls, key);
 	}
 
+	/**
+	 * This {@code main} is used for test purposes.
+	 * 
+	 * @param args the arguments
+	 * 
+	 * @deprecated
+	 */
 	public static void main(String[] args) {
-		
+
 		ApplicationFacadeInterface afi = AppFacade.getImpl(true);
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		List<RuralHouse> ruralHouseList = afi.getAllRuralHouses();
