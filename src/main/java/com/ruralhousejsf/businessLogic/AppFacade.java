@@ -26,7 +26,7 @@ public final class AppFacade {
 	/**
 	 * Initializes and returns the application facade instance.
 	 * <p>
-	 * When getting the instance, this will truncate or initialize the database if 
+	 * When getting the instance, this will truncate or initialize the database if it 
 	 * is planned to do so.
 	 * 
 	 * @return the initialized application facade instance
@@ -41,7 +41,7 @@ public final class AppFacade {
 	/**
 	 * Initializes and returns the application facade instance.
 	 * <p>
-	 * When getting the instance, this will truncate or initialize the database if 
+	 * When getting the instance, this will truncate or initialize the database if it 
 	 * is planned to do so.
 	 * 
 	 * @param shouldTruncateDb {@code true} to remove the database tables content, {@code false} otherwise
@@ -58,7 +58,7 @@ public final class AppFacade {
 	/**
 	 * Initializes and returns the application facade instance.
 	 * <p>
-	 * When getting the instance, this will truncate or initialize the database if 
+	 * When getting the instance, this will truncate or initialize the database if it 
 	 * is planned to do so.
 	 * 
 	 * @param shouldTruncateDb {@code true} to remove the database tables content, {@code false} otherwise
@@ -82,15 +82,17 @@ public final class AppFacade {
 	}
 
 	/**
-	 * Return if is planned to truncate the database in the next call of {@link AppFacade#getImpl()}
-	 * @return {@code true} if is planned to truncate, {@code false} otherwise 
+	 * Return if it is planned to truncate the database in the next call of {@link AppFacade#getImpl()}.
+	 * 
+	 * @return {@code true} if it is planned to truncate, {@code false} otherwise 
 	 */
 	public static boolean isTruncateEnabled() {
 		return truncateDb;
 	}
 
 	/**
-	 * Set to truncate the database data in the next call of {@link AppFacade#getImpl()}
+	 * Set to truncate the database data in the next call of {@link AppFacade#getImpl()}.
+	 * 
 	 * @param truncateDb {@code true} to plan to truncate the database, {@code false} otherwise 
 	 */
 	public static void truncate(boolean truncateDb) {
@@ -98,15 +100,17 @@ public final class AppFacade {
 	}
 
 	/**
-	 * Return if is planned to initialize the database data in the next call of {@link AppFacade#getImpl()}
-	 * @return {@code true} if is planned to initialize the database with data, {@code false} otherwise 
+	 * Return if it is planned to initialize the database data in the next call of {@link AppFacade#getImpl()}.
+	 * 
+	 * @return {@code true} if it is planned to initialize the database with data, {@code false} otherwise 
 	 */
 	public static boolean isInitializeEnabled() {
 		return initializeDb;
 	}
 
 	/**
-	 * Set to initialize the database data in the next call of {@link AppFacade#getImpl()}
+	 * Set to initialize the database data in the next call of {@link AppFacade#getImpl()}.
+	 * 
 	 * @param initializeDb {@code true} to plan the database initialization with data, {@code false} otherwise 
 	 */
 	public static void initialize(boolean initializeDb) {
