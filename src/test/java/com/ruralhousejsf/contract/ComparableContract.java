@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * This interface defines tests to verify that the objects of each class that 
- * implements the {@link Comparable} interface, impose their total ordering, 
- * with a expected behavior. This ordering is referred to as the classes 
+ * implements the {@link Comparable} interface, impose their total ordering with
+ * the expected behavior. This ordering is referred to as the classes 
  * <i>natural ordering</i>, and the classes {@code compareTo} method is referred
  * to as its <i>natural comparison method</i>.
  * <p>
@@ -27,8 +27,8 @@ public interface ComparableContract<T extends Comparable<T>> extends Testable<T>
 	
 	/**
 	 * Creates and returns a smaller value to use in the comparable tests.<br>
-	 * This method should return a value smaller than the returned by 
-	 * {@link Testable#createValue}, for its correct execution.
+	 * This method, for its correct execution, should return a value smaller 
+	 * than the returned by {@link Testable#createValue}.
 	 * 
 	 * @return the created value
 	 */

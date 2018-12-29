@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
  * non-null object references.
  * <p>
  * Note that it is generally necessary to override the {@code hashCode} method
- * whenever this method is overridden, so as to maintain the general contract 
+ * whenever the {@code equals} method is overridden, so as to maintain the general contract 
  * for the {@code hashCode} method, which states that equal objects must have 
  * equal hash codes.
  *  
@@ -29,8 +29,8 @@ public interface EqualsContract<T> extends Testable<T> {
 
 	/**
 	 * Creates and returns a non equal value to use in the equality tests.<br>
-	 * This method should return a value non equal than the returned by 
-	 * {@link Testable#createValue}, for its correct execution.
+	 * This method, for its correct execution, should return value non equal 
+	 * than the returned by {@link Testable#createValue}.
 	 * 
 	 * @return the created value
 	 */
