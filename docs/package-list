@@ -2,6 +2,7 @@ com.ruralhousejsf.businessLogic
 com.ruralhousejsf.contract
 com.ruralhousejsf.converter
 com.ruralhousejsf.dataAccess
+com.ruralhousejsf.dataAccess.util
 com.ruralhousejsf.domain
 com.ruralhousejsf.domain.event
 com.ruralhousejsf.domain.observer

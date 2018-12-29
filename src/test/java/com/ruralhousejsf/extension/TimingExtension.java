@@ -31,7 +31,8 @@ public class TimingExtension implements BeforeTestExecutionCallback, AfterTestEx
 	/**
 	 * 
 	 * This will store the current system time value for later retrieval under
-	 * the {@code START_TIME} key.<br>
+	 * the {@code START_TIME} key.
+	 * <p>
 	 * This method will be invoked before any user defined teardown methods
 	 * like "{@code @Test}" is made and its main purpose is to start the test
 	 * elapsed time.
@@ -51,7 +52,8 @@ public class TimingExtension implements BeforeTestExecutionCallback, AfterTestEx
 	 * 
 	 * 
 	 * This method will retrieve the stored value under the {@code START_TIME} key and 
-	 * calculate the elapsed time.<br>
+	 * calculate the elapsed time.
+	 * <p>
 	 * This will be invoked after the user defined teardown methods
 	 * like "{@code @Test}" is made and its main purpose is to stop and log out
 	 * the test elapsed time.
