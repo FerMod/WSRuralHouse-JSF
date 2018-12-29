@@ -29,8 +29,8 @@ public interface EqualsContract<T> extends Testable<T> {
 
 	/**
 	 * Creates and returns a non equal value to use in the equality tests.<br>
-	 * This method, for its correct execution, should return value non equal 
-	 * than the returned by {@link Testable#createValue}.
+	 * This method should return a value not equal to the returned by
+	 * {@link Testable#createValue} for its correct execution.
 	 * 
 	 * @return the created value
 	 */
