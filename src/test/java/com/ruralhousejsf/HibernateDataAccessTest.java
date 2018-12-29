@@ -144,13 +144,13 @@ class HibernateDataAccessTest {
 		return offer;
 	}
 
-	@Nested
 	@DisplayName("Client Test")
+	@Nested
 	class ClientTest {
 
+		@DisplayName("CreateClient - Correct Execution")
 		@ParameterizedTest
 		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("CreateClient - Correct Execution")
 		void createClientTest(String username, String password) {
 
 			try {
@@ -164,9 +164,9 @@ class HibernateDataAccessTest {
 
 		}
 
+		@DisplayName("GetClient - Correct Execution")
 		@ParameterizedTest
 		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("GetClient - Correct Execution")
 		void getClientTest(String username, String password) {
 
 			try {
@@ -188,9 +188,9 @@ class HibernateDataAccessTest {
 
 		}
 
+		@DisplayName("Login - True")
 		@ParameterizedTest
 		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("Login - True")
 		void loginTest1(String username, String password) {
 
 			try {
@@ -208,9 +208,9 @@ class HibernateDataAccessTest {
 
 		}
 
+		@DisplayName("Login - False")
 		@ParameterizedTest
 		@CsvFileSource(resources = CLIENT_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("Login - False")
 		void loginTest2(String username, String password) {
 
 			try {
@@ -230,13 +230,13 @@ class HibernateDataAccessTest {
 
 	}
 
-	@Nested
 	@DisplayName("Offer Test")
+	@Nested
 	class OfferTest {
 
+		@DisplayName("CreateOffer - BadDatesException")
 		@ParameterizedTest
 		@CsvFileSource(resources = OFFER_BAD_DATES_DATA, numLinesToSkip = 1)
-		@DisplayName("CreateOffer - BadDatesException")
 		void createOfferTest1(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
 
 			try {
@@ -259,9 +259,9 @@ class HibernateDataAccessTest {
 
 		}
 
+		@DisplayName("CreateOffer - Correct Execution")
 		@ParameterizedTest
 		@CsvFileSource(resources = OFFER_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("CreateOffer - Correct Execution")
 		void createOfferTest2(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
 
 			try {
@@ -282,9 +282,9 @@ class HibernateDataAccessTest {
 
 		}
 
+		@DisplayName("GetOffers - BadDatesException")
 		@ParameterizedTest
 		@CsvFileSource(resources = OFFER_BAD_DATES_DATA, numLinesToSkip = 1)
-		@DisplayName("GetOffers - BadDatesException")
 		void getOffersTest1(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
 
 			try {
@@ -304,9 +304,9 @@ class HibernateDataAccessTest {
 
 		}
 
+		@DisplayName("GetOffers - Empty")
 		@ParameterizedTest
 		@CsvFileSource(resources = OFFER_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("GetOffers - Empty")
 		void getOffersTest3(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
 
 			try {
@@ -325,9 +325,9 @@ class HibernateDataAccessTest {
 
 		}
 
+		@DisplayName("GetOffers - Not Empty")
 		@ParameterizedTest
 		@CsvFileSource(resources = OFFER_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("GetOffers - Not Empty")
 		void getOffersTest4(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
 
 			try {
@@ -354,8 +354,8 @@ class HibernateDataAccessTest {
 
 	}
 
-	@Nested
 	@DisplayName("RuralHouse Test")
+	@Nested
 	class RuralHouseTest {
 
 		@ParameterizedTest
@@ -374,8 +374,8 @@ class HibernateDataAccessTest {
 
 		}
 
-		@Test
 		@DisplayName("GetAllRuralHouses - List Not Empty")
+		@Test
 		void getAllRuralHousesTest() {
 
 			try {
@@ -403,9 +403,9 @@ class HibernateDataAccessTest {
 
 		}
 
+		@DisplayName("GetOffers - Correct Execution")
 		@ParameterizedTest
 		@CsvFileSource(resources = OFFER_TEST_DATA, numLinesToSkip = 1)
-		@DisplayName("GetOffers - Correct Execution")
 		void getOffersTest(String description, String city, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate startDate, @JavaTimeConversionPattern("dd/MM/yyyy") LocalDate endDate, double price) {
 
 			try {
