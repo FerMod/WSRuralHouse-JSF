@@ -34,11 +34,12 @@ import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
 import com.ruralhousejsf.exceptions.BadDatesException;
+import com.ruralhousejsf.extension.DataBaseConnectionExtension;
 import com.ruralhousejsf.extension.TimingExtension;
 import com.ruralhousejsf.logger.ConsoleLogger;
 
 @DisplayName("Hibernate Data Access Test")
-@ExtendWith(TimingExtension.class)
+@ExtendWith({DataBaseConnectionExtension.class, TimingExtension.class})
 class HibernateDataAccessTest {
 
 	static final Logger LOGGER = ConsoleLogger.createLogger(HibernateDataAccessTest.class);
@@ -56,7 +57,7 @@ class HibernateDataAccessTest {
 
 	@BeforeAll
 	static void beforeAll() {
-
+		
 		try {
 			afi = AppFacade.getImpl();
 		} catch (Exception e) {

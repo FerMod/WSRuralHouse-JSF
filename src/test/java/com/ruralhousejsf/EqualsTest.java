@@ -22,10 +22,11 @@ import com.ruralhousejsf.contract.EqualsContract;
 import com.ruralhousejsf.domain.Client;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.extension.DataBaseConnectionExtension;
 import com.ruralhousejsf.extension.TimingExtension;
 
 @DisplayName("Equals Test")
-@ExtendWith(TimingExtension.class)
+@ExtendWith({DataBaseConnectionExtension.class, TimingExtension.class})
 class EqualsTest {
 
 	static ApplicationFacadeInterface afi;
