@@ -39,8 +39,6 @@ public class TimingExtension implements BeforeTestExecutionCallback, AfterTestEx
 	 * 
 	 * @param context the current extension context, never {@code null}
 	 * 
-	 * @throws Exception
-	 * 
 	 * @see BeforeTestExecutionCallback#beforeTestExecution(ExtensionContext)
 	 */
 	@Override
@@ -57,8 +55,6 @@ public class TimingExtension implements BeforeTestExecutionCallback, AfterTestEx
 	 * key and calculate the elapsed time.
 	 * 
 	 * @param context the current extension context, never {@code null}
-	 * 
-	 * @throws Exception
 	 * 
 	 * @see AfterTestExecutionCallback#afterTestExecution(ExtensionContext)
 	 */
