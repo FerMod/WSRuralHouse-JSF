@@ -98,8 +98,8 @@ public class ApplicationFacadeImpl implements ApplicationFacadeInterface {
 	@Override
 	public boolean login(String username, String password) {
 		LOGGER.debug("Login with username: " + username + " and password: " + password + ".");
-		Optional<Client> clients = dataAccess.getClient(username, password);
-		return clients.isPresent();
+		Optional<Client> client = dataAccess.getClient(username, password);
+		return client.isPresent();
 	}
 
 	@Override
