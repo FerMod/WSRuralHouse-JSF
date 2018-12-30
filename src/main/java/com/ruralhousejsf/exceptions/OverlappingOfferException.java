@@ -5,8 +5,6 @@ package com.ruralhousejsf.exceptions;
  */
 public class OverlappingOfferException extends Exception {
 
-	private static final long serialVersionUID = -3406783201140469412L;
-
 	/**
 	 * Constructs a {@code OverlappingOfferException} with no detail message.
 	 */
@@ -17,11 +15,13 @@ public class OverlappingOfferException extends Exception {
 	/**
 	 * Constructs a {@code OverlappingOfferException} with the specified detail message.
 	 *
-	 * @param   s   the detail message.
+	 * @param s the detail message.
 	 * 
 	 */
 	public OverlappingOfferException(String s) {
 		super(s);
 	}
+
+	private static final long serialVersionUID = -3406783201140469412L;
 
 }

@@ -1,0 +1,15 @@
+/* Javadoc style sheet */
+/*
+Custom document style
+*/
+
+blockquote {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding-left: 15px;
+    border-left: 4px solid #ffd966;
+    background-color: #faebbc;
+    border-radius: 2px;
+} 

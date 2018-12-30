@@ -24,16 +24,11 @@ import com.ruralhousejsf.logger.ConsoleLogger;
 public class HibernateDataAccess implements HibernateDataAccessInterface {
 
 	private static final Logger LOGGER = ConsoleLogger.createLogger(HibernateDataAccess.class);
-	
-	public static void main(String[] args) {
-		new HibernateDataAccess().initializeDB();
-	}
 
 	public HibernateDataAccess() {}
 
-	public void initializeDB() {
+	public void truncateDB() {
 
-		LOGGER.debug("Initializing DB...");
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
 		LOGGER.trace("Hibernate session obtained");		
 		session.beginTransaction();
@@ -57,7 +52,16 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Transaction commit and session closed");
 		LOGGER.debug("DB data deleted");
 
-		LOGGER.debug("Creating DB data...");
+	}
+
+	public void initializeDB() {
+
+		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");		
+		session.beginTransaction();
+		LOGGER.trace("Transaction started");
+
+		LOGGER.debug("Initializing DB...");
 
 		createClient("cliente", "cliente123");
 		createClient("user", "user123");
@@ -77,13 +81,11 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 			createOffer(rh3, LocalDate.of(2019, 1, 3), LocalDate.of(2019, 1, 9), 40.0);
 			createOffer(rh4, LocalDate.of(2019, 1, 7), LocalDate.of(2019, 1, 21), 36.0);
 			createOffer(rh4, LocalDate.of(2018, 1, 7), LocalDate.of(2019, 1, 7), 78.0);
-
 		} catch (BadDatesException e) {
 			e.printStackTrace();
 		}
 		LOGGER.trace("Data of Offer created");
 
-		LOGGER.debug("DB data created");		
 		LOGGER.debug("Initialization of BD finished");		
 
 	}
@@ -106,13 +108,13 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	}
 
 	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException {		
-		return createOffer(ruralHouse, ParseDate.asDate(startDate), ParseDate.asDate(endDate), price);
+		return createOffer(ruralHouse, ParseDate.toDate(startDate), ParseDate.toDate(endDate), price);
 	}
 
 	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException {
 
 		if(startDate.after(endDate)) {
-			throw new BadDatesException("The startDate have to be before than the endDate.");
+			throw new BadDatesException("The start date must be before the end date");
 		}
 
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();
@@ -156,9 +158,9 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
 
-		Query query = session.createQuery("FROM RuralHouse");
+		Criteria criteria = session.createCriteria(RuralHouse.class);
 		@SuppressWarnings("unchecked")
-		List<RuralHouse> result = query.list();
+		List<RuralHouse> result = criteria.list();
 
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
@@ -167,13 +169,13 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 	}
 
 	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate firstDate, LocalDate endDate) throws BadDatesException {		
-		return getOffers(ruralHouse, ParseDate.asDate(firstDate), ParseDate.asDate(endDate));
+		return getOffers(ruralHouse, ParseDate.toDate(firstDate), ParseDate.toDate(endDate));
 	}
 
 	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException {
 
 		if(startDate.after(endDate)) {
-			throw new BadDatesException("The startDate have to be before than the endDate.");
+			throw new BadDatesException("The start date must be before the end date");
 		}
 
 		LOGGER.debug("getOffers of " + ruralHouse.toString() + " with startDate " + startDate.toString() + " and endDate " + endDate.toString());
@@ -182,34 +184,20 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		LOGGER.trace("Hibernate session obtained");	
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
-		
+
 		Criteria criteria = session.createCriteria(Offer.class);
 		criteria.setFetchMode("ruralHouse", FetchMode.JOIN);
-		
+		criteria.add(Restrictions.eq("ruralHouse.id", ruralHouse.getId()));
+
 		Criterion betweenStartDate = Restrictions.between("startDate", startDate, endDate);
 		Criterion betweenEndDate = Restrictions.between("endDate", startDate, endDate);
 		Criterion leStartDate = Restrictions.le("startDate", startDate);
-		Criterion geEndDate = Restrictions.ge("endDate", endDate);
-		
+		Criterion geEndDate = Restrictions.ge("endDate", endDate);		
+
 		criteria.add(Restrictions.or(Restrictions.or(betweenStartDate, betweenEndDate), Restrictions.and(leStartDate, geEndDate)));
-		
-		@SuppressWarnings("unchecked")
-		List<Offer> result = criteria.list();
-		
-		/*
-		Query query = session.createQuery("FROM Offer " + 
-				"WHERE (start_date BETWEEN :startDate AND :endDate) " + 
-				"OR (end_date BETWEEN :startDate AND :endDate) " + 
-				"OR (start_date <= :startDate AND end_date >= :endDate)"
-				);
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		query.setParameter("startDate", formatter.format(startDate));
-		query.setParameter("endDate", formatter.format(endDate));
 
 		@SuppressWarnings("unchecked")
-		List<Offer> result = query.list();
-		*/
+		List<Offer> result = criteria.list();
 
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
@@ -225,11 +213,11 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		session.beginTransaction();
 		LOGGER.trace("Transaction started");
 
-		Query query = session.createQuery("FROM Client WHERE username = :username AND password = :password");
-		query.setParameter("username", username);
-		query.setParameter("password", password);
+		Criteria criteria = session.createCriteria(Client.class);
+		criteria.add(Restrictions.eq("username", username));
+		criteria.add(Restrictions.eq("password", password));
 
-		Optional<Client> result = Optional.ofNullable((Client) query.uniqueResult());
+		Optional<Client> result = Optional.ofNullable((Client) criteria.uniqueResult());
 
 		session.getTransaction().commit();
 		LOGGER.trace("Transaction commit and session closed");
@@ -237,7 +225,40 @@ public class HibernateDataAccess implements HibernateDataAccessInterface {
 		return result;
 	}
 
-	public <T extends Serializable> void delete(Class<?> cls, T key) {
+	public <T extends Serializable, U extends Serializable> Optional<T> get(Class<T> cls, U key) {
+		LOGGER.debug("Get " + cls.getSimpleName() + " with key " + key);
+
+		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
+		session.beginTransaction();
+		LOGGER.trace("Transaction started");
+
+		@SuppressWarnings("unchecked")
+		Optional<T> persistantInstance = (Optional<T>) Optional.ofNullable(session.get(cls, key));
+
+		session.getTransaction().commit();
+		LOGGER.trace("Transaction commit and session closed");
+
+		return persistantInstance;
+	}
+
+	public <T extends Serializable, U extends Serializable> boolean exists(Class<T> cls, U key) {
+		LOGGER.debug("Exists " + cls.getSimpleName() + " with key " + key);
+
+		Session session = HibernateSession.getSessionFactory().getCurrentSession();
+		LOGGER.trace("Hibernate session obtained");	
+		session.beginTransaction();
+		LOGGER.trace("Transaction started");
+
+		Optional<Object> persistantInstance = Optional.ofNullable(session.get(cls, key));
+
+		session.getTransaction().commit();
+		LOGGER.trace("Transaction commit and session closed");
+
+		return persistantInstance.isPresent();
+	}
+
+	public <T extends Serializable, U extends Serializable> void delete(Class<T> cls, U key) {
 		LOGGER.debug("delete " + cls.getSimpleName() + " with key " + key);
 
 		Session session = HibernateSession.getSessionFactory().getCurrentSession();

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.ruralhousejsf.dataAccess.HibernateDataAccessInterface;
 import com.ruralhousejsf.domain.Client;
@@ -14,104 +15,193 @@ import com.ruralhousejsf.exceptions.BadDatesException;
 public interface ApplicationFacadeInterface {
 
 	/**
+	 * Truncate the data base.
+	 */
+	public void truncateDB();
+	
+	/**
 	 * Initialize the data base.
 	 */
 	public void initializeDB();
 
 	/**
-	 * Set the DataAccess object for the business logic
+	 * Set the {@link HibernateDataAccessInterface} for this business logic
 	 * 
-	 * @param dataAccess
+	 * @param dataAccess the facade data access
 	 */
 	public void setDataAccess(HibernateDataAccessInterface dataAccess);
 
 	/**
-	 * Creates a RuralHouse in the database with his description and his city.
+	 * Creates and stores in the database a {@code RuralHouse} in the database with his description and his city.
 	 * 
-	 * @param description
-	 * @param city
-	 * @return RuralHouse created
+	 * @param description the rural house description
+	 * @param city the rural house city
+	 * 
+	 * @return the created {@code RuralHouse}
+	 * 
+	 * @see RuralHouse
 	 */
 	public RuralHouse createRuralHouse(String description, String city);
 
 	/**
-	 * Creates a Offer of a RuralHouse with his startDate, his endDate and his price.
+	 * Creates and stores in the database an {@code Offer} for the given {@code RuralHouse} that will start and end in the given dates, and will 
+	 * have the passed price.
 	 * 
-	 * @param ruralHouse
-	 * @param startDate
-	 * @param endDate
-	 * @param price
-	 * @return Offer of the RuralHouse created
-	 * @throws BadDatesException 
+	 * @param ruralHouse this offers associated rural house  
+	 * @param startDate the offer start date
+	 * @param endDate the offer end date
+	 * @param price the cost per day of the offer
+	 * 
+	 * @return the created {@code Offer} for the {@code RuralHouse}
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date
+	 * 
+	 * @see Offer
+	 * @see RuralHouse
 	 */
 	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException;
 
 	/**
-	 * Creates a Offer of a RuralHouse with his startDate, his endDate and his price.
+	 * Creates and stores in the database an {@code Offer} for the given {@code RuralHouse} that will start and end in the given dates, and will 
+	 * have the passed price.
 	 * 
-	 * @param ruralHouse
-	 * @param startDate
-	 * @param endDate
-	 * @param price
-	 * @return Offer of the RuralHouse created
-	 * @throws BadDatesException 
+	 * @param ruralHouse this offers associated rural house  
+	 * @param startDate the offer start date
+	 * @param endDate the offer end date
+	 * @param price the cost per day of the offer
+	 * 
+	 * @return {@code Offer} for the {@code RuralHouse}
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date
+	 * 
+	 * @see Offer
+	 * @see RuralHouse
 	 */
 	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException;
 
 	/**
-	 * Creates a Client in the database and returns the created client
+	 * Creates and stores in the database a {@code Client} with the passed user name and password.
 	 * 
-	 * @param username
-	 * @param password
-	 * @return Client created
+	 * @param username the client user name
+	 * @param password the client password
+	 * 
+	 * @return the created {@code Client}
+	 * 
+	 * @see Client
 	 */
 	public Client createClient(String username, String password);
 
 	/**
-	 * Obtain all the rural houses.
+	 * Obtains all rural houses stored in the database.
 	 * 
 	 * @return list of rural houses
+	 * 
+	 * @see RuralHouse
 	 */
 	public List<RuralHouse> getAllRuralHouses();
 
 	/**
-	 * Obtain all the offers of a RuralHouse between the given range of dates.
+	 * Obtains all offers of a given {@code RuralHouse} between the defined start and end dates 
+	 * range (both inclusive).
 	 * 
-	 * @param ruralHouse
-	 * @param startDate
-	 * @param endDate
-	 * @return vector of offers
-	 * @throws BadDatesException 
+	 * @param ruralHouse the rural house to apply this search
+	 * @param startDate the start date  
+	 * @param endDate the end date
+	 * 
+	 * @return list of offers between both dates of the given rural house
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date 
+	 * 
+	 * @see Offer
+	 * @see RuralHouse
 	 */
 	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate) throws BadDatesException;
 
 	/**
-	 * Obtain all the offers of a RuralHouse between the given range of dates.
+	 * Obtains all offers of a given {@code RuralHouse} between the defined start and end dates 
+	 * range (both inclusive).
 	 * 
-	 * @param ruralHouse
-	 * @param startDate
-	 * @param endDate
-	 * @return vector of offers
-	 * @throws BadDatesException 
+	 * @param ruralHouse the rural house to apply this search
+	 * @param startDate the start date  
+	 * @param endDate the end date
+	 * 
+	 * @return list of offers between both dates of the given rural house
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date 
+	 * 
+	 * @see Offer
+	 * @see RuralHouse
 	 */
 	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException;
 
 	/**
-	 * Verify that the login is correct with for the given username and a password.
+	 * Verifies that the login with the given user name and the password is correct and returns a boolean
+	 * indicating if the login information is valid.
+	 * <blockquote>
+	 * 	This only verifies if the login should succeed, this does not make any further operations than
+	 *  the mentioned here. 
+	 * </blockquote>
 	 * 
-	 * @param username
-	 * @param password
-	 * @return <code>true</code> if the operation is successful, <code>false</code> otherwise
+	 * @param username the client user name
+	 * @param password the client password
+	 * 
+	 * @return {@code true} if the operation is successful, {@code false} otherwise
+	 * 
+	 * @see Client
 	 */
 	public boolean login(String username, String password);
+	
+	/**
+	 * Obtains a {@code Client} with the given user name and the password, if exists and is found. 
+	 * 
+	 * @param username the client user name
+	 * @param password the client password
+	 * 
+	 * @return optional containing the found client or an <code>Optional.Empty()</code> if none was found
+	 * 
+	 * @see Client
+	 * @see Optional
+	 */
+	public Optional<Client> getClient(String username, String password);
+	
+	/**
+	 * Returns the persistent instance of the given entity class with the given key
+	 * 
+	 * @param <T> the class type
+	 * @param <U> the key type
+	 * 
+	 * @param cls the instance class
+	 * @param key the instance key
+	 * 
+	 * @return <code>Optional</code> with the persistent instance, or <code>Optional.empty()</code> if 
+	 * no persistent instance is found
+	 * 
+	 * @see Optional
+	 */
+	public <T extends Serializable, U extends Serializable> Optional<T> get(Class<T> cls, U key);
+	
+	/**
+	 * Check if exists the persistent instance with the given key
+	 * 
+	 * @param <T> the class type
+	 * @param <U> the key type
+	 * 
+	 * @param cls the instance class
+	 * @param key the instance key
+	 * 
+	 * @return <code>true</code> if exists the persistent instance, <code>false</code> otherwise
+	 */
+	public <T extends Serializable, U extends Serializable> boolean exists(Class<T> cls, U key);
 
 	/**
 	 * Delete the persistent instance with the given id
 	 * 
-	 * @param <T> the key type
+	 * @param <T> the class type
+	 * @param <U> the key type
+	 * 
 	 * @param cls the instance class
 	 * @param key the instance key
 	 */
-	public <T extends Serializable> void delete(Class<?> cls, T key);
+	public <T extends Serializable, U extends Serializable> void delete(Class<T> cls, U key);
 
 }

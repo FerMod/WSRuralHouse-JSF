@@ -1,11 +1,9 @@
 package com.ruralhousejsf.exceptions;
 
 /**
- * Thrown when a account authentication fails.
+ * Thrown when an authentication fails.
  */
 public class AuthException extends Exception {
-
-	private static final long serialVersionUID = -7963009307719576712L;
 
 	/**
 	 * Constructs a {@code AuthException} with a default message.
@@ -21,5 +19,7 @@ public class AuthException extends Exception {
 	public AuthException(String s) {
 		super(s);
 	}
+
+	private static final long serialVersionUID = -7963009307719576712L;
 
 }

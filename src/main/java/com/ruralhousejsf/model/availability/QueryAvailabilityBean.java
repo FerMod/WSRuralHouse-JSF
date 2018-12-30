@@ -1,5 +1,6 @@
 package com.ruralhousejsf.model.availability;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import com.ruralhousejsf.businessLogic.AppFacade;
 import com.ruralhousejsf.businessLogic.ApplicationFacadeInterface;
 import com.ruralhousejsf.domain.Offer;
 import com.ruralhousejsf.domain.RuralHouse;
+import com.ruralhousejsf.domain.util.ParseDate;
 import com.ruralhousejsf.exceptions.BadDatesException;
 
 @ManagedBean(name="queryAvailability")
@@ -35,6 +37,8 @@ public class QueryAvailabilityBean {
 
 		applicationFacade = AppFacade.getImpl();
 		ruralHouseList = applicationFacade.getAllRuralHouses();
+		
+		startDate = ParseDate.toDate(LocalDate.now());
 
 	}
 
