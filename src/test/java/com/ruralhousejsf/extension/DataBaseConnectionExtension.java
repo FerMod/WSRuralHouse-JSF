@@ -17,8 +17,9 @@ import com.ruralhousejsf.logger.ConsoleLogger;
  * {@link BeforeAllCallback} interface, which overrides the {@code beforeAll} 
  * method.
  * <p>
- * This extension class should be added to another class with the 
- * "{@code @extendsWith}" tag.
+ * An Extension can be registered <tt>declaratively</tt> via {@link org.junit.jupiter.api.extension.ExtendWith @ExtendWith}, 
+ * <tt>programmatically</tt> via {@linkplain org.junit.jupiter.api.extension.RegisterExtension @RegisterExtension}, 
+ * or <tt>automatically</tt> via the {@linkplain java.util.ServiceLoader ServiceLoader} mechanism.
  * 
  * @see #beforeAll(ExtensionContext)
  */
@@ -32,17 +33,16 @@ public class DataBaseConnectionExtension implements BeforeAllCallback {
 	private static final String PASSWORD = "root";
 
 	/**
-	 * This method will be invoked before any user defined teardown methods
-	 * like "{@code @beforeAll}" is made and its main purpose is to test the 
-	 * connection before hand.<br>
+	 * This callback is invoked once <tt>before</tt> all tests in the 
+	 * current container, and its only purpose is to test the connection before 
+	 * hand.<br>
 	 * This method makes an assertion to checks and guarantee that no issues 
 	 * where found when establishing the connection with the database.
 	 * 
-	 * @param context the context in which the current test or container is 
-	 * being executed. Extensions are provided an instance of ExtensionContext 
-	 * to perform their work.
+	 * @param context the current extension context, never {@code null}
 	 * 
 	 * @see BeforeAllCallback#beforeAll(ExtensionContext)
+	 * @see ExtensionContext
 	 */
 	@Override
 	public void beforeAll(ExtensionContext context) throws Exception {

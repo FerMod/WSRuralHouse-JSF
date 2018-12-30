@@ -16,8 +16,9 @@ import com.ruralhousejsf.logger.ConsoleLogger;
  * and the {@link AfterTestExecutionCallback} interfaces, which overrides the 
  * {@code beforeTestExecution} method and the {@code afterTestExecution} method.
  * <p>
- * This extension class should be added to another class with the 
- * "{@code @extendsWith}" tag.
+ * An Extension can be registered <tt>declaratively</tt> via {@link org.junit.jupiter.api.extension.ExtendWith @ExtendWith}, 
+ * <tt>programmatically</tt> via {@linkplain org.junit.jupiter.api.extension.RegisterExtension @RegisterExtension}, 
+ * or <tt>automatically</tt> via the {@linkplain java.util.ServiceLoader ServiceLoader} mechanism.
  * 
  * @see #beforeTestExecution(ExtensionContext)
  * @see #afterTestExecution(ExtensionContext)
@@ -29,17 +30,16 @@ public class TimingExtension implements BeforeTestExecutionCallback, AfterTestEx
 	private static final String START_TIME = "start time";
 
 	/**
-	 * 
+	 * This callback is invoked <tt>immediately after</tt> each test has been
+	 * executed, and its only purpose is to start the test timer to measure the
+	 * elapsed time.
+	 * <p>
 	 * This will store the current system time value for later retrieval under
 	 * the {@code START_TIME} key.
-	 * <p>
-	 * This method will be invoked before any user defined teardown methods
-	 * like "{@code @Test}" is made and its main purpose is to start the test
-	 * elapsed time.
 	 * 
-	 * @param context the context in which the current test or container is 
-	 * being executed. Extensions are provided an instance of ExtensionContext 
-	 * to perform their work.
+	 * @param context the current extension context, never {@code null}
+	 * 
+	 * @throws Exception
 	 * 
 	 * @see BeforeTestExecutionCallback#beforeTestExecution(ExtensionContext)
 	 */
@@ -49,18 +49,16 @@ public class TimingExtension implements BeforeTestExecutionCallback, AfterTestEx
 	}
 
 	/**
-	 * 
-	 * 
-	 * This method will retrieve the stored value under the {@code START_TIME} key and 
-	 * calculate the elapsed time.
+	 * This callback is invoked <tt>immediately after</tt> each test has been
+	 * executed, and its only purpose is to stop the timer and to log out the
+	 * test elapsed time.
 	 * <p>
-	 * This will be invoked after the user defined teardown methods
-	 * like "{@code @Test}" is made and its main purpose is to stop and log out
-	 * the test elapsed time.
+	 * This method will retrieve the stored value under the {@code START_TIME} 
+	 * key and calculate the elapsed time.
 	 * 
-	 * @param context the context in which the current test or container is 
-	 * being executed. Extensions are provided an instance of ExtensionContext 
-	 * to perform their work.
+	 * @param context the current extension context, never {@code null}
+	 * 
+	 * @throws Exception
 	 * 
 	 * @see AfterTestExecutionCallback#afterTestExecution(ExtensionContext)
 	 */

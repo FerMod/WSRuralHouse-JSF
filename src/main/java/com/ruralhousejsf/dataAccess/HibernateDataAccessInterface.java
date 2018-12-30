@@ -25,17 +25,19 @@ public interface HibernateDataAccessInterface {
 	public void initializeDB();
 	
 	/**
-	 * Creates and stores in the database a {@link RuralHouse} in the database with his description and his city.
+	 * Creates and stores in the database a {@code RuralHouse} in the database with his description and his city.
 	 * 
 	 * @param description the rural house description
 	 * @param city the rural house city
 	 * 
-	 * @return the created {@link RuralHouse}
+	 * @return the created {@code RuralHouse}
+	 * 
+	 * @see RuralHouse
 	 */
 	public RuralHouse createRuralHouse(String description, String city);
-	
+
 	/**
-	 * Creates and stores in the database an {@link Offer} for the given {@link RuralHouse} that will start and end in the given dates, and will 
+	 * Creates and stores in the database an {@code Offer} for the given {@code RuralHouse} that will start and end in the given dates, and will 
 	 * have the passed price.
 	 * 
 	 * @param ruralHouse this offers associated rural house  
@@ -43,14 +45,17 @@ public interface HibernateDataAccessInterface {
 	 * @param endDate the offer end date
 	 * @param price the cost per day of the offer
 	 * 
-	 * @return the created Offer for the RuralHouse passed as parameter
+	 * @return the created {@code Offer} for the {@code RuralHouse}
 	 * 
 	 * @throws BadDatesException thrown when the start date is greater than the end date
+	 * 
+	 * @see Offer
+	 * @see RuralHouse
 	 */
 	public Offer createOffer(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate, double price) throws BadDatesException;
-	
+
 	/**
-	 * Creates and stores in the database an {@link Offer} for the given {@link RuralHouse} that will start and end in the given dates, and will 
+	 * Creates and stores in the database an {@code Offer} for the given {@code RuralHouse} that will start and end in the given dates, and will 
 	 * have the passed price.
 	 * 
 	 * @param ruralHouse this offers associated rural house  
@@ -58,19 +63,24 @@ public interface HibernateDataAccessInterface {
 	 * @param endDate the offer end date
 	 * @param price the cost per day of the offer
 	 * 
-	 * @return the created {@link Offer}
+	 * @return the created {@code Offer} for the {@code RuralHouse}
 	 * 
-	 * @throws BadDatesException thrown when the start date is greater than the end date 
+	 * @throws BadDatesException thrown when the start date is greater than the end date
+	 * 
+	 * @see Offer
+	 * @see RuralHouse
 	 */
 	public Offer createOffer(RuralHouse ruralHouse, Date startDate, Date endDate, double price) throws BadDatesException;
 
 	/**
-	 * Creates and stores in the database a {@link Client} with the passed user name and password.
+	 * Creates and stores in the database a {@code Client} with the passed user name and password.
 	 * 
 	 * @param username the client user name
 	 * @param password the client password
 	 * 
-	 * @return the created {@link Client}
+	 * @return the created {@code Client}
+	 * 
+	 * @see Client
 	 */
 	public Client createClient(String username, String password);
 
@@ -78,11 +88,13 @@ public interface HibernateDataAccessInterface {
 	 * Obtains all rural houses stored in the database.
 	 * 
 	 * @return list of rural houses
+	 * 
+	 * @see RuralHouse
 	 */
 	public List<RuralHouse> getAllRuralHouses();
-	
+
 	/**
-	 * Obtains all offers of a given {@link RuralHouse} between the defined start and end dates 
+	 * Obtains all offers of a given {@code RuralHouse} between the defined start and end dates 
 	 * range (both inclusive).
 	 * 
 	 * @param ruralHouse the rural house to apply this search
@@ -92,11 +104,14 @@ public interface HibernateDataAccessInterface {
 	 * @return list of offers between both dates of the given rural house
 	 * 
 	 * @throws BadDatesException thrown when the start date is greater than the end date 
+	 * 
+	 * @see Offer
+	 * @see RuralHouse
 	 */
 	public List<Offer> getOffers(RuralHouse ruralHouse, LocalDate startDate, LocalDate endDate) throws BadDatesException;
 
 	/**
-	 * Obtains all offers of a given {@link RuralHouse} between the defined start and end dates 
+	 * Obtains all offers of a given {@code RuralHouse} between the defined start and end dates 
 	 * range (both inclusive).
 	 * 
 	 * @param ruralHouse the rural house to apply this search
@@ -106,16 +121,22 @@ public interface HibernateDataAccessInterface {
 	 * @return list of offers between both dates of the given rural house
 	 * 
 	 * @throws BadDatesException thrown when the start date is greater than the end date 
+	 * 
+	 * @see Offer
+	 * @see RuralHouse
 	 */
 	public List<Offer> getOffers(RuralHouse ruralHouse, Date startDate, Date endDate) throws BadDatesException;
-	
+
 	/**
-	 * Obtains a Client with the given user name and the password, if exists and is found. 
+	 * Obtains a {@code Client} with the given user name and the password, if exists and is found. 
 	 * 
 	 * @param username the client user name
 	 * @param password the client password
 	 * 
 	 * @return optional containing the found client or an <code>Optional.Empty()</code> if none was found
+	 * 
+	 * @see Client
+	 * @see Optional
 	 */
 	public Optional<Client> getClient(String username, String password);
 	

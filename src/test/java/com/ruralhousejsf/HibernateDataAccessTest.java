@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +37,14 @@ import com.ruralhousejsf.extension.DataBaseConnectionExtension;
 import com.ruralhousejsf.extension.TimingExtension;
 import com.ruralhousejsf.logger.ConsoleLogger;
 
+/**
+ * This class defines test to guarantee a correct and an expected result of
+ * the methods and classes that access the database.
+ * <p>
+ * Before any test is run, the connection with the database is checked and if
+ * this check fails all the tests are aborted.
+ * 
+ */
 @DisplayName("Hibernate Data Access Test")
 @ExtendWith({DataBaseConnectionExtension.class, TimingExtension.class})
 class HibernateDataAccessTest {
@@ -57,7 +64,7 @@ class HibernateDataAccessTest {
 
 	@BeforeAll
 	static void beforeAll() {
-		
+
 		try {
 			afi = AppFacade.getImpl();
 		} catch (Exception e) {
@@ -80,6 +87,11 @@ class HibernateDataAccessTest {
 		removeTestData();
 	}
 
+	/**
+	 * Remove any test data added in the database.<br>
+	 * This method should be called at least once in the annotated method with
+	 * "{@code @afterAll}".
+	 */
 	private static void removeTestData() {
 
 		if(!clientList.isEmpty()) {
@@ -106,43 +118,83 @@ class HibernateDataAccessTest {
 
 	}
 
+	/**
+	 * Creates and stores a client to be used in the tests.<br>
+	 * This method assumes that no {@code null} value will not be obtained when
+	 * creating the client, in that extent, this method will not return a 
+	 * {@code null} value.
+	 * <p>
+	 * This value is added to a list for the later removal and to avoid to 
+	 * fill the database with invalid data.
+	 * 
+	 * @param username the client user name
+	 * @param password the client password
+	 * 
+	 * @return the created {@code Client}
+	 * 
+	 * @see Client
+	 */
 	private Client createTestClient(String username, String password) {
 
-		Client client = null;
-
-		try {
-			client = afi.createClient(username, password);
-		} catch (Exception e) {
-			assumeNoException("Exception raised when creating the Client test data", e);
-		}
+		Client client = afi.createClient(username, password);
+		assumeNotNull(client, "Assumption of a non null value not true");
+		clientList.add(client);
 
 		return client;
 	}
 
-	private RuralHouse createTestRuralHouse(String description, String city) {
-
-		RuralHouse ruralHouse = null;
-
-		try {
-			ruralHouse = afi.createRuralHouse(description, city);
-		} catch (Exception e) {
-			assumeNoException("Exception raised when creating the RuralHouse test data", e);
-		}
-
-		return ruralHouse;
+	/**
+	 * Creates and stores an offer to be used in the tests.<br>
+	 * This method assumes that no {@code null} value will not be obtained when
+	 * creating the client, in that extent, this method will not return a 
+	 * {@code null} value.
+	 * <p>
+	 * This value is added to a list for the later removal and to avoid to 
+	 * fill the database with invalid data.
+	 * 
+	 * @param ruralHouse this offers associated rural house  
+	 * @param startDate the offer start date
+	 * @param endDate the offer end date
+	 * @param price the cost per day of the offer
+	 * 
+	 * @return the created {@code Offer} for the {@code RuralHouse}
+	 * 
+	 * @throws BadDatesException thrown when the start date is greater than the end date
+	 * 
+	 * @see Offer
+	 */
+	private Offer createTestOffer(RuralHouse ruralHouse, LocalDate offerStartDate, LocalDate offerEndDate, double offerPrice) throws BadDatesException {
+	
+		Offer offer = afi.createOffer(ruralHouse, offerStartDate, offerEndDate, offerPrice);
+		assumeNotNull(offer, "Assumption of a non null value not true");
+		offerList.add(offer);
+		
+		return offer;
 	}
 
-	private Offer createTestOffer(RuralHouse ruralHouse, LocalDate offerStartDate, LocalDate offerEndDate, double offerPrice) {
+	/**
+	 * Creates and stores a rural house to be used in the tests.<br>
+	 * This method assumes that no {@code null} value will not be obtained when
+	 * creating the client, in that extent, this method will not return a 
+	 * {@code null} value.
+	 * <p>
+	 * This value is added to a list for the later removal and to avoid to 
+	 * fill the database with invalid data.
+	 * 
+	 * @param description the rural house description
+	 * @param city the rural house city
+	 * 
+	 * @return the created {@code RuralHouse}
+	 * 
+	 * @see RuralHouse
+	 */
+	private RuralHouse createTestRuralHouse(String description, String city) {
 
-		Offer offer = null;
+		RuralHouse ruralHouse = afi.createRuralHouse(description, city);
+		assumeNotNull(ruralHouse, "Assumption of a non null value not true");
+		ruralHouseList.add(ruralHouse);
 
-		try {
-			offer = afi.createOffer(ruralHouse, offerStartDate, offerEndDate, offerPrice);
-		} catch (Exception e) {
-			assumeNoException("Exception raised when creating the Offer test data", e);
-		}
-
-		return offer;
+		return ruralHouse;
 	}
 
 	@DisplayName("Client Test")
@@ -155,9 +207,7 @@ class HibernateDataAccessTest {
 		void createClientTest(String username, String password) {
 
 			try {
-				Client client = createTestClient(username, password);			
-				assumeNotNull(client);
-				clientList.add(client);
+				Client client = createTestClient(username, password);
 				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
 			} catch (Exception e) {
 				fail("Exception thrown when trying to create an offer", e);
@@ -172,9 +222,7 @@ class HibernateDataAccessTest {
 
 			try {
 
-				Client client = createTestClient(username, password);			
-				assumeNotNull(client);
-				clientList.add(client);
+				Client client = createTestClient(username, password);
 				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
 
 				Optional<Client> optClient = afi.getClient(username, password);
@@ -196,9 +244,7 @@ class HibernateDataAccessTest {
 
 			try {
 
-				Client client = createTestClient(username, password);			
-				assumeNotNull(client);
-				clientList.add(client);
+				Client client = createTestClient(username, password);	
 				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
 
 				assertTrue(afi.login(username, password), () -> "Could not login an existing client");
@@ -216,9 +262,7 @@ class HibernateDataAccessTest {
 
 			try {
 
-				Client client = createTestClient(username, password);			
-				assumeNotNull(client);
-				clientList.add(client);
+				Client client = createTestClient(username, password);	
 				assertTrue(afi.exists(Client.class, client.getId()), () -> "Persistent instance not found in the database");
 
 				assertFalse(afi.login(username, password + "wrong"), () -> "Unexpected client login occurred");
@@ -243,8 +287,6 @@ class HibernateDataAccessTest {
 			try {
 
 				RuralHouse ruralHouse = afi.createRuralHouse(description, city);
-				assumeNotNull(ruralHouse);
-				ruralHouseList.add(ruralHouse);
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
 
 				assertThrows(BadDatesException.class, () -> {
@@ -268,13 +310,9 @@ class HibernateDataAccessTest {
 			try {
 
 				RuralHouse ruralHouse = createTestRuralHouse(description, city);
-				assumeNotNull(ruralHouse);
-				ruralHouseList.add(ruralHouse);
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Assumption of persistent instance stored in the database not true");
 
 				Offer offer = createTestOffer(ruralHouse, startDate, endDate, price);
-				assumeNotNull(offer);
-				offerList.add(offer);
 				assertTrue(afi.exists(Offer.class, offer.getId()), () -> "Persistent instance not found in the database");
 
 			} catch (Exception e) {
@@ -291,8 +329,6 @@ class HibernateDataAccessTest {
 			try {
 
 				RuralHouse ruralHouse = afi.createRuralHouse(description, city);
-				assumeNotNull(ruralHouse);
-				ruralHouseList.add(ruralHouse);
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
 
 				assertThrows(BadDatesException.class, () -> {
@@ -313,8 +349,6 @@ class HibernateDataAccessTest {
 			try {
 
 				RuralHouse ruralHouse = createTestRuralHouse(description, city);
-				assumeNotNull(ruralHouse);
-				ruralHouseList.add(ruralHouse);
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
 
 				List<Offer> offers = afi.getOffers(ruralHouse, startDate, endDate);
@@ -334,15 +368,11 @@ class HibernateDataAccessTest {
 			try {
 
 				RuralHouse ruralHouse = createTestRuralHouse(description, city);
-				assumeNotNull(ruralHouse);
-				ruralHouseList.add(ruralHouse);
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
 
 				int initialSize = afi.getOffers(ruralHouse, startDate, endDate).size();
 
-				Offer offer = createTestOffer(ruralHouse, startDate, endDate, price);
-				assumeNotNull(offer);
-				offerList.add(offer);
+				createTestOffer(ruralHouse, startDate, endDate, price);
 
 				List<Offer> offers = afi.getOffers(ruralHouse, startDate, endDate);
 				assertEquals(initialSize + offerList.size(), offers.size(), () -> "No offers obtained");
@@ -366,8 +396,6 @@ class HibernateDataAccessTest {
 
 			try {
 				RuralHouse ruralHouse =	createTestRuralHouse(description, city);
-				assumeNotNull(ruralHouse);
-				ruralHouseList.add(ruralHouse);
 				assertTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
 			} catch (Exception e) {
 				fail("Exception thrown when trying to create a rural house", e);
@@ -384,13 +412,9 @@ class HibernateDataAccessTest {
 				int initialSize = afi.getAllRuralHouses().size();
 
 				RuralHouse ruralHouse =	createTestRuralHouse("Test1", "City1");
-				assumeNotNull(ruralHouse);
-				ruralHouseList.add(ruralHouse);
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Persistent instance not found in the database");
 
 				RuralHouse ruralHouse2 = createTestRuralHouse("Test2", "City2");
-				assumeNotNull(ruralHouse2);
-				ruralHouseList.add(ruralHouse2);
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse2.getId()), () -> "Persistent instance not found in the database");
 
 				List<RuralHouse> ruralHouseListResult = afi.getAllRuralHouses();
@@ -412,13 +436,9 @@ class HibernateDataAccessTest {
 			try {
 
 				RuralHouse ruralHouse = createTestRuralHouse(description, city);
-				assumeNotNull(ruralHouse);
-				ruralHouseList.add(ruralHouse);
 				assumeTrue(afi.exists(RuralHouse.class, ruralHouse.getId()), () -> "Assumption of persistent instance stored in the database not true");
 
 				Offer offer = createTestOffer(ruralHouse, startDate, endDate, price);
-				assumeNotNull(offer);
-				offerList.add(offer);
 				assumeTrue(afi.exists(Offer.class, offer.getId()), () -> "Persistent instance not found in the database");
 
 
